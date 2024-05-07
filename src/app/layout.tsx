@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 
 import Header from '@/components/common/Header'
 import StyledComponentsRegistry from '@/lib/registry'
-
 export const metadata: Metadata = {
   title: 'title',
   description: 'description',
