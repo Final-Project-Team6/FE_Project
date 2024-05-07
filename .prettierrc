@@ -2,8 +2,11 @@
   "semi": false,
   "singleQuote": true,
   "singleAttributePerLine": true,
+  "jsxSingleQuote": false,
+  "tabWidth": 2,
+  "useTabs": false,
   "bracketSameLine": true,
   "endOfLine": "crlf",
-  "trailingComma": "none",
+  "trailingComma": "all",
   "arrowParens": "avoid"
 }

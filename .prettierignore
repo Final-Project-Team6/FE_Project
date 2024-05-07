@@ -1,0 +1,10 @@
+*.html
+**/node_modules
+stories
+.next
+.cache
+package-lock.json
+public
+next-env.d.ts
+next.config.ts
+yarn.lock
