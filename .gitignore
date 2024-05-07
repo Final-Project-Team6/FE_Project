@@ -38,5 +38,3 @@ next-env.d.ts
 
 *storybook.log
 # /src/stories/assets
-
-yarn.lock
