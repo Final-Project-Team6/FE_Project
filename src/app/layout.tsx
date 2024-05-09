@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 
 import Header from '@/components/common/Header'
 import StyledComponentsRegistry from '@/lib/registry'
+import ThemeClient from '@/providers/ThemeClient'
 
 export const metadata: Metadata = {
   title: 'title',
@@ -17,8 +18,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="ko">
         <body>
           <StyledComponentsRegistry>
-            <Header />
-            {children}
+            <ThemeClient>
+              <Header />
+              {children}
+            </ThemeClient>
           </StyledComponentsRegistry>
         </body>
       </html>
