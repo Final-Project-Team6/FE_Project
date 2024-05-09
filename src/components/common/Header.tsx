@@ -7,7 +7,7 @@ const TestContainer = styled.div`
   color: #111;
 
   .label-item {
-    ${({ theme }) => theme.fonts.caption._1}
+    ${({ theme }) => theme.fonts.caption._01}
   }
 `
 
