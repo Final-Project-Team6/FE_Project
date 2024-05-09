@@ -37,30 +37,62 @@ const bold = 'font-weight: 700;'
 
 const fonts = {
   menuTitle: {
-    _1: menuTitle1 + medium,
-    _2: menuTitle2 + bold,
+    _01: menuTitle1 + medium,
+    _02: menuTitle2 + bold,
   },
   title: title1 + bold,
   subTitle: {
-    _1: subTitle1 + bold,
-    _2: subTitle2 + bold,
+    _01: subTitle1 + bold,
+    _02: subTitle2 + bold,
   },
   body: {
-    _1: body1 + medium,
-    _2: body2 + medium,
-    _3: body3 + medium,
-    _4: body4 + medium,
-    _5: body5 + medium,
-    _6: body6 + medium,
+    _01: body1 + medium,
+    _02: body2 + medium,
+    _03: body3 + medium,
+    _04: body4 + medium,
+    _05: body5 + medium,
+    _06: body6 + medium,
   },
   caption: {
-    _1: caption1 + medium,
-    _2: caption2 + bold,
+    _01: caption1 + medium,
+    _02: caption2 + bold,
   },
+}
+
+// 02.Color
+const color = {
+  // Theme / Brand
+  primaryColor: '#2A3F6D',
+  subColor: '#1674B7',
+
+  // Gray
+  white: '#ffffff',
+  black100: '#222222',
+
+  gray: {
+    _01: '#F9F9F9',
+    _02: '#F7F7F7',
+    _03: '#EEEEEE',
+    _04: '#DDDDDD',
+    _05: '#BBBBBB',
+    _06: '#999999',
+    _07: '#777777',
+    _08: '#666666',
+    _09: '#555555',
+    _10: '#333333',
+  },
+}
+
+const devices = {
+  mobile: '414px', // 미정
+  tablet: '820px', // 미정
+  laptop: '1440px',
 }
 
 const theme: DefaultTheme = {
   fonts,
+  colors: color,
+  devices,
 }
 
 export default theme
