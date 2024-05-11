@@ -1,0 +1,20 @@
+:root {
+  /* Gray */
+  --white: #ffffff;
+  --black100: #222222;
+  
+  --gray01: #f9f9f9;
+  --gray02: #f7f7f7;
+  --gray03: #eeeeee;
+  --gray04: #dddddd;
+  --gray05: #bbbbbb;
+  --gray06: #999999;
+  --gray07: #777777;
+  --gray08: #666666;
+  --gray09: #555555;
+  --gray10: #333333;
+
+  /* Theme / Brand */
+  --primary-color: #2A3F6D;
+  --sub-color: #1674B7;
+}
