@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 // ButtonHTMLAttributes로 button 태그에 기본으로 들어있는 속성 확장
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: 'phone' | 'message' | 'confirm'
-  color: 'white' | 'primary'
+  color?: 'white' | 'primary'
 }
 
 /* Todo
