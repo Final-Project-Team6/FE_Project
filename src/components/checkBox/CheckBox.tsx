@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import styled from 'styled-components'
+// import RadioImg from '../../../public/checkbox.svg'
 
 interface CheckBoxProps {
   children: string
 }
+// test svg경로
+const RadioImg = '/checkbox.svg'
 
 const CheckContent = styled.div`
   display: flex;
@@ -29,6 +32,12 @@ const CheckContent = styled.div`
 
   /* 체크되었을 때 스타일 변경 */
   .input:checked + .label-box {
+    /* background-image: url('/checkbox.svg'); */
+    background-image: url(${RadioImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: ${({ theme }) => theme.colors.primaryColor};
     border: none;
   }
 
