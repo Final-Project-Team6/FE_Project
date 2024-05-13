@@ -3,11 +3,11 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
-    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, 
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4,
     h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite,
-     code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, 
-     strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, menu, ol, ul, li, 
-     fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, 
+     code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike,
+     strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, menu, ol, ul, li,
+     fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
      article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
     main, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     border: 0;
     }
 
-    * { 
+    * {
         box-sizing: border-box;
         color: #333333;
     }
@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     body{
         -webkit-overflow-scrolling: touch;
     }
-    
+
     button, a{
         outline: none;
         border: none;
@@ -32,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
-    ::-webkit-scrollbar { 
+    ::-webkit-scrollbar {
         display: none !important;
     }
 `
