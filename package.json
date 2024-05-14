@@ -52,7 +52,8 @@
     "msw": "^2.2.14",
     "prettier": "^3.2.5",
     "storybook": "^8.0.10",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-plugin-css-modules": "^5.1.0"
   },
   "license": "MIT",
   "husky": {
