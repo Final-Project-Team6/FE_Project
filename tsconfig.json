@@ -14,9 +14,8 @@
     "declaration": true,
     "incremental": true,
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "typescript-plugin-css-modules" },
+      { "name": "next" }
     ],
     "baseUrl": "./",
     "paths": {
