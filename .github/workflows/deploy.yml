@@ -15,7 +15,7 @@ jobs:
         run: apk add ruby && gem install mustache
 
       - name: creates output
-        run: sh ./build.sh
+        run: ./build.sh
 
       - name: Pushes to another repository
         id: push_directory
@@ -24,8 +24,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
         with:
           source-directory: 'output'
-          destination-github-username: [subinsad]
-          destination-repository-name: [FE_Project]
+          destination-github-username: subinsad
+          destination-repository-name: FE_Project
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
