@@ -1,4 +1,4 @@
-import '@/styles/global-styles'
+import '@/app/globals.css'
 
 import { Metadata } from 'next'
 import { ReactNode } from 'react'
