@@ -1,18 +1,41 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import Chip from './Chip'
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ isMainPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 30px;
   color: #111;
+  ${({ isMainPage }) =>
+    isMainPage
+      ? `
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid white;
+    box-shadow: none;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      position: absolute;
+      top: 118px;
+      border: 1px solid white;
+    }
+  `
+      : `
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  `}
 `
 
 const CustomChip = styled(Chip)`
@@ -104,10 +127,17 @@ const HeaderBottom = styled.div`
 `
 
 export default function Header() {
-  const [isHovering, setIsHovering] = useState(false)
+  const [isHovering, setIsHovering] = useState(true)
+  const [isMainPage, setIsMainPage] = useState(false)
+  const pathname = usePathname()
+
+  // 메인페이지일 경우 배경 투병으로 변경
+  useEffect(() => {
+    setIsMainPage(pathname === '/')
+  }, [pathname])
 
   return (
-    <HeaderContainer>
+    <HeaderContainer isMainPage={isMainPage}>
       <HeaderTop>
         <Link
           href="/"
