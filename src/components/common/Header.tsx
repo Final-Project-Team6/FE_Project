@@ -127,7 +127,7 @@ const HeaderBottom = styled.div`
 `
 
 export default function Header() {
-  const [isHovering, setIsHovering] = useState(true)
+  const [isHovering, setIsHovering] = useState(false)
   const [isMainPage, setIsMainPage] = useState(false)
   const pathname = usePathname()
 
@@ -156,7 +156,7 @@ export default function Header() {
             <CustomChip color="outline">회원가입</CustomChip>
           </Link>
           <Link
-            href="/"
+            href="/login"
             className="chip-link">
             <CustomChip color="fill"> 로그인 </CustomChip>
           </Link>
