@@ -21,19 +21,33 @@
   .btn-box {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 44px;
 
-    &-serch {
-      a {
-        color: $gray07;
-        padding: 0 8px;
-      }
-      a:first-child {
-        border-right: 2px solid $gray07;
-      }
-      a:last-child {
-        padding-right: 0;
+    gap: 56px;
+
+    &-login {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+
+      .serch {
+        display: flex;
+        flex-direction: row;
+
+        a {
+          display: flex;
+          align-items: center;
+
+          color: $gray07;
+        }
+        a:first-child::after {
+          content: '';
+          display: block;
+          width: 1px;
+          height: 15px;
+          margin: 0 8px;
+          background-color: $gray07;
+        }
       }
     }
   }
