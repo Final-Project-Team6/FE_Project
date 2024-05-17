@@ -34,30 +34,35 @@
 }
 
 .body {
-  font-weight: $medium;
   &_01 {
     font-size: 28px;
     line-height: 36px;
+    font-weight: $bold;
   }
   &_02 {
     font-size: 24px;
     line-height: 32px;
+    font-weight: $medium;
   }
   &_03 {
     font-size: 20px;
     line-height: 28px;
+    font-weight: $medium;
   }
   &_04 {
     font-size: 18px;
     line-height: 24px;
+    font-weight: $medium;
   }
   &_05 {
     font-size: 16px;
     line-height: 24px;
+    font-weight: $medium;
   }
   &_06 {
     font-size: 12px;
     line-height: 18px;
+    font-weight: $medium;
   }
 }
 
@@ -69,6 +74,17 @@
   }
   &_02 {
     font-size: 16px;
+    line-height: 24px;
+    font-weight: $bold;
+  }
+}
+
+.dialog {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: $medium;
+  &BTN {
+    font-size: 18px;
     line-height: 24px;
     font-weight: $bold;
   }
