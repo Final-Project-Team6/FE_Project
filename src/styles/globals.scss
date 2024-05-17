@@ -1,0 +1,13 @@
+@import './mixins.module';
+@import './variables.module';
+
+// 공통 전체 레이아웃 padding, gap 각자 페이지에서 지정해 사용
+.commonLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 1280px;
+  margin: 0 auto;
+}
+
