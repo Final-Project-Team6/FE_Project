@@ -6,7 +6,7 @@
   "tabWidth": 2,
   "useTabs": false,
   "bracketSameLine": true,
-  "endOfLine": "auto",
+  "endOfLine": "crlf",
   "trailingComma": "all",
   "arrowParens": "avoid"
 }
