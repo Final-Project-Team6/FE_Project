@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "declaration": true,
+    "declaration": false,
     "incremental": true,
     "plugins": [
       { "name": "typescript-plugin-css-modules" },

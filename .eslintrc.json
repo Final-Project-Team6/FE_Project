@@ -50,7 +50,7 @@
     "comma-spacing": ["error", { "before": false, "after": true }],
     "prettier/prettier": [
       "error",
-      { "endOfLine": "crlf" },
+      // { "endOfLine": "crlf" },
       { "usePrettierrc": true }
     ],
     "react/react-in-jsx-scope": "off",

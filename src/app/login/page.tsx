@@ -38,14 +38,16 @@ function page() {
       </div>
 
       <div className="btn-box">
-        <Button
-          size="confirm"
-          color="primary">
-          로그인
-        </Button>
-        <div className="btn-box-serch body_05">
-          <Link href="/"> 아이디 찾기</Link>
-          <Link href="/"> 비밀번호 찾기</Link>
+        <div className="btn-box-login">
+          <Button
+            size="confirm"
+            color="primary">
+            로그인
+          </Button>
+          <div className="serch body_05">
+            <Link href="/"> 아이디 찾기</Link>
+            <Link href="/"> 비밀번호 찾기</Link>
+          </div>
         </div>
 
         <Button size="confirm">회원가입</Button>
