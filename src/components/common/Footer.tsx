@@ -5,7 +5,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className="Footer">
+    <footer className="Footer">
       <ul className="link-box body_05 ">
         <li className="link-item">
           <Link href="/"> 이용약관 </Link>
@@ -40,7 +40,7 @@ function Footer() {
           <p>Copyright ⓒ Aptner inc. All right reserved</p>
         </li>
       </ul>
-    </div>
+    </footer>
   )
 }
 

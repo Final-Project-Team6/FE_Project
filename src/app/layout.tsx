@@ -9,8 +9,11 @@ import StyledComponentsRegistry from '@/lib/registry'
 import ThemeClient from '@/providers/ThemeClient'
 
 export const metadata: Metadata = {
-  title: 'title',
-  description: 'description',
+  title: {
+    template: 'Apatner | %s Page',
+    default: 'Apatner',
+  },
+  description: 'Apatner 6조 프로젝트',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

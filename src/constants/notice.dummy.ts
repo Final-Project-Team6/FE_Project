@@ -63,3 +63,7 @@ export const noticeData = [
     type: 'important',
   },
 ]
+export const noticeType = {
+  noticeAll: '공지사항 전체보기',
+  community: '입주민 소통공간 전체보기',
+}

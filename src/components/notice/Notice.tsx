@@ -11,10 +11,12 @@ export default function Notice({
   noticeTitle,
   noticeOptions,
   noticeData,
+  noticeType,
 }: {
   noticeTitle: string
   noticeOptions: string[]
   noticeData: noticeProps[]
+  noticeType: string
 }) {
   const [optionState, setOptionState] = useState(noticeOptions[0])
   const [posts, setPosts] = useState(
@@ -68,8 +70,10 @@ export default function Notice({
         })}
       </div>
       <Link href={'/'}>
-        <div className={styles.containerBottom}>
-          <p>공지사항 전체 보기 {'>'}</p>
+        <div className={`${styles.containerBottom} body_03`}>
+          <p>
+            {noticeType} {'>'}
+          </p>
         </div>
       </Link>
     </div>
