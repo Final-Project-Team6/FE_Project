@@ -168,7 +168,9 @@ export default function Header() {
   const [$isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
   )
-  const $isMainPage = usePathname() === '/'
+  const pathname = usePathname()
+  const mainPagePattern = /^\/[^\/]+$/
+  const $isMainPage = mainPagePattern.test(pathname)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,6 +181,8 @@ export default function Header() {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  console.log($isMainPage)
 
   return (
     <HeaderWrapper $isMainPage={$isMainPage}>
