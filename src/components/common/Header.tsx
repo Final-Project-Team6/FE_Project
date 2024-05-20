@@ -165,14 +165,15 @@ const HeaderBottom = styled.div<{
 
 export default function Header() {
   const [isHovering, setIsHovering] = useState(false)
-  const [$isScrolled, setIsScrolled] = useState(window.scrollY > 573)
+  const [$isScrolled, setIsScrolled] = useState(
+    typeof window !== 'undefined' ? window.scrollY > 573 : false,
+  )
   const $isMainPage = usePathname() === '/'
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY >= 573)
     }
-
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
