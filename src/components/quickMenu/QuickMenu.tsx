@@ -26,24 +26,24 @@ export default function QuickMenu({
           <div className={styles.quickMenuContainer}>
             <Image
               src={menu.icon}
-              width={28}
-              height={28}
+              width={60}
+              height={60}
               alt={menu.text}
               priority
             />
-            <p className={styles.quickMenuText}>{menu.text}</p>
+            <p className={`${styles.quickMenuText} body_05`}>{menu.text}</p>
           </div>
         </Link>
       ))}
       <div
-        className={styles.topContainer}
+        className={`${styles.topContainer} body_05`}
         onClick={topButtonHandler}>
         <p>TOP</p>
         <Image
           className={styles.topImage}
           src={NextIcon}
-          width={16}
-          height={16}
+          width={24}
+          height={24}
           alt="TOP"
           priority
         />

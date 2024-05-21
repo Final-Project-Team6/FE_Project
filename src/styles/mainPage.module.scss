@@ -1,0 +1,128 @@
+@import '@/styles/_mixins.module';
+@import '@/styles/_variables.module';
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.mainPageImage {
+  background-image: url('/testMainPageImage.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 760px;
+  margin-bottom: 40px;
+}
+
+.mainContents {
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.serviceContainer {
+  display: flex;
+  width: 100%;
+  padding: 60px calc(50% - 640px) 80px;
+  gap: 40px;
+  flex-direction: column;
+}
+
+.serviceContainerGray {
+  background-color: $gray02;
+}
+
+.serviceContainerText {
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 52px;
+  letter-spacing: -0.4px;
+  color: $gray10;
+}
+
+.serviceBoxList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.serviceBox {
+  transition: scale 0.2s ease-out;
+  text-align: center;
+  width: 193px;
+  &:hover {
+    scale: 1.2;
+  }
+}
+
+.serviceText {
+  padding-top: 16px;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: -0.24px;
+}
+
+.noticeContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.helpContainer {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 80px;
+}
+
+.helpBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  width: calc(100% / 3);
+  justify-content: center;
+  border-radius: 2rem;
+  padding: 24px 0;
+}
+
+.helpBoxGray {
+  background-color: $gray02;
+  align-items: center;
+}
+
+.helpTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h3 {
+    color: $gray10;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+  }
+  span {
+    color: $gray10;
+    font-family: Pretendard;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.28px;
+  }
+  p {
+    color: $gray09;
+    font-family: Pretendard;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.18px;
+    width: 145px;
+  }
+}

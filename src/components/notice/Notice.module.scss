@@ -26,12 +26,9 @@
 .containerBottom {
   display: flex;
   justify-content: center;
-  border-top: 1px solid $gray07;
-  padding: 16px;
+  border-top: 1px solid $gray05;
+  padding: 36px 16px 28px;
   color: $gray09;
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 500;
 }
 
 .buttons {
@@ -57,7 +54,7 @@
 }
 
 .notices {
-  padding: 0 16px;
+  padding: 0px;
   div {
     span {
       white-space: nowrap;
@@ -78,7 +75,8 @@
 .noticeBox {
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  padding: 16px 32px;
+  transition: background 0.1s ease-out;
 
   border-bottom: 1px solid $gray04;
 
@@ -88,5 +86,9 @@
 
   &:last-child {
     border-bottom: none;
+  }
+
+  &:hover {
+    background-color: $brandColor;
   }
 }
