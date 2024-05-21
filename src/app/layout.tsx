@@ -1,4 +1,5 @@
 import '@/app/globals.css'
+import '../styles/globals.scss'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Metadata } from 'next'

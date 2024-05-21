@@ -1,0 +1,118 @@
+@import '../../styles/_mixins.module.scss';
+
+.join-wrap {
+  display: flex;
+  gap: 80px;
+
+  padding: 80px 0 100px;
+
+  &-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+
+    width: 737px;
+  }
+
+  &-title {
+    display: flex;
+
+    width: 100%;
+    padding-bottom: 40px;
+    padding-left: 60px;
+  }
+}
+
+.scrollbar {
+  display: inline-block;
+  box-sizing: border-box;
+
+  padding: 35px 55px;
+  width: 100%;
+  height: 319px;
+  border: 12px solid $gray02;
+  border-radius: 8px;
+
+  overflow-y: scroll;
+  background-color: $gray02;
+  white-space: pre-line;
+
+  &-item-title {
+    text-align: center;
+  }
+
+  //box2, box3
+  .chart {
+    display: flex;
+    padding: 1px;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 230px;
+      height: 4rem;
+      border-bottom: 1px solid black;
+      text-align: center;
+    }
+
+    p:nth-child(2),
+    p:nth-child(3) {
+      border-left: 1px solid black;
+    }
+  }
+}
+
+/* 스크롤바 설정*/
+.scrollbar::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* 스크롤바 막대 설정*/
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: $gray06;
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+  border: 7px solid $gray02;
+}
+
+/* 스크롤바 뒷 배경 설정*/
+.scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.step1 {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-item1 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.linkBox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 157px;
+
+  .link {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    width: auto;
+    color: $gray10;
+    text-decoration: underline;
+  }
+}
+
+// step1 제외하고 왼쪽으로
+.left {
+  margin-left: 6rem;
+}

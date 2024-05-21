@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 // ButtonHTMLAttributes로 button 태그에 기본으로 들어있는 속성 확장
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: 'phone' | 'message' | 'confirm'
-  color?: 'white' | 'primary'
+  color?: 'white' | 'primary' | 'default'
 }
 
 /* Todo
@@ -29,6 +29,13 @@ const StyledButton = styled.button<ButtonProps>`
   &.confirm {
     width: 628px;
     height: 72px;
+  }
+  &.default {
+    border: 2px solid ${({ theme }) => theme.colors.gray._05};
+    color: ${({ theme }) => theme.colors.gray._07};
+    padding: 16px 40px;
+    width: auto;
+    ${({ theme }) => theme.fonts.body._05};
   }
   &.white {
     background: ${({ theme }) => theme.colors.white};
