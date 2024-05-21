@@ -11,13 +11,15 @@ import styled from 'styled-components'
 import InputProps from '@/types/input.interface'
 import { addHyphenToPhoneNum } from '@/utils/addHyphenToPhoneNum'
 
-const InputContent = styled.div`
+const InputContent = styled.div<{ width?: number }>`
+  width: ${({ width }) => (width ? `${width}px` : '628px')};
+
   .inputContainer {
     display: flex;
     align-items: center;
     width: fit-content;
     justify-content: space-between;
-    width: 628px;
+    width: 100%;
     position: relative;
   }
   .iconContainer {
@@ -41,6 +43,7 @@ const InputContent = styled.div`
   }
   .inputArea {
     width: 100%;
+    height: 72px;
     outline: 0;
     ${({ theme }) => theme.fonts.body._04}
     color: ${({ theme }) => theme.colors.black100};
@@ -48,7 +51,6 @@ const InputContent = styled.div`
     line-height: 24px;
     letter-spacing: -0.18px;
     padding: 16px;
-    padding-right: 100px;
     border: 2px solid ${({ theme }) => theme.colors.gray._05};
     border-radius: 8px;
     + img {
@@ -114,6 +116,7 @@ export default function Input({
   checkIcon,
   message,
   chip,
+  width,
 }: InputProps) {
   const [passwordWatch, setPasswordWatch] = useState(false)
   const [inputValue, setInputValue] = useState(value || '')
@@ -139,7 +142,9 @@ export default function Input({
   )
 
   return (
-    <InputContent className="container">
+    <InputContent
+      className="container"
+      width={width}>
       <div className="inputContainer">
         <input
           className={`inputArea${status ? ' ' + status : ''}${timer === '시간 종료' ? ' timeOver' : ''}`}

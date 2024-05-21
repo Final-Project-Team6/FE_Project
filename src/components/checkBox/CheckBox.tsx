@@ -1,20 +1,23 @@
 'use client'
 
-import { useState } from 'react'
 import styled, { css } from 'styled-components'
 
 interface CheckBoxProps {
   children: string
   big?: boolean
+  checked: boolean
+  onChange: (_: React.ChangeEvent<HTMLInputElement>) => void
+  name: string
 }
 
+// 스타일 정의
 const CheckContent = styled.div<{ big?: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
   ${({ theme }) => theme.fonts.body._05}
   color: ${({ theme }) => theme.colors.gray._07};
-  /* 큰 경우에는 원하는 크기로 조정 */
+
   ${({ big }) =>
     big &&
     css`
@@ -56,26 +59,28 @@ const CheckContent = styled.div<{ big?: boolean }>`
   }
 `
 
-export default function CheckBox({ children, big }: CheckBoxProps) {
-  const [isChecked, setIsChecked] = useState(false)
-  const handleChange = () => {
-    setIsChecked(!isChecked)
-  }
-
+export default function CheckBox({
+  children,
+  checked,
+  onChange,
+  big = false,
+  name,
+}: CheckBoxProps) {
   return (
     <CheckContent big={big}>
       <input
         type="checkbox"
-        name=""
-        id="check"
+        name={name}
+        id={name}
         className="input"
-        onChange={handleChange}
+        checked={checked}
+        onChange={onChange}
       />
       <label
-        htmlFor="check"
+        htmlFor={name}
         className="label-box"
       />
-      <span className={isChecked ? 'checked' : ''}>{children}</span>
+      <span className={checked ? 'checked' : ''}>{children}</span>
     </CheckContent>
   )
 }
