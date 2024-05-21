@@ -10,7 +10,7 @@ import { joinPlaceholder, loginPlaceholder } from '@/constants/inputPlaceholder'
 
 function page() {
   return (
-    <div className="login-wrap">
+    <div className="commonLayout">
       <h1 className="title">로그인</h1>
       <div className="input-box">
         <div className="input-box-item">

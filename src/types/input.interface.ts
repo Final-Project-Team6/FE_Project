@@ -12,4 +12,5 @@ export default interface InputProps {
   message?: string
   value?: string
   chip?: string[]
+  width?: number
 }

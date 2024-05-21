@@ -151,7 +151,7 @@ export default function Header() {
         </Link>
         <div className="chip-wrap">
           <Link
-            href="/"
+            href="/join"
             className="chip-link">
             <CustomChip color="outline">회원가입</CustomChip>
           </Link>
