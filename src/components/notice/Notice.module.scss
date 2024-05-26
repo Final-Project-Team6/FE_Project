@@ -89,6 +89,9 @@
   }
 
   &:hover {
-    background-color: $brandColor;
+    background-color: $gray03;
+    span {
+      font-weight: $bold;
+    }
   }
 }

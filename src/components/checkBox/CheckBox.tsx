@@ -5,9 +5,9 @@ import styled, { css } from 'styled-components'
 interface CheckBoxProps {
   children: string
   big?: boolean
-  checked: boolean
-  onChange: (_: React.ChangeEvent<HTMLInputElement>) => void
-  name: string
+  checked?: boolean
+  onChange?: (_: React.ChangeEvent<HTMLInputElement>) => void
+  name?: string
 }
 
 // 스타일 정의
