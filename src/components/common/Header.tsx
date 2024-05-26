@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import Chip from './Chip'
-
 const HeaderWrapper = styled.header<{ $isMainPage: boolean }>`
   width: 100%;
   padding-top: ${({ $isMainPage }) => ($isMainPage ? '0px' : '200px')};
@@ -50,10 +48,6 @@ const HeaderContainer = styled.div<{
       top: 118px;
     }
   `}
-`
-
-const CustomChip = styled(Chip)`
-  ${({ theme }) => theme.fonts.caption._01}
 `
 
 const HeaderTop = styled.div`
@@ -182,7 +176,7 @@ export default function Header() {
     }
   }, [])
 
-  console.log($isMainPage)
+  // const session = await getSession()
 
   return (
     <HeaderWrapper $isMainPage={$isMainPage}>
@@ -202,18 +196,33 @@ export default function Header() {
             />
             <span>시그니엘레지던스</span>
           </Link>
-          <div className="chip-wrap">
-            <Link
-              href="/join"
-              className="chip-link">
-              <CustomChip color="outline">회원가입</CustomChip>
-            </Link>
-            <Link
-              href="/login"
-              className="chip-link">
-              <CustomChip color="fill"> 로그인 </CustomChip>
-            </Link>
-          </div>
+          {/* <div className="chip-wrap">
+            {session?.user ? (
+              <>
+                <form action={signOutWithForm}>
+                  <Link
+                    type="submit"
+                    href="/login"
+                    className="chip-link">
+                    <CustomChip color="fill"> 로그아웃 </CustomChip>
+                  </Link>
+                </form>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/join"
+                  className="chip-link">
+                  <CustomChip color="outline">회원가입</CustomChip>
+                </Link>
+                <Link
+                  href="/login"
+                  className="chip-link">
+                  <CustomChip color="fill"> 로그인 </CustomChip>
+                </Link>
+              </>
+            )}
+          </div> */}
         </HeaderTop>
         <HeaderBottom
           $isMainPage={$isMainPage}

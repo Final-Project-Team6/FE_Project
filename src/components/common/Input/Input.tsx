@@ -117,6 +117,7 @@ export default function Input({
   message,
   chip,
   width,
+  onChange,
 }: InputProps) {
   const [passwordWatch, setPasswordWatch] = useState(false)
   const [inputValue, setInputValue] = useState(value || '')
@@ -137,8 +138,13 @@ export default function Input({
         type === 'tel' ? addHyphenToPhoneNum(newValue) : newValue
 
       setInputValue(formattedValue)
+
+      // 변경된 부분: onChange prop 호출
+      if (onChange) {
+        onChange(e) // onChange prop에 이벤트 객체 전달
+      }
     },
-    [type],
+    [type, onChange], // onChange 추가
   )
 
   return (
