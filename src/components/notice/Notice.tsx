@@ -28,7 +28,6 @@ export default function Notice({
     setOptionState(newType)
   }
 
-  // useQuery 공지내용 요청
   const { isLoading, error, data } = useFetchNoticeList(
     noticeTitle,
     apartmentData.data.apartmentId,
@@ -50,8 +49,7 @@ export default function Notice({
     )
   }
   if (error) {
-    // console.log('error', error)
-    return error.message
+    return <h1 className={styles.noticeText}>{error.message}</h1>
   }
 
   return (
@@ -72,16 +70,19 @@ export default function Notice({
       <div className={styles.notices}>
         {data &&
           data.content &&
-          data.content.map((notice: complaint) => {
+          data.content.map((notice: complaint, idx: number) => {
             return (
-              <Link
-                key={notice.complaintId}
-                href={`/${notice.complaintId || notice.announcementId}`}>
-                <div className={styles.noticeBox}>
-                  <span>{notice.title}</span>
-                  <p>{notice.createdAt}</p>
-                </div>
-              </Link>
+              <div key={notice.complaintId}>
+                <Link href={`/${notice.complaintId || notice.announcementId}`}>
+                  <div className={styles.noticeBox}>
+                    <span>{notice.title}</span>
+                    <p>{notice.createdAt}</p>
+                  </div>
+                  {data.content.length != ++idx && (
+                    <div className={styles.noticeBoxLine} />
+                  )}
+                </Link>
+              </div>
             )
           })}
       </div>

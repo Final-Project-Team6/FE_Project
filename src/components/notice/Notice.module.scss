@@ -79,20 +79,17 @@
   padding: 16px 32px;
   transition: background 0.1s ease-out;
 
-  border-bottom: 1px solid $gray04;
-
-  &:first-child {
-    border-top: none;
-  }
-
-  &:last-child {
-    border-bottom: none;
-  }
-
   &:hover {
     background-color: $gray03;
     span {
       font-weight: $bold;
     }
   }
+}
+
+.noticeBoxLine {
+  width: 564px;
+  height: 1px;
+  background: $gray04;
+  margin: auto;
 }
