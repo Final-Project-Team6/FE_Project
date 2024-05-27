@@ -49,7 +49,9 @@ export default async function App({
                 자주 찾는 서비스
               </span>
               <ul className={styles.serviceBoxList}>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={phone1}
                     width={70}
@@ -59,7 +61,9 @@ export default async function App({
                   />
                   <p className={styles.serviceText}>관리사무소 민원</p>
                 </Link>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={write}
                     width={70}
@@ -69,7 +73,9 @@ export default async function App({
                   />
                   <p className={styles.serviceText}>입대의 소통</p>
                 </Link>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={car}
                     width={70}
@@ -79,7 +85,9 @@ export default async function App({
                   />
                   <p className={styles.serviceText}>방문주차 등록</p>
                 </Link>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={scan}
                     width={70}
@@ -89,7 +97,9 @@ export default async function App({
                   />
                   <p className={styles.serviceText}>커뮤니티 예약</p>
                 </Link>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={vote}
                     width={70}
@@ -99,7 +109,9 @@ export default async function App({
                   />
                   <p className={styles.serviceText}>주민투표</p>
                 </Link>
-                <Link href={'/'}>
+                <Link
+                  href={'/'}
+                  className={styles.serviceBox}>
                   <Image
                     src={calendar}
                     width={70}
