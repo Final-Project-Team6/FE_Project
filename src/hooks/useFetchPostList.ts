@@ -2,20 +2,19 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-const fetchNoticeList = async (
+const fetchPostList = async (
   noticeTitle: string,
   apartmentId: number,
   orderType: string,
-  complaintType: string,
 ) => {
   let response
   if (noticeTitle === '공지사항') {
     response = await axios.get(
-      `https://aptner.shop/api/post/announcement/search/${apartmentId}?pageNumber=1&pageSize=5${orderType === '중요글' ? '&important=true' : ''}&orderBy=DESC`,
+      `https://aptner.shop/api/post/announcement/search/${apartmentId}?pageNumber=1&pageSize=5${orderType === '중요글' ? '&important=true' : orderType === '최신순' ? '&orderType=DATE' : ''}&orderBy=DESC`,
     )
   } else {
     response = await axios.get(
-      `https://aptner.shop/api/post/complaint/search/${apartmentId}?pageNumber=1&pageSize=5${orderType && `&orderType=${orderType}`}&orderBy=DESC${complaintType && `&complaintType=${complaintType}`}`,
+      `https://aptner.shop/api/post/communication/search/${apartmentId}?pageNumber=1&pageSize=5${orderType === '인기순' ? '&orderType=VOTE' : orderType === '댓글 TOP' ? '&orderType=COMMENT' : ''}&orderBy=DESC&communicationType=USER_COMMU`,
     )
   }
   return response.data
@@ -38,15 +37,8 @@ const useFetchNoticeList = (
     }
   }, [apartmentId])
   return useQuery({
-    queryKey: [
-      'noticeList',
-      noticeTitle,
-      apartmentId,
-      orderType,
-      complaintType,
-    ],
-    queryFn: () =>
-      fetchNoticeList(noticeTitle, apartmentId, orderType, complaintType),
+    queryKey: [noticeTitle, apartmentId, orderType],
+    queryFn: () => fetchPostList(noticeTitle, apartmentId, orderType),
     enabled: enabled,
     ...options,
   })
