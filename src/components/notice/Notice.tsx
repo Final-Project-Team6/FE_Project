@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import Skeleton from '@/components/common/skeleton/Skeleton'
 import styles from '@/components/notice/Notice.module.scss'
 import useFetchNoticeList from '@/hooks/useFetchPostList'
 import { RootState } from '@/redux/store'
@@ -38,7 +39,16 @@ export default function Notice({
     },
   )
 
-  if (isLoading) return 'Loading...'
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <Skeleton
+          width={628}
+          height={491}
+        />
+      </div>
+    )
+  }
   if (error) {
     // console.log('error', error)
     return error.message
