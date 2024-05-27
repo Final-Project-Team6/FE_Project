@@ -1,4 +1,4 @@
-@import '../../styles/_mixins.module.scss';
+@import '@/styles/_mixins.module.scss';
 
 .step {
   display: flex;
@@ -70,4 +70,3 @@
     color: $primaryColor;
   }
 }
-
