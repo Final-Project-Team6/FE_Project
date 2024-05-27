@@ -1,11 +1,12 @@
 'use client'
 
+import './Header.scss'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
 
 import { fetchApartmentReducer } from '@/redux/apartmentSlice'
 import { AppDispatch } from '@/redux/store'
@@ -13,174 +14,18 @@ import { findApartmentData } from '@/types/apartmentData'
 
 import Chip from './Chip'
 
-const HeaderWrapper = styled.header<{ $isMainPage: boolean }>`
-  width: 100%;
-  padding-top: ${({ $isMainPage }) => ($isMainPage ? '0px' : '200px')};
-`
-
-const HeaderContainer = styled.div<{
-  $isMainPage: boolean
-  $isScrolled: boolean
-}>`
-  transition:
-    color 0.1s ease-in-out,
-    background 0.1s ease-in-out;
-  width: 100%;
-  z-index: 100;
-  position: fixed;
-  top: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 30px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  background-color: ${({ $isScrolled, $isMainPage }) =>
-    $isMainPage
-      ? $isScrolled
-        ? 'white'
-        : 'rgba(255, 255, 255, 0.3)'
-      : 'white'};
-  ${({ $isMainPage, $isScrolled }) =>
-    $isMainPage &&
-    !$isScrolled &&
-    `
-    -webkit-backdrop-filter: blur(4px);
-    border-bottom: 1px solid white;
-    box-shadow: none;
-
-    &::before {
-      content: '';
-      display: block;
-      width: 100%;
-      top: 118px;
-    }
-  `}
-`
-
-const CustomChip = styled(Chip)`
-  ${({ theme }) => theme.fonts.caption._01}
-`
-
-const HeaderTop = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  width: 1280px;
-  padding: 58px 0 18px 80px;
-
-  .logo {
-    display: flex;
-    align-items: flex-start;
-    align-items: center;
-    gap: 16px;
-    ${({ theme }) => theme.fonts.menuTitle._01}
-    color: ${({ theme }) => theme.colors.gray._10};
-
-    span {
-      letter-spacing: -0.28px;
-    }
-  }
-
-  .chip-wrap {
-    display: flex;
-    gap: 16px;
-
-    .chip-link {
-      display: flex;
-      align-items: center;
-      ${({ theme }) => theme.fonts.caption._01};
-    }
-  }
-`
-
-const NavDetail = styled.div<{ $isOpen: boolean }>`
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-  padding: 0px calc(50% - 640px);
-  backdrop-filter: blur(5px);
-  max-height: ${({ $isOpen }) => ($isOpen ? '500px' : '0')};
-  opacity: ${({ $isOpen }) => ($isOpen ? '1' : '0')};
-  overflow: hidden;
-  transition:
-    max-height 0.5s ease-in-out,
-    opacity 0.5s ease-in-out,
-    color 0.5s ease-in-out,
-    background 0.5s ease-in-out;
-
-  .detail-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 250px;
-    ${({ theme }) => theme.fonts.body._04}
-
-    .detail-item {
-      height: 72px;
-      list-style: none;
-      align-content: center;
-      a {
-        transition:
-          font-size 0.2s ease-out,
-          font-weight 0.2s ease-out;
-        color: ${({ theme }) => theme.colors.gray._10};
-      }
-      :hover {
-        font-size: 24px;
-        font-weight: 900;
-      }
-    }
-  }
-`
-
-const HeaderBottom = styled.div<{
-  $isMainPage: boolean
-  $isScrolled: boolean
-}>`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  .nav-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0px calc(50% - 640px);
-    border-bottom: 1px solid ${({ theme }) => theme.colors.white};
-  }
-
-  .nav-top {
-    display: flex;
-    ${({ theme }) => theme.fonts.menuTitle._02}
-    color: ${({ theme }) => theme.colors.gray._10};
-
-    .item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 250px;
-      height: 76px;
-    }
-  }
-`
-
 export default function Header({
   apartmentData,
 }: {
   apartmentData: findApartmentData
 }) {
   const dispatch: AppDispatch = useDispatch()
-  const [isHovering, setIsHovering] = useState(false)
-  const [$isScrolled, setIsScrolled] = useState(
+  const [isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
   )
   const pathname = usePathname()
   const mainPagePattern = /^\/[^\/]+$/
-  const $isMainPage = mainPagePattern.test(pathname)
+  const isMainPage = mainPagePattern.test(pathname)
 
   useEffect(() => {
     dispatch(fetchApartmentReducer(apartmentData))
@@ -191,18 +36,16 @@ export default function Header({
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [dispatch, apartmentData])
 
-  // const session = await getSession()
   return (
-    <HeaderWrapper $isMainPage={$isMainPage}>
-      <HeaderContainer
-        $isMainPage={$isMainPage}
-        $isScrolled={$isScrolled}>
-        <HeaderTop>
+    <header className={`header-wrapper ${isMainPage ? 'is-main-page' : ''}`}>
+      <div
+        className={`header-container ${isMainPage ? 'is-main-page' : ''} ${isScrolled ? 'is-scrolled' : ''}`}>
+        <div className="header-top">
           <Link
             href="/"
-            className="logo">
+            className="logo menuTitle1">
             <Image
               width={155}
               height={42}
@@ -215,23 +58,28 @@ export default function Header({
           <div className="chip-wrap">
             <Link
               href="/join"
-              className="chip-link">
-              <CustomChip color="outline">회원가입</CustomChip>
+              className="chip-link caption_02">
+              <Chip
+                color="outline"
+                className="custom-chip">
+                회원가입
+              </Chip>
             </Link>
             <Link
               href="/login"
               className="chip-link">
-              <CustomChip color="fill"> 로그인 </CustomChip>
+              <Chip
+                color="fill"
+                className="custom-chip caption_01">
+                로그인
+              </Chip>
             </Link>
           </div>
-        </HeaderTop>
-        <HeaderBottom
-          $isMainPage={$isMainPage}
-          $isScrolled={$isScrolled}
-          onMouseOver={() => setIsHovering(true)}
-          onMouseOut={() => setIsHovering(false)}>
+        </div>
+        <div
+          className={`header-bottom ${isMainPage ? 'is-main-page' : ''} ${isScrolled ? 'is-scrolled' : ''}`}>
           <div className="nav-wrap">
-            <ul className="nav-top">
+            <ul className="nav-top menuTitle2">
               <Link href="/">
                 <li className="item">아파트 정보</li>
               </Link>
@@ -247,7 +95,7 @@ export default function Header({
             </ul>
             <Link href="/">
               <Image
-                className={$isMainPage ? 'mainUserIcon' : ''}
+                className={isMainPage ? 'mainUserIcon' : ''}
                 width={37}
                 height={35}
                 src="/icons/user.svg"
@@ -256,8 +104,8 @@ export default function Header({
             </Link>
           </div>
 
-          <NavDetail $isOpen={isHovering}>
-            <ul className="detail-wrap">
+          <div className="nav-detail">
+            <ul className="detail-wrap body_04">
               <li className="detail-item">
                 <Link href="/"> 인사말 </Link>
               </li>
@@ -272,7 +120,7 @@ export default function Header({
               </li>
             </ul>
 
-            <ul className="detail-wrap">
+            <ul className="detail-wrap body_04">
               <li className="detail-item">
                 <Link href="/"> 공지사항 </Link>
               </li>
@@ -281,13 +129,13 @@ export default function Header({
               </li>
             </ul>
 
-            <ul className="detail-wrap">
+            <ul className="detail-wrap body_04">
               <li className="detail-item">
                 <Link href="/"> 관리사무소 인원 </Link>
               </li>
             </ul>
 
-            <ul className="detail-wrap">
+            <ul className="detail-wrap body_04">
               <li className="detail-item">
                 <Link href="/"> 입주민 소통 </Link>
               </li>
@@ -295,9 +143,9 @@ export default function Header({
                 <Link href="/"> 입대의 소통 </Link>
               </li>
             </ul>
-          </NavDetail>
-        </HeaderBottom>
-      </HeaderContainer>
-    </HeaderWrapper>
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }

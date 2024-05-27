@@ -1,0 +1,142 @@
+.header-wrapper {
+  width: 100%;
+  padding-top: 0px;
+
+  &.is-main-page {
+    padding-top: 200px;
+  }
+}
+
+.header-container {
+  transition:
+    color 0.1s ease-in-out,
+    background 0.1s ease-in-out;
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 30px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: white;
+
+  &.is-main-page {
+    background-color: rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid white;
+    box-shadow: none;
+
+    &.is-scrolled {
+      background-color: white;
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      top: 118px;
+    }
+  }
+}
+
+.header-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 1280px;
+  padding: 58px 0 18px 80px;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    span {
+      letter-spacing: -0.28px;
+    }
+  }
+
+  .chip-wrap {
+    display: flex;
+    gap: 16px;
+
+    .chip-link {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.nav-detail {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0px calc(50% - 640px);
+  backdrop-filter: blur(5px);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
+
+  .detail-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+
+    .detail-item {
+      height: 72px;
+      list-style: none;
+      align-content: center;
+
+      a {
+        transition:
+          font-size 0.2s ease-out,
+          font-weight 0.2s ease-out;
+      }
+
+      &:hover {
+        font-size: 24px;
+        font-weight: 900;
+      }
+    }
+  }
+}
+
+.header-bottom {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .nav-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px calc(50% - 640px);
+  }
+
+  .nav-top {
+    display: flex;
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 76px;
+    }
+  }
+
+  &:hover .nav-detail {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
