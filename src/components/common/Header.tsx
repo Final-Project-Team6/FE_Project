@@ -4,7 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+
+import { fetchApartmentReducer } from '@/redux/apartmentSlice'
+import { AppDispatch } from '@/redux/store'
+import { findApartmentData } from '@/types/apartmentData'
+
+import Chip from './Chip'
 
 const HeaderWrapper = styled.header<{ $isMainPage: boolean }>`
   width: 100%;
@@ -48,6 +55,10 @@ const HeaderContainer = styled.div<{
       top: 118px;
     }
   `}
+`
+
+const CustomChip = styled(Chip)`
+  ${({ theme }) => theme.fonts.caption._01}
 `
 
 const HeaderTop = styled.div`
@@ -157,7 +168,12 @@ const HeaderBottom = styled.div<{
   }
 `
 
-export default function Header() {
+export default function Header({
+  apartmentData,
+}: {
+  apartmentData: findApartmentData
+}) {
+  const dispatch: AppDispatch = useDispatch()
   const [isHovering, setIsHovering] = useState(false)
   const [$isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
@@ -167,6 +183,7 @@ export default function Header() {
   const $isMainPage = mainPagePattern.test(pathname)
 
   useEffect(() => {
+    dispatch(fetchApartmentReducer(apartmentData))
     const handleScroll = () => {
       setIsScrolled(window.scrollY >= 573)
     }
@@ -177,7 +194,6 @@ export default function Header() {
   }, [])
 
   // const session = await getSession()
-
   return (
     <HeaderWrapper $isMainPage={$isMainPage}>
       <HeaderContainer
@@ -190,39 +206,24 @@ export default function Header() {
             <Image
               width={155}
               height={42}
-              src="/icons/logo.svg"
+              src={apartmentData?.data.icon}
               alt=""
               className="logo-image"
             />
-            <span>시그니엘레지던스</span>
+            <span>{apartmentData?.data.name}</span>
           </Link>
-          {/* <div className="chip-wrap">
-            {session?.user ? (
-              <>
-                <form action={signOutWithForm}>
-                  <Link
-                    type="submit"
-                    href="/login"
-                    className="chip-link">
-                    <CustomChip color="fill"> 로그아웃 </CustomChip>
-                  </Link>
-                </form>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/join"
-                  className="chip-link">
-                  <CustomChip color="outline">회원가입</CustomChip>
-                </Link>
-                <Link
-                  href="/login"
-                  className="chip-link">
-                  <CustomChip color="fill"> 로그인 </CustomChip>
-                </Link>
-              </>
-            )}
-          </div> */}
+          <div className="chip-wrap">
+            <Link
+              href="/join"
+              className="chip-link">
+              <CustomChip color="outline">회원가입</CustomChip>
+            </Link>
+            <Link
+              href="/login"
+              className="chip-link">
+              <CustomChip color="fill"> 로그인 </CustomChip>
+            </Link>
+          </div>
         </HeaderTop>
         <HeaderBottom
           $isMainPage={$isMainPage}
