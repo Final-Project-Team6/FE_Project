@@ -3,6 +3,7 @@
 
 .container {
   width: 628px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   background: $white;
