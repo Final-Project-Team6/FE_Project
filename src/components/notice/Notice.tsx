@@ -2,17 +2,11 @@
 import '@/styles/_mixins.module.scss'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import styles from '@/components/notice/Notice.module.scss'
-import useFetchNoticeList from '@/hooks/useFetchNoticeList'
-import {
-  setNoticesByComments,
-  setNoticesByImportance,
-  setNoticesByPopularity,
-  setNoticesByRecency,
-} from '@/redux/complaintSlice'
+import useFetchNoticeList from '@/hooks/useFetchPostList'
 import { RootState } from '@/redux/store'
 import { complaint } from '@/types/notice.interface'
 
@@ -25,26 +19,11 @@ export default function Notice({
   noticeOptions: string[]
   noticeType: string
 }) {
-  const dispatch = useDispatch()
   const apartmentData = useSelector((state: RootState) => state.apartment)
-  const noticesByComments = useSelector(
-    (state: RootState) => state.notice.byComments.content,
-  )
-  const noticesByPopularity = useSelector(
-    (state: RootState) => state.notice.byPopularity.content,
-  )
-  const noticesByImportance = useSelector(
-    (state: RootState) => state.notice.byImportance.content,
-  )
-  const noticesByRecency = useSelector(
-    (state: RootState) => state.notice.byRecency.content,
-  )
 
   const [optionState, setOptionState] = useState(noticeOptions[0])
-  const [type, setType] = useState('최신글')
 
   const handleTypeChange = (newType: string) => {
-    setType(newType)
     setOptionState(newType)
   }
 
@@ -52,37 +31,12 @@ export default function Notice({
   const { isLoading, error, data } = useFetchNoticeList(
     noticeTitle,
     apartmentData.data.apartmentId,
-    type === '최신글' ? 'DATE' : type === '중요글' ? '' : '',
+    optionState,
     'MANAGEMENT_OFFICE',
     {
       enabled: apartmentData.data.apartmentId !== 0,
     },
   )
-
-  // data를 전역상태에 저장
-  useEffect(() => {
-    if (data) {
-      dispatch(setNoticesByComments(data))
-      dispatch(setNoticesByPopularity(data))
-      dispatch(setNoticesByImportance(data))
-      dispatch(setNoticesByRecency(data))
-    }
-  }, [data, dispatch])
-
-  // 변경된 데이터 확인
-  useEffect(() => {
-    // console.log('apartmentId', apartmentData)
-    // console.log('type', type)
-    // console.log('noticesByComments:', noticesByComments)
-    // console.log('noticesByPopularity:', noticesByPopularity)
-    // console.log('noticesByImportance:', noticesByImportance)
-    // console.log('noticesByRecency:', noticesByRecency)
-  }, [
-    noticesByComments,
-    noticesByPopularity,
-    noticesByImportance,
-    noticesByRecency,
-  ])
 
   if (isLoading) return 'Loading...'
   if (error) {
