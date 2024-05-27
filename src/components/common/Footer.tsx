@@ -1,4 +1,4 @@
-import './Footer.scss'
+import '@/components/common/Footer.scss'
 
 import Link from 'next/link'
 import React from 'react'
