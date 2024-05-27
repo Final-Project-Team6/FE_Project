@@ -4,22 +4,22 @@ import styled, { css } from 'styled-components'
 
 interface CheckBoxProps {
   children: string
-  big?: boolean
+  $big?: boolean
   checked?: boolean
   onChange?: (_: React.ChangeEvent<HTMLInputElement>) => void
   name?: string
 }
 
 // 스타일 정의
-const CheckContent = styled.div<{ big?: boolean }>`
+const CheckContent = styled.div<{ $big?: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
   ${({ theme }) => theme.fonts.body._05}
   color: ${({ theme }) => theme.colors.gray._07};
 
-  ${({ big }) =>
-    big &&
+  ${({ $big }) =>
+    $big &&
     css`
       ${({ theme }) => theme.fonts.menuTitle._02}
       color: ${({ theme }) => theme.colors.gray._10};
@@ -37,8 +37,8 @@ const CheckContent = styled.div<{ big?: boolean }>`
     height: 20px;
     border: 2px solid ${({ theme }) => theme.colors.gray._07};
 
-    ${({ big }) =>
-      big &&
+    ${({ $big }) =>
+      $big &&
       css`
         width: 24px;
         height: 24px;
@@ -63,11 +63,11 @@ export default function CheckBox({
   children,
   checked,
   onChange,
-  big = false,
+  $big = false,
   name,
 }: CheckBoxProps) {
   return (
-    <CheckContent big={big}>
+    <CheckContent $big={$big}>
       <input
         type="checkbox"
         name={name}
