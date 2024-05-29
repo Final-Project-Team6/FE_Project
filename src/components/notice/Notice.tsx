@@ -10,6 +10,7 @@ import styles from '@/components/notice/Notice.module.scss'
 import useFetchNoticeList from '@/hooks/useFetchPostList'
 import { RootState } from '@/redux/store'
 import { complaint } from '@/types/notice.interface'
+import { formatDate } from '@/utils/formatDate'
 
 export default function Notice({
   noticeTitle,
@@ -76,7 +77,7 @@ export default function Notice({
                 <Link href={`/${notice.complaintId || notice.announcementId}`}>
                   <div className={styles.noticeBox}>
                     <span>{notice.title}</span>
-                    <p>{notice.createdAt}</p>
+                    <p>{formatDate(notice.createdAt)}</p>
                   </div>
                   {data.content.length != ++idx && (
                     <div className={styles.noticeBoxLine} />
