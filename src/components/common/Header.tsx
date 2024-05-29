@@ -126,7 +126,7 @@ const NavDetail = styled.div<{ $isOpen: boolean }>`
         color: ${({ theme }) => theme.colors.gray._10};
       }
       :hover {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 900;
       }
     }
