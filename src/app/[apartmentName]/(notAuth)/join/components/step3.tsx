@@ -23,12 +23,6 @@ const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
       [name]: value,
     }))
   }
-  useEffect(() => {
-    dispatch(saveStep2Data({ data: formData }))
-    onUpdate(formData)
-    // onUpdate를 useEffect 의존성 배열에서 제거
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData, dispatch])
 
   useEffect(() => {
     dispatch(saveStep3Data({ data: formData }))
