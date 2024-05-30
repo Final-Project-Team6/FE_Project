@@ -9,7 +9,7 @@ import Skeleton from '@/components/common/skeleton/Skeleton'
 import styles from '@/components/notice/Notice.module.scss'
 import useFetchNoticeList from '@/hooks/useFetchPostList'
 import { RootState } from '@/redux/store'
-import { complaint } from '@/types/notice.interface'
+import { post } from '@/types/post.interface'
 import { formatDate } from '@/utils/formatDate'
 
 export default function Notice({
@@ -71,7 +71,7 @@ export default function Notice({
       <div className={styles.notices}>
         {data &&
           data.content &&
-          data.content.map((notice: complaint, idx: number) => {
+          data.content.map((notice: post, idx: number) => {
             return (
               <div key={notice.complaintId}>
                 <Link href={`/${notice.complaintId || notice.announcementId}`}>
