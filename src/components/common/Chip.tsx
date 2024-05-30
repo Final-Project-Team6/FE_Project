@@ -6,17 +6,23 @@ import styled from 'styled-components'
 interface ChipProps {
   children: string
   color: string
+  textType?: string
   className?: string // className를 선택적으로 받기 위해 `?` 추가
 }
 
 const ChipContainer = styled.div`
+  width: fit-content;
   display: flex;
   align-items: center;
-  padding: 4px 16px;
+  padding: 2px 16px;
   border-radius: 40px;
-
-  ${({ theme }) => theme.fonts.caption._02};
   text-align: center;
+  border: 2px solid transparent;
+  ${({ theme }) => theme.fonts.caption._02};
+
+  &.thin {
+    ${({ theme }) => theme.fonts.caption._01};
+  }
 
   &.fill {
     background-color: ${({ theme }) => theme.colors.primaryColor};
@@ -39,9 +45,9 @@ const ChipContainer = styled.div`
   }
 `
 
-function Chip({ children, color, className }: ChipProps) {
+function Chip({ children, color, className, textType }: ChipProps) {
   return (
-    <ChipContainer className={`${color} ${className}`}>
+    <ChipContainer className={`${color} ${className} ${textType}`}>
       {children}
     </ChipContainer>
   )
