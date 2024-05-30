@@ -46,7 +46,7 @@ const CheckContent = styled.div<{ $big?: boolean }>`
   }
 
   .input:checked + .label-box {
-    background-image: url('icons/checkbox.svg');
+    background-image: url('../icons/checkbox.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

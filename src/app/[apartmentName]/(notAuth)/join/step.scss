@@ -27,8 +27,21 @@
   &-label {
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
+
+    &-phone {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      width: 90%;
+
+      .phoneItem {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
 
     &-padding {
       padding-bottom: 3rem;
@@ -51,6 +64,7 @@
   }
   &-label span:first-child {
     width: 100px;
+    padding-top: 24px;
   }
 }
 

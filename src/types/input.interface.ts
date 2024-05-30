@@ -14,4 +14,5 @@ export default interface InputProps {
   chip?: string[]
   width?: number
   onChange?: React.ChangeEventHandler<HTMLInputElement>
+  name?: string
 }

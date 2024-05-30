@@ -3,8 +3,9 @@
 import './join.scss'
 import './step.scss'
 
+import axios from 'axios'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Button from '@/components/common/Button'
 import ProgressBar from '@/components/common/ProgressBar'
@@ -16,16 +17,31 @@ import Step3 from './components/step3'
 import Step4 from './components/step4'
 import Step5 from './components/step5'
 
-function Page() {
+const Page: React.FC = () => {
   const [completedItems, setCompletedItems] = useState(1)
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [showAlternative, setShowAlternative] = useState(false)
+  const [isDataValid, setIsDataValid] = useState(false) // 버튼활성화
+  const [formData, setFormData] = useState({
+    termsService: false,
+    privateInformationCollection: false,
+    snsMarketingInformationReceive: false,
+    fullName: '',
+    birthFirst: 0,
+    gender: 0,
+    phone: 0,
+    username: '',
+    password: '',
+    nickname: '',
+    dong: '',
+    ho: '',
+    apartmentId: 0,
+  })
 
   const handleLink = () => {
     setShowAlternative(true)
   }
 
-  // 다음 버튼 클릭 핸들러
   const handleNextClick = () => {
     if (showAlternative) {
       setShowAlternative(false)
@@ -35,10 +51,43 @@ function Page() {
     }
   }
 
-  // 본인인증 없이 회원가입
   const handleAllChecked = (checked: boolean) => {
     setIsButtonDisabled(!checked)
   }
+
+  const handleDataUpdate = (data: any) => {
+    setFormData(prev => ({
+      ...prev,
+      ...data,
+    }))
+  }
+
+  const handleValidationUpdate = (isValid: boolean) => {
+    setIsDataValid(isValid)
+  }
+
+  const handleSubmit = async () => {
+    try {
+      await axios.post('https://aptner.shop/api/member/join', formData)
+      // console.log('회원가입이 성공적으로 처리되었습니다.')
+    } catch (error) {
+      console.error('회원가입 중 오류가 발생했습니다:', error)
+    }
+  }
+
+  const handleNext = () => {
+    if (completedItems < 4) {
+      handleNextClick()
+    } else {
+      handleSubmit()
+    }
+  }
+
+  useEffect(() => {
+    if (completedItems === 2) {
+      setIsButtonDisabled(!isDataValid)
+    }
+  }, [isDataValid, completedItems])
 
   return (
     <div className="commonLayout join-wrap">
@@ -84,31 +133,48 @@ function Page() {
         <>
           {completedItems === 4 && (
             <p className="body_03">
-              아파트 동,  호 정보를 입력한 후, 관리사무소의 인증을
-              받아야 아파트너 서비스를 이용할 수 있습니다.
+              아파트 동, 호 정보를 입력한 후, 관리사무소의 인증을 받아야
+              아파트너 서비스를 이용할 수 있습니다.
             </p>
           )}
           <div className="join-wrap-step">
-            {completedItems === 1 && <Step1 onAllChecked={handleAllChecked} />}
-            {completedItems === 2 && <Step2 />}
-            {completedItems === 3 && <Step3 />}
-            {completedItems === 4 && <Step4 />}
+            {completedItems === 1 && (
+              <Step1
+                onAllChecked={handleAllChecked}
+                onUpdate={data => handleDataUpdate(data)}
+              />
+            )}
+            {completedItems === 2 && (
+              <Step2
+                handleNext={handleNext}
+                onUpdate={(data: any) => handleDataUpdate(data)}
+                onValidationUpdate={handleValidationUpdate} // 유효성 검사 결과 업데이트
+              />
+            )}
+            {completedItems === 3 && (
+              <Step3 onUpdate={(data: any) => handleDataUpdate(data)} />
+            )}
+            {completedItems === 4 && (
+              <Step4 onUpdate={(data: any) => handleDataUpdate(data)} />
+            )}
             {completedItems === 5 && <Step5 />}
           </div>
         </>
       )}
 
-      {completedItems !== 5 && (
-        <div className={completedItems === 1 ? 'center' : 'left'}>
-          <Button
-            disabled={isButtonDisabled}
-            onClick={handleNextClick}
-            size="confirm"
-            color="primary">
-            다음
-          </Button>
-        </div>
-      )}
+      <div className={completedItems === 1 ? 'center' : 'left'}>
+        {completedItems < 5 && (
+          <div className={completedItems === 1 ? 'center' : 'left'}>
+            <Button
+              disabled={isButtonDisabled && completedItems === 1}
+              onClick={handleNext}
+              size="confirm"
+              color="primary">
+              {completedItems === 5 ? '다음' : '확인'}
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

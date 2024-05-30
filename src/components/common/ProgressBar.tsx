@@ -45,7 +45,7 @@ const Container = styled.div`
 
     /* 이미지 추가된 상태 */
     &.with-background {
-      background-image: url('icons/checkbox.svg');
+      background-image: url('../icons/checkbox.svg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;

@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Input from '@/components/common/Input/Input'
 import { passwordChip } from '@/constants/passwordChip'
+import { saveStep3Data } from '@/redux/joinSlice'
 
-function Step3() {
+type Step3Props = {
+  onUpdate: (data: any) => void
+}
+
+const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  })
+  const dispatch = useDispatch()
+
+  const handleChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+  useEffect(() => {
+    dispatch(saveStep2Data({ data: formData }))
+    onUpdate(formData)
+    // onUpdate를 useEffect 의존성 배열에서 제거
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, dispatch])
+
+  useEffect(() => {
+    dispatch(saveStep3Data({ data: formData }))
+    onUpdate(formData)
+    // onUpdate를 useEffect 의존성 배열에서 제거
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, dispatch])
+
   return (
     <div className="step">
       <div className="step-label">
@@ -21,6 +54,8 @@ function Step3() {
         <Input
           id="id"
           type="id"
+          onChange={handleChange}
+          name="username"
           required
           placeholder="도움 메세지"
           message="5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
@@ -34,6 +69,8 @@ function Step3() {
           passwordIcon
           id="password"
           type="password"
+          name="password"
+          onChange={handleChange}
           required
           placeholder="비밀번호 입력"
         />

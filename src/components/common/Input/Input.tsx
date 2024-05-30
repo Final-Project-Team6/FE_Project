@@ -117,6 +117,8 @@ export default function Input({
   message,
   chip,
   width,
+  name, // name 추가
+
   onChange,
 }: InputProps) {
   const [passwordWatch, setPasswordWatch] = useState(false)
@@ -161,6 +163,7 @@ export default function Input({
           onChange={onChangeText}
           value={inputValue}
           required={required}
+          name={name} // name 추가
         />
         <div className="iconContainer">
           {inputValue && clearIcon && (
