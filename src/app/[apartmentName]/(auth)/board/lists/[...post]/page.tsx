@@ -3,6 +3,7 @@ import Emoji from '@/components/emoji/Emoji'
 import NumberBar from '@/components/numberBar/NumberBar'
 import SearchBar from '@/components/searchBar/SearchBar'
 import Tap from '@/components/tap/Tap'
+import ToolTip from '@/components/toolTip/ToolTip'
 import { dummyAnnouncementData } from '@/constants/announcement.dummy'
 import { dropDown } from '@/constants/dropDown'
 import { tapList } from '@/constants/tapList'
@@ -48,6 +49,7 @@ export default function Page({ params }: { params: { post: string } }) {
         count={12}
         active={true}
       />
+      <ToolTip />
     </div>
   )
 }
