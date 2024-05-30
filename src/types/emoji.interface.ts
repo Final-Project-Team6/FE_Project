@@ -3,3 +3,8 @@ export interface EmojiProps {
   count?: number
   active?: boolean
 }
+
+export interface CommentLikeProps {
+  count?: number
+  active?: boolean
+}
