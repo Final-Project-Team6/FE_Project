@@ -2,14 +2,16 @@
 
 import './Header.scss'
 
+import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { fetchApartmentReducer } from '@/redux/apartmentSlice'
-import { AppDispatch } from '@/redux/store'
+import { clearAccessToken } from '@/redux/authSlice'
+import { AppDispatch, RootState } from '@/redux/store'
 import { findApartmentData } from '@/types/apartmentData'
 
 import Chip from './Chip'
@@ -19,6 +21,8 @@ export default function Header({
 }: {
   apartmentData: findApartmentData
 }) {
+  //경로
+  const apartmentName = apartmentData?.data?.name || 'defaultApartment'
   const dispatch: AppDispatch = useDispatch()
   const [isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
@@ -26,6 +30,16 @@ export default function Header({
   const pathname = usePathname()
   const mainPagePattern = /^\/[^\/]+$/
   const isMainPage = mainPagePattern.test(pathname)
+
+  //로그아웃
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken)
+  const router = useRouter()
+
+  const handleLogout = () => {
+    dispatch(clearAccessToken())
+    Cookies.remove('accessToken')
+    router.replace('/')
+  }
 
   useEffect(() => {
     dispatch(fetchApartmentReducer(apartmentData))
@@ -56,24 +70,52 @@ export default function Header({
             <span>{apartmentData?.data.name}</span>
           </Link>
           <div className="chip-wrap">
-            <Link
-              href="/join"
-              className="chip-link caption_02">
-              <Chip
-                color="outline"
-                className="custom-chip">
-                회원가입
-              </Chip>
-            </Link>
-            <Link
-              href="/login"
-              className="chip-link">
-              <Chip
-                color="fill"
-                className="custom-chip caption_01">
-                로그인
-              </Chip>
-            </Link>
+            {!accessToken ? (
+              <>
+                <Link
+                  href={`/${apartmentName}/join`}
+                  className="chip-link caption_02">
+                  <Chip
+                    color="outline"
+                    className="custom-chip">
+                    회원가입
+                  </Chip>
+                </Link>
+                <Link
+                  href={`/${apartmentName}/login`}
+                  className="chip-link">
+                  <Chip
+                    color="fill"
+                    className="custom-chip caption_01">
+                    로그인
+                  </Chip>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href={`/${apartmentName}/mypage`}
+                  className="chip-link">
+                  <Chip
+                    color="outline"
+                    className="custom-chip">
+                    마이페이지
+                  </Chip>
+                </Link>
+                <Link
+                  href="/"
+                  className="chip-link">
+                  <Chip
+                    onClick={handleLogout}
+                    color="fill"
+                    className="custom-chip caption_01">
+                    로그아웃
+                  </Chip>
+                </Link>
+              </>
+
+              // <button onClick={handleLogout}>로그아웃</button>
+            )}
           </div>
         </div>
         <div

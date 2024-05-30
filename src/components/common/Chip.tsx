@@ -6,7 +6,8 @@ import styled from 'styled-components'
 interface ChipProps {
   children: string
   color: string
-  className?: string // className를 선택적으로 받기 위해 `?` 추가
+  className?: string
+  onClick?: () => void // onClick 핸들러를 선택적으로 받기 위해 추가
 }
 
 const ChipContainer = styled.div`
@@ -39,9 +40,11 @@ const ChipContainer = styled.div`
   }
 `
 
-function Chip({ children, color, className }: ChipProps) {
+const Chip: React.FC<ChipProps> = ({ children, color, className, onClick }) => {
   return (
-    <ChipContainer className={`${color} ${className}`}>
+    <ChipContainer
+      className={`${color} ${className}`}
+      onClick={onClick}>
       {children}
     </ChipContainer>
   )

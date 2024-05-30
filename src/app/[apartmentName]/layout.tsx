@@ -9,6 +9,8 @@ import Header from '@/components/common/Header'
 import StyledComponentsRegistry from '@/lib/registry'
 import ReactQueryProviders from '@/providers/provider'
 import ThemeClient from '@/providers/ThemeClient'
+import { setApartmentData } from '@/redux/authSlice'
+import { store } from '@/redux/store'
 import { StoreProvider } from '@/redux/storeProvider'
 import { getData } from '@/serverActions/fetchApartmentData'
 
@@ -29,6 +31,10 @@ export default async function RootLayout({
   params: { apartmentName: string }
 }) {
   const apartmentData = await getData(params.apartmentName)
+
+  // Redux 스토어에 초기 데이터 설정
+  store.dispatch(setApartmentData(apartmentData))
+
   return (
     <html lang="ko">
       <body>
