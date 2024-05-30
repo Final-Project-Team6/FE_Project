@@ -1,15 +1,19 @@
+// src/pages/login.tsx
 'use client'
 
 import './login.scss'
 
+import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import CheckBox from '@/components/checkBox/CheckBox'
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input/Input'
 import { joinPlaceholder, loginPlaceholder } from '@/constants/inputPlaceholder'
+import { setAccessToken } from '@/redux/authSlice'
 import { signInWithCredentials } from '@/serverActions/auth'
 
 function LoginForm() {
@@ -17,6 +21,7 @@ function LoginForm() {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const onChangeId: ChangeEventHandler<HTMLInputElement> = e => {
     setId(e.target.value)
@@ -29,22 +34,18 @@ function LoginForm() {
   const loginHandler: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     try {
-      // 아이디와 비밀번호를 고정값으로 설정하여 signInWithCredentials 함수 호출
       const response = await signInWithCredentials(id, password, '1')
 
-      // 응답 데이터 구조를 기반으로 로그인 성공 여부를 확인
       if (response.ok) {
-        // 'code'가 1인 경우 로그인 성공이라고 가정
+        const accessToken = response.data.data.accessToken
+        const refreshToken = response.data.data.refreshToken
+        dispatch(setAccessToken(accessToken))
+        Cookies.set('accessToken', accessToken, { expires: 1 }) // 액세스 토큰 저장
+        Cookies.set('refreshToken', refreshToken, { expires: 7 }) // 리프레시 토큰 저장 (예: 7일 동안 유지)
         router.replace('/')
       } else {
-        // 사용자에게 표시할 메시지를 조건에 따라 설정
         const errorMessage =
-          response.message === '회원이 존재하지 않습니다.'
-            ? '아이디 또는 비밀번호가 올바르지 않습니다. 다시 확인해주세요'
-            : response.message === '유효하지 않은 인증 입니다.'
-              ? '유효하지 않은 인증입니다. 다시 시도해주세요.'
-              : response.message
-
+          '아이디 또는 비밀번호가 올바르지 않습니다. 다시 확인해주세요'
         setMessage(errorMessage)
       }
     } catch (err) {
@@ -66,7 +67,6 @@ function LoginForm() {
             required
             placeholder={joinPlaceholder.id}
           />
-
           <Input
             id="password"
             type="password"

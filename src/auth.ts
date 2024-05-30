@@ -1,7 +1,12 @@
+import axios from 'axios'
+import Cookies from 'js-cookie'
 import error from 'next/error'
 import NextAuth from 'next-auth'
 import { CredentialsSignin } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
+
+import { clearAccessToken, setAccessToken } from './redux/authSlice'
+import { store } from './redux/store'
 
 export const {
   handlers,
@@ -74,3 +79,27 @@ export const {
     },
   },
 })
+
+export const refreshAccessToken = async () => {
+  try {
+    const refreshToken = Cookies.get('refreshToken')
+    if (!refreshToken) throw new Error('No refresh token available')
+
+    const response = await axios.post('/api/auth/refresh', {
+      token: refreshToken,
+    })
+
+    if (response.data.accessToken) {
+      const newAccessToken = response.data.accessToken
+      store.dispatch(setAccessToken(newAccessToken))
+      Cookies.set('accessToken', newAccessToken, { expires: 1 }) // 쿠키에 새로운 액세스 토큰 저장
+      return newAccessToken
+    } else {
+      throw new Error('Failed to refresh access token')
+    }
+  } catch (error) {
+    console.error('Error refreshing access token:', error)
+    store.dispatch(clearAccessToken())
+    return null
+  }
+}
