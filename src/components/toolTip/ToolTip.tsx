@@ -9,12 +9,21 @@ const ToolTipWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  height: 56px;
+  height: fit-content;
 `
 
 const ToolTipText = styled.div`
   display: flex;
   gap: 8px;
+  align-items: center;
+
+  img {
+    transition: 0.3s;
+  }
+
+  img:hover {
+    transform: rotate(90deg);
+  }
 `
 const ToolTipInfo = styled.div<{ $active: boolean }>`
   background-color: ${({ theme }) => theme.colors.primaryColor};
@@ -40,10 +49,11 @@ export default function ToolTip({
 
   return (
     <ToolTipWrapper>
-      <ToolTipText>
+      <ToolTipText
+        onMouseEnter={() => setActiveInfo(true)}
+        onMouseLeave={() => setActiveInfo(false)}>
         <p>{toolTipText}</p>
         <Image
-          onClick={() => setActiveInfo(prev => !prev)}
           src={activeInfo ? InfoOff : InfoOn}
           width={24}
           height={24}

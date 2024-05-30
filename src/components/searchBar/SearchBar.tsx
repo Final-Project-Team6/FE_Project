@@ -8,7 +8,8 @@ import styled from 'styled-components'
 import SearchBarProps from '@/types/searchBar.interface'
 
 const InputContent = styled.div<{ $dropDown?: string[] }>`
-  width: 628px;
+  width: 452px;
+  height: 52px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -128,7 +129,7 @@ const InputContent = styled.div<{ $dropDown?: string[] }>`
   }
 `
 
-export default function Input({
+export default function SearchBar({
   id,
   placeholder,
   value,
