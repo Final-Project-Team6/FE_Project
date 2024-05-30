@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { findApartmentData } from '@/types/apartmentData'
+import { findApartmentData } from '@/types/apartmentData.interface'
 
 const initialState: findApartmentData = {
   code: 0,

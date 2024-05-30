@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { fetchApartmentReducer } from '@/redux/apartmentSlice'
 import { AppDispatch } from '@/redux/store'
-import { findApartmentData } from '@/types/apartmentData'
+import { findApartmentData } from '@/types/apartmentData.interface'
 
 import Chip from './Chip'
 
