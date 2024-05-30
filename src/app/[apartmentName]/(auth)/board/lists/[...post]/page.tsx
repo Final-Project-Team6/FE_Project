@@ -1,3 +1,4 @@
+import Emoji from '@/components/emoji/Emoji'
 import NumberBar from '@/components/numberBar/NumberBar'
 import SearchBar from '@/components/searchBar/SearchBar'
 import Tap from '@/components/tap/Tap'
@@ -22,6 +23,24 @@ export default function Page({ params }: { params: { post: string } }) {
       <NumberBar
         totalPages={dummyAnnouncementData.totalPages}
         pageNumber={Number(params.post[1])}
+      />
+      <Emoji
+        iconType="like"
+        count={1}
+        active={false}
+      />
+      <Emoji
+        iconType="like"
+        count={2}
+        active={true}
+      />
+      <Emoji
+        iconType="hate"
+        active={false}
+      />
+      <Emoji
+        iconType="hate"
+        active={true}
       />
     </div>
   )
