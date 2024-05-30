@@ -1,3 +1,4 @@
+import CommentLike from '@/components/commentLike/CommentLike'
 import Emoji from '@/components/emoji/Emoji'
 import NumberBar from '@/components/numberBar/NumberBar'
 import SearchBar from '@/components/searchBar/SearchBar'
@@ -40,6 +41,11 @@ export default function Page({ params }: { params: { post: string } }) {
       />
       <Emoji
         iconType="hate"
+        active={true}
+      />
+      <CommentLike />
+      <CommentLike
+        count={12}
         active={true}
       />
     </div>
