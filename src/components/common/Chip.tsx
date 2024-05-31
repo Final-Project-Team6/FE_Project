@@ -6,18 +6,25 @@ import styled from 'styled-components'
 interface ChipProps {
   children: string
   color: string
+  textType?: string
   className?: string
   onClick?: () => void // onClick 핸들러를 선택적으로 받기 위해 추가
 }
 
 const ChipContainer = styled.div`
+  width: fit-content;
   display: flex;
   align-items: center;
-  padding: 4px 16px;
+  padding: 2px 16px;
   border-radius: 40px;
 
-  ${({ theme }) => theme.fonts.caption._02};
   text-align: center;
+  border: 2px solid transparent;
+  ${({ theme }) => theme.fonts.caption._02};
+
+  &.thin {
+    ${({ theme }) => theme.fonts.caption._01};
+  }
 
   &.fill {
     background-color: ${({ theme }) => theme.colors.primaryColor};
@@ -40,10 +47,10 @@ const ChipContainer = styled.div`
   }
 `
 
-const Chip: React.FC<ChipProps> = ({ children, color, className, onClick }) => {
+function Chip({ children, color, className, textType, onClick }: ChipProps) {
   return (
     <ChipContainer
-      className={`${color} ${className}`}
+      className={`${color} ${className} ${textType}`}
       onClick={onClick}>
       {children}
     </ChipContainer>
