@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import Button from '@/components/common/Button'
 import Input from '@/components/common/Input/Input'
 import { passwordChip, seccessChip } from '@/constants/passwordChip'
 import { saveStep3Data } from '@/redux/joinSlice'
@@ -9,9 +10,10 @@ import { RootState } from '@/redux/store'
 
 type Step3Props = {
   onUpdate: (data: any) => void
+  handleNext: () => void
 }
 
-const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
+const Step3: React.FC<Step3Props> = ({ onUpdate, handleNext }) => {
   const fullName = useSelector((state: RootState) => state.step.data.fullName)
   const phone = useSelector((state: RootState) => state.step.data.phone)
 
@@ -22,13 +24,14 @@ const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [usernameStatus, setUsernameStatus] = useState<
     'default' | 'error' | 'success'
-  >('default') // 상태 변수 추가
+  >('default')
   const [usernameError, setUsernameError] = useState<string | null>(null)
   const [usernameMessage, setUsernameMessage] = useState<string>(
     '5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.',
   )
   const [passwordError, setPasswordError] = useState<string | null>(null)
-  const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false) // 비밀번호 일치 여부 상태 추가
+  const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false)
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
 
   const dispatch = useDispatch()
 
@@ -46,7 +49,6 @@ const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
     setConfirmPassword(e.target.value)
   }
 
-  //아이디검사
   const checkUsernameAvailability = async (username: string) => {
     try {
       const response = await axios.get(
@@ -89,12 +91,29 @@ const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
     }
   }
 
+  const isFormValid = useCallback(() => {
+    return (
+      formData.username !== '' &&
+      formData.password !== '' &&
+      confirmPassword !== '' &&
+      usernameStatus === 'success' &&
+      isPasswordMatch
+    )
+  }, [formData, confirmPassword, usernameStatus, isPasswordMatch])
+
   useEffect(() => {
     dispatch(saveStep3Data({ data: formData }))
     onUpdate(formData)
-    // onUpdate를 useEffect 의존성 배열에서 제거
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData, dispatch])
+    setIsButtonDisabled(!isFormValid())
+  }, [
+    formData,
+    confirmPassword,
+    usernameStatus,
+    isPasswordMatch,
+    dispatch,
+
+    isFormValid,
+  ])
 
   return (
     <div className="step">
@@ -156,6 +175,15 @@ const Step3: React.FC<Step3Props> = ({ onUpdate }) => {
           errorMessage={passwordError}
           chip={isPasswordMatch ? seccessChip : undefined}
         />
+      </div>
+      <div className="left">
+        <Button
+          onClick={handleNext}
+          size="confirm"
+          color="primary"
+          disabled={isButtonDisabled}>
+          다음
+        </Button>
       </div>
     </div>
   )

@@ -60,9 +60,9 @@ const Page: React.FC = () => {
   const handleNextClick = () => {
     if (showAlternative) {
       setShowAlternative(false)
-      setCompletedItems(completedItems + 1)
+      setCompletedItems(prev => prev + 1)
     } else if (completedItems < 5) {
-      setCompletedItems(completedItems + 1)
+      setCompletedItems(prev => prev + 1)
     }
   }
 
@@ -104,7 +104,7 @@ const Page: React.FC = () => {
   }
 
   useEffect(() => {
-    if (completedItems === 2) {
+    if (completedItems === 4 || completedItems === 2) {
       setIsButtonDisabled(!isDataValid)
     }
   }, [isDataValid, completedItems])
@@ -174,22 +174,28 @@ const Page: React.FC = () => {
               />
             )}
             {completedItems === 3 && (
-              <Step3 onUpdate={(data: any) => handleDataUpdate(data)} />
+              <Step3
+                onUpdate={(data: any) => handleDataUpdate(data)}
+                handleNext={handleNext}
+              />
             )}
             {completedItems === 4 && (
-              <Step4 onUpdate={(data: any) => handleDataUpdate(data)} />
+              <Step4
+                onUpdate={(data: any) => handleDataUpdate(data)}
+                onValidationUpdate={handleValidationUpdate}
+              />
             )}
             {completedItems === 5 && <Step5 />}
           </div>
         </>
       )}
 
-      <div className={completedItems === 1 ? 'center' : 'left'}>
-        {completedItems < 5 && (
-          <div className={completedItems === 1 ? 'center' : 'left'}>
+      <div className={completedItems === 1 ? 'center' : 'leftbtn'}>
+        {(completedItems === 1 || completedItems === 4) && (
+          <div className={completedItems === 1 ? 'center' : 'leftbtn'}>
             <Button
-              disabled={isButtonDisabled && completedItems === 1}
-              onClick={handleNext}
+              disabled={isButtonDisabled}
+              onClick={completedItems === 1 ? handleNext : handleSubmit}
               size="confirm"
               color="primary">
               {completedItems === 4 ? '확인' : '다음'}

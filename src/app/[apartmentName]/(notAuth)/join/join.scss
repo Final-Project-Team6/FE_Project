@@ -114,5 +114,10 @@
 
 // step1 제외하고 왼쪽으로
 .left {
-  margin-left: 3.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.leftbtn {
+  margin-left: 6.5rem;
 }

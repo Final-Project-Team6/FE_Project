@@ -25,7 +25,11 @@ interface DecodedToken {
   phone: string
 }
 
-const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
+const Step2: React.FC<Step2Props> = ({
+  handleNext,
+  onUpdate,
+  onValidationUpdate,
+}) => {
   const [isMessageSubmitted, setIsMessageSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -44,6 +48,7 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
   const [isPhoneNumberValidated, setIsPhoneNumberValidated] = useState(false)
   const [dialogMessage, setDialogMessage] = useState<string | null>(null)
   const [dialogType, setDialogType] = useState<'confirm' | 'find'>('confirm')
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const dispatch = useDispatch()
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +103,7 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
       number.certificationNumber !== '' &&
       isPhoneNumberValidated
     onValidationUpdate(isValid)
+    setIsButtonDisabled(!isValid)
   }, [
     formData,
     isMessageSubmitted,
@@ -125,7 +131,6 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
     }
   }
 
-  // 인증번호와 토큰값 비교
   const validatePhoneNumber = (token: string, phoneNumber: string): boolean => {
     try {
       const decodedToken = jwtDecode(token) as DecodedToken
@@ -141,22 +146,18 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
     }
   }
 
-  // todo : -1일경우 modal이 find가 되어야함/ 모든 모달창이 confir
   const phoneSubmit = async () => {
     const sanitizedPhone = formData.phone.replace(/-/g, '')
     try {
-      // 먼저 전화번호 중복 체크
       const checkResponse = await axios.get(
         `https://aptner.shop/api/member/check/phone?phone=${sanitizedPhone}`,
       )
-      console.log('Check Response:', checkResponse.data) // Check response 확인
       if (checkResponse.data.code === -1) {
         setDialogMessage('이미 존재하는 휴대전화번호 입니다.')
         setDialogType('find')
         return
       }
 
-      // 중복이 아닌 경우 인증번호 확인
       const response = await axios.post(
         'https://v2dev.aptner.com/user/sms/verification/signup',
         {
@@ -178,7 +179,6 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
     } catch (error) {
       console.error('오류:', error)
       if (axios.isAxiosError(error) && error.response) {
-        console.log('Error Response:', error.response.data)
         if (error.response.status === 400 && error.response.data.code === -1) {
           setDialogMessage('이미 존재하는 휴대전화번호 입니다.')
           setDialogType('find')
@@ -195,10 +195,14 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
     }
   }
 
-  useEffect(() => {}, [dialogType])
-
   const closeDialog = () => {
     setDialogMessage(null)
+  }
+
+  const handleNextClick = () => {
+    dispatch(saveStep2Data({ data: formData }))
+    onUpdate(formData)
+    handleNext()
   }
 
   return (
@@ -332,6 +336,15 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
           {dialogMessage}
         </Dialog>
       )}
+      <div className="left">
+        <Button
+          onClick={handleNextClick}
+          size="confirm"
+          color="primary"
+          disabled={isButtonDisabled}>
+          다음
+        </Button>
+      </div>
     </div>
   )
 }

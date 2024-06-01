@@ -6,9 +6,10 @@ import { saveStep4Data } from '@/redux/joinSlice' // 경로는 실제 경로에 
 
 type Step4Props = {
   onUpdate: (data: any) => void
+  onValidationUpdate: (isValid: boolean) => void // 변경된 부분
 }
 
-const Step4: React.FC<Step4Props> = ({ onUpdate }) => {
+const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
   const [formData, setFormData] = useState({
     nickname: '',
     dong: '',
@@ -20,6 +21,7 @@ const Step4: React.FC<Step4Props> = ({ onUpdate }) => {
   useEffect(() => {
     dispatch(saveStep4Data({ data: formData }))
     onUpdate(formData)
+    checkFormValidity()
     // onUpdate를 useEffect 의존성 배열에서 제거
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData, dispatch])
@@ -32,6 +34,18 @@ const Step4: React.FC<Step4Props> = ({ onUpdate }) => {
       [name]: value,
     }))
   }
+
+  // 모든 필드가 작성되었는지 확인하는 함수
+  const checkFormValidity = () => {
+    const { nickname, dong, ho } = formData
+    const isValid =
+      nickname.length >= 2 && nickname.length <= 16 && !!dong && !!ho
+    onValidationUpdate(isValid)
+  }
+
+  useEffect(() => {
+    checkFormValidity()
+  }, [formData])
 
   return (
     <div className="step">
