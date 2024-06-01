@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image'
 import check from 'public/icons/check.svg'
 import chipCheck from 'public/icons/check_black.svg'
@@ -115,10 +114,11 @@ export default function Input({
   passwordIcon,
   checkIcon,
   message,
+  errorMessage,
   chip,
   width,
   name, // name 추가
-
+  onBlur,
   onChange,
 }: InputProps) {
   const [passwordWatch, setPasswordWatch] = useState(false)
@@ -132,6 +132,16 @@ export default function Input({
     setInputValue('')
   }, [])
 
+  const validatePassword = (password: string) => {
+    const conditions = [
+      /[a-zA-Z]/.test(password),
+      /[0-9]/.test(password),
+      /[!@#$%^&*]/.test(password),
+      password.length >= 8 && password.length <= 16,
+    ]
+    return conditions
+  }
+
   const onChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value
@@ -141,21 +151,22 @@ export default function Input({
 
       setInputValue(formattedValue)
 
-      // 변경된 부분: onChange prop 호출
       if (onChange) {
-        onChange(e) // onChange prop에 이벤트 객체 전달
+        onChange(e)
       }
     },
-    [type, onChange], // onChange 추가
+    [type, onChange],
   )
 
+  const passwordConditions = chip ? validatePassword(inputValue) : []
+
   return (
-    <InputContent
-      className="container"
-      width={width}>
+    <InputContent width={width}>
       <div className="inputContainer">
         <input
-          className={`inputArea${status ? ' ' + status : ''}${timer === '시간 종료' ? ' timeOver' : ''}`}
+          className={`inputArea${status ? ' ' + status : ''}${
+            timer === '시간 종료' ? ' timeOver' : ''
+          }`}
           id={id}
           type={type === 'password' && passwordWatch ? 'text' : type}
           disabled={timer === '시간 종료' || disabled}
@@ -163,7 +174,8 @@ export default function Input({
           onChange={onChangeText}
           value={inputValue}
           required={required}
-          name={name} // name 추가
+          name={name}
+          onBlur={onBlur}
         />
         <div className="iconContainer">
           {inputValue && clearIcon && (
@@ -191,7 +203,7 @@ export default function Input({
               {timer}
             </span>
           )}
-          {checkIcon && (
+          {checkIcon && status === 'success' && (
             <Image
               className="noCursor"
               src={check}
@@ -203,7 +215,11 @@ export default function Input({
           )}
         </div>
       </div>
-      {message && <p className={`message ${status}Message`}>{message}</p>}
+      {errorMessage ? (
+        <p className="errorMessage">{errorMessage}</p>
+      ) : (
+        <p className="message">{message}</p>
+      )}
       {chip && (
         <div className="chipContainer">
           {chip.map((text, idx) => {
@@ -212,13 +228,12 @@ export default function Input({
                 className="chip"
                 key={idx}>
                 {text}
-                {/* ⬇️ idx는 추후 비밀번호의 조건 통과에 대한 값을 넣어주세요. */}
-                {idx % 2 === 0 && (
+                {passwordConditions[idx] && (
                   <Image
                     src={chipCheck}
                     width={16}
                     height={16}
-                    alt="clear input"
+                    alt="check input"
                     priority
                   />
                 )}

@@ -15,4 +15,6 @@ export default interface InputProps {
   width?: number
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   name?: string
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
+  errorMessage?: string | null
 }

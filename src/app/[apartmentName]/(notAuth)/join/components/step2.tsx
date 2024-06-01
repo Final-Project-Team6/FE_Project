@@ -1,9 +1,10 @@
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Button from '@/components/common/Button'
+import Dialog from '@/components/common/Dialog'
 import DotNum from '@/components/common/DotNum'
 import Input from '@/components/common/Input/Input'
 import { joinPlaceholder } from '@/constants/inputPlaceholder'
@@ -41,6 +42,8 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
   const [carriers, setCarriers] = useState<Carrier[]>([])
   const [transactionId, setTransactionId] = useState<string | null>(null)
   const [isPhoneNumberValidated, setIsPhoneNumberValidated] = useState(false)
+  const [dialogMessage, setDialogMessage] = useState<string | null>(null)
+  const [dialogType, setDialogType] = useState<'confirm' | 'find'>('confirm')
   const dispatch = useDispatch()
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,28 +120,43 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
       )
       setTransactionId(response.data.transactionId)
       setIsMessageSubmitted(true)
-      // console.log('Response:', response.data)
-      // console.log(sanitizedPhone)
     } catch (error) {
       console.error('오류:', error)
     }
   }
 
+  // 인증번호와 토큰값 비교
   const validatePhoneNumber = (token: string, phoneNumber: string): boolean => {
-    const decodedToken = jwt_decode(token) as DecodedToken
-    //console.log('Decoded Token:', decodedToken)
-    const tokenPhoneNumber: string = decodedToken.phone
-    // console.log('Token Phone Number:', tokenPhoneNumber)
-    // console.log('Input Phone Number:', phoneNumber)
-    const normalizedTokenPhoneNumber = tokenPhoneNumber.replace(/-/g, '').trim()
-    const normalizedInputPhoneNumber = phoneNumber.replace(/-/g, '').trim()
-    //   console.log('Normalized Token Phone Number:', normalizedTokenPhoneNumber)
-    // console.log('Normalized Input Phone Number:', normalizedInputPhoneNumber)
-    return normalizedTokenPhoneNumber === normalizedInputPhoneNumber
+    try {
+      const decodedToken = jwtDecode(token) as DecodedToken
+      const tokenPhoneNumber: string = decodedToken.phone
+      const normalizedTokenPhoneNumber = tokenPhoneNumber
+        .replace(/-/g, '')
+        .trim()
+      const normalizedInputPhoneNumber = phoneNumber.replace(/-/g, '').trim()
+      return normalizedTokenPhoneNumber === normalizedInputPhoneNumber
+    } catch (error) {
+      console.error('Failed to decode token:', error)
+      return false
+    }
   }
 
+  // todo : -1일경우 modal이 find가 되어야함/ 모든 모달창이 confir
   const phoneSubmit = async () => {
+    const sanitizedPhone = formData.phone.replace(/-/g, '')
     try {
+      // 먼저 전화번호 중복 체크
+      const checkResponse = await axios.get(
+        `https://aptner.shop/api/member/check/phone?phone=${sanitizedPhone}`,
+      )
+      console.log('Check Response:', checkResponse.data) // Check response 확인
+      if (checkResponse.data.code === -1) {
+        setDialogMessage('이미 존재하는 휴대전화번호 입니다.')
+        setDialogType('find')
+        return
+      }
+
+      // 중복이 아닌 경우 인증번호 확인
       const response = await axios.post(
         'https://v2dev.aptner.com/user/sms/verification/signup',
         {
@@ -147,19 +165,40 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
         },
       )
       const token = response.data.token
-      //  console.log('Response:', response.data)
       const isValidPhoneNumber = validatePhoneNumber(token, formData.phone)
       setIsPhoneNumberValidated(isValidPhoneNumber)
 
       if (isValidPhoneNumber) {
-        alert('성공했습니다.')
+        setDialogMessage('인증을 완료하였습니다.')
+        setDialogType('confirm')
       } else {
-        alert('전화번호가 일치하지 않습니다.')
+        setDialogMessage('전화번호가 일치하지 않습니다.')
+        setDialogType('confirm')
       }
     } catch (error) {
-      // console.error('오류:', error)
-      alert('인증 중 오류가 발생했습니다.')
+      console.error('오류:', error)
+      if (axios.isAxiosError(error) && error.response) {
+        console.log('Error Response:', error.response.data)
+        if (error.response.status === 400 && error.response.data.code === -1) {
+          setDialogMessage('이미 존재하는 휴대전화번호 입니다.')
+          setDialogType('find')
+        } else {
+          setDialogMessage(
+            error.response.data.message || '인증 중 오류가 발생했습니다.',
+          )
+          setDialogType('confirm')
+        }
+      } else {
+        setDialogMessage('인증 중 오류가 발생했습니다.')
+        setDialogType('confirm')
+      }
     }
+  }
+
+  useEffect(() => {}, [dialogType])
+
+  const closeDialog = () => {
+    setDialogMessage(null)
   }
 
   return (
@@ -176,8 +215,8 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
         />
       </div>
 
-      <div className="step-label">
-        <span className="body_04">주민번호</span>
+      <div className="step-label center">
+        <span className="body_04 nopadding">주민번호</span>
         <Input
           width={302}
           type="text"
@@ -220,6 +259,9 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
                 key={carrier.code}
                 size="phone"
                 color={number.carrier === carrier.code ? 'primary' : 'default'}
+                className={
+                  number.carrier === carrier.code ? 'selected' : 'selecteds'
+                }
                 onClick={() => handleCarrierSelect(carrier.code)}>
                 {carrier.name}
               </Button>
@@ -276,6 +318,20 @@ const Step2: React.FC<Step2Props> = ({ onUpdate, onValidationUpdate }) => {
           )}
         </div>
       </div>
+      {dialogMessage && dialogType === 'find' && (
+        <Dialog
+          dialog="find"
+          onClose={closeDialog}>
+          {dialogMessage}
+        </Dialog>
+      )}
+      {dialogMessage && dialogType === 'confirm' && (
+        <Dialog
+          dialog="confirm"
+          onClose={closeDialog}>
+          {dialogMessage}
+        </Dialog>
+      )}
     </div>
   )
 }

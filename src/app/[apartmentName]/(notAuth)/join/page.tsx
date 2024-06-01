@@ -6,9 +6,11 @@ import './step.scss'
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Button from '@/components/common/Button'
 import ProgressBar from '@/components/common/ProgressBar'
+import { RootState } from '@/redux/store'
 
 import AlternativeComponent from './components/AlternativeComponent'
 import Step1 from './components/step1'
@@ -21,22 +23,35 @@ const Page: React.FC = () => {
   const [completedItems, setCompletedItems] = useState(1)
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const [showAlternative, setShowAlternative] = useState(false)
-  const [isDataValid, setIsDataValid] = useState(false) // 버튼활성화
+  const [isDataValid, setIsDataValid] = useState(false) // 버튼 활성화
+
+  const apartmentId = useSelector(
+    (state: RootState) => state.apartment.data.apartmentId,
+  ) // 아파트 아이디 가져오기
+
   const [formData, setFormData] = useState({
     termsService: false,
     privateInformationCollection: false,
     snsMarketingInformationReceive: false,
     fullName: '',
-    birthFirst: 0,
-    gender: 0,
-    phone: 0,
+    birthFirst: '',
+    gender: '',
+    phone: '',
     username: '',
     password: '',
     nickname: '',
     dong: '',
     ho: '',
-    apartmentId: 0,
+    apartmentId: apartmentId, // 아파트 아이디 추가
   })
+
+  useEffect(() => {
+    // apartmentId가 변경될 때마다 formData에 업데이트
+    setFormData(prevData => ({
+      ...prevData,
+      apartmentId: apartmentId,
+    }))
+  }, [apartmentId])
 
   const handleLink = () => {
     setShowAlternative(true)
@@ -67,9 +82,14 @@ const Page: React.FC = () => {
   }
 
   const handleSubmit = async () => {
+    // 선택사항 필드를 제외하고 필수값만 서버로 전송
+    const submitData = Object.fromEntries(
+      Object.entries(formData).filter(([value]) => value),
+    )
+
     try {
-      await axios.post('https://aptner.shop/api/member/join', formData)
-      // console.log('회원가입이 성공적으로 처리되었습니다.')
+      await axios.post('https://aptner.shop/api/member/join', submitData)
+      console.log('회원가입이 성공적으로 처리되었습니다.')
     } catch (error) {
       console.error('회원가입 중 오류가 발생했습니다:', error)
     }
@@ -111,10 +131,9 @@ const Page: React.FC = () => {
         <div className="linkBox">
           <p className="step-number body_03">
             휴대폰 본인인증이 불가능한 경우, 휴대폰 소유여부만 확인하고
-            회원가입을 할 수 있습니다. <br /> 단, 투표 시 모바일 전자투표 참여가
-            어려울 수 있습니다.
+            회원가입을 할 수 있습니다. <br />
+            단, 투표 시 모바일 전자투표 참여가 어려울 수 있습니다.
           </p>
-
           <div className="link">
             <Link
               href=""
@@ -127,7 +146,10 @@ const Page: React.FC = () => {
 
       {showAlternative ? (
         <div className="join-wrap-step">
-          <AlternativeComponent />
+          <AlternativeComponent
+            onUpdate={handleDataUpdate}
+            onValidationUpdate={handleValidationUpdate}
+          />
         </div>
       ) : (
         <>
@@ -170,7 +192,7 @@ const Page: React.FC = () => {
               onClick={handleNext}
               size="confirm"
               color="primary">
-              {completedItems === 5 ? '다음' : '확인'}
+              {completedItems === 4 ? '확인' : '다음'}
             </Button>
           </div>
         )}
