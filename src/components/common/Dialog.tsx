@@ -16,10 +16,12 @@ type Dialog = 'confirm' | 'find'
 interface DialogProps {
   children: ReactNode
   dialog: Dialog
+  onClose: () => void
 }
 
 interface DialogButtonProps {
   dialog: Dialog
+  onClose: () => void
 }
 
 const Background = styled.div`
@@ -37,6 +39,7 @@ const StyledModal = styled.div`
   height: 358px;
   background: ${({ theme }) => theme.colors.white};
   display: flex;
+  gap: 32px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -48,6 +51,11 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  p {
+    font-size: ${({ theme }) => theme.fonts.body._03};
+    ${({ theme }) => theme.colors.gray._10};
+  }
 `
 
 const ButtonBlock = styled.div`
@@ -83,35 +91,51 @@ const CloseButton = styled.button`
   }
 `
 
-function DialogButton({ dialog }: DialogButtonProps) {
+function DialogButton({ dialog, onClose }: DialogButtonProps) {
   switch (dialog) {
     case 'find':
       return (
         <ButtonBlock>
-          <Button size="message">확인</Button>
           <Button
             size="message"
-            color="primary">
+            onClick={onClose}>
+            확인
+          </Button>
+          <Button
+            size="message"
+            color="primary"
+            onClick={onClose}>
             아이디/비밀번호 찾기
           </Button>
         </ButtonBlock>
       )
     case 'confirm':
-      return <Button size="message">확인</Button>
+      return (
+        <Button
+          color="primary"
+          size="message"
+          onClick={onClose}>
+          확인
+        </Button>
+      )
   }
 }
 
-export default function Dialog({ children, dialog }: DialogProps) {
+export default function Dialog({ children, dialog, onClose }: DialogProps) {
   return (
     <>
-      <Background />
+      <Background onClick={onClose} />
       <StyledModal>
-        <CloseButton>
+        <CloseButton onClick={onClose}>
           <span />
           <span />
         </CloseButton>
-        <h2>{children}</h2>
-        <DialogButton dialog={dialog} />
+        <p>{children}</p>
+
+        <DialogButton
+          dialog={dialog}
+          onClose={onClose}
+        />
       </StyledModal>
     </>
   )
