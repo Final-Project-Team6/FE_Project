@@ -147,6 +147,7 @@ const Page: React.FC = () => {
       {showAlternative ? (
         <div className="join-wrap-step">
           <AlternativeComponent
+            handleNext={handleNext}
             onUpdate={handleDataUpdate}
             onValidationUpdate={handleValidationUpdate}
           />

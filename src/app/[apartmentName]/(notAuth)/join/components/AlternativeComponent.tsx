@@ -16,10 +16,13 @@ interface DecodedToken {
 interface AlternativeComponentProps {
   onUpdate: (data: any) => void
   onValidationUpdate: (isValid: boolean) => void
+  handleNext: () => void
 }
 
 const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
   onUpdate,
+  onValidationUpdate,
+  handleNext,
 }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -28,9 +31,11 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
   const [transactionId, setTransactionId] = useState<string | null>(null)
   const [certificationNumber, setCertificationNumber] = useState('')
   const [isMessageSubmitted, setIsMessageSubmitted] = useState(false)
+  const [isCertificationValid, setIsCertificationValid] = useState(false)
 
   const [dialogMessage, setDialogMessage] = useState<string | null>(null)
   const [dialogType, setDialogType] = useState<'confirm' | 'find'>('confirm')
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   const dispatch = useDispatch()
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +51,26 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
   useEffect(() => {
     dispatch(saveStep2Data({ data: formData }))
     onUpdate(formData)
+    checkFormValidity()
   }, [formData, dispatch, onUpdate])
 
   const isFormValid = () => {
     const { fullName, phone } = formData
     return !!(fullName && phone)
   }
+
+  const checkFormValidity = () => {
+    const isValid =
+      isMessageSubmitted &&
+      isCertificationValid &&
+      certificationNumber.length > 0
+    onValidationUpdate(isValid)
+    setIsButtonDisabled(!isValid)
+  }
+
+  useEffect(() => {
+    checkFormValidity()
+  }, [formData, certificationNumber, isMessageSubmitted, isCertificationValid])
 
   const messageSubmit = async () => {
     const sanitizedPhone = formData.phone.replace(/-/g, '')
@@ -65,6 +84,7 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
       )
       setTransactionId(response.data.transactionId)
       setIsMessageSubmitted(true)
+      setIsCertificationValid(false) // 인증번호가 요청되면 인증이 완료되지 않은 상태로 설정
     } catch (error) {
       console.error('오류:', error)
     }
@@ -113,12 +133,15 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
       if (isValidPhoneNumber) {
         setDialogMessage('인증을 완료하였습니다.')
         setDialogType('confirm')
+        setIsCertificationValid(true)
       } else {
         setDialogMessage('전화번호가 일치하지 않습니다.')
         setDialogType('confirm')
+        setIsCertificationValid(false)
       }
     } catch (error) {
       console.error('오류:', error)
+      setIsCertificationValid(false)
       if (axios.isAxiosError(error) && error.response) {
         if (error.response.status === 400 && error.response.data.code === -1) {
           setDialogMessage('이미 존재하는 휴대전화번호 입니다.')
@@ -138,6 +161,10 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
 
   const closeDialog = () => {
     setDialogMessage(null)
+  }
+
+  const handleNextClick = () => {
+    handleNext()
   }
 
   return (
@@ -205,6 +232,15 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
           {dialogMessage}
         </Dialog>
       )}
+      <div className="left">
+        <Button
+          onClick={handleNextClick}
+          size="confirm"
+          color="primary"
+          disabled={isButtonDisabled}>
+          다음
+        </Button>
+      </div>
     </div>
   )
 }
