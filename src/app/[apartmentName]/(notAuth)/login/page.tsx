@@ -7,13 +7,14 @@ import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import CheckBox from '@/components/checkBox/CheckBox'
 import Button from '@/components/common/Button'
 import Input from '@/components/common/Input/Input'
 import { joinPlaceholder, loginPlaceholder } from '@/constants/inputPlaceholder'
 import { setAccessToken } from '@/redux/authSlice'
+import { RootState } from '@/redux/store'
 import { signInWithCredentials } from '@/serverActions/auth'
 
 function LoginForm() {
@@ -22,6 +23,9 @@ function LoginForm() {
   const [message, setMessage] = useState('')
   const router = useRouter()
   const dispatch = useDispatch()
+  const apartmentId = useSelector(
+    (state: RootState) => state.apartment.data.apartmentId,
+  )
 
   const onChangeId: ChangeEventHandler<HTMLInputElement> = e => {
     setId(e.target.value)
@@ -34,7 +38,11 @@ function LoginForm() {
   const loginHandler: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     try {
-      const response = await signInWithCredentials(id, password, '1')
+      const response = await signInWithCredentials(
+        id,
+        password,
+        apartmentId.toString(),
+      )
 
       if (response.ok) {
         const accessToken = response.data.data.accessToken
