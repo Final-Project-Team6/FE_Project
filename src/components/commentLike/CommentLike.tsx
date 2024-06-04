@@ -14,7 +14,7 @@ const CommentLikeWrapper = styled.div`
   ${({ theme }) => theme.fonts.body._05}
   color: ${({ theme }) => theme.colors.gray._07};
   cursor: pointer;
-  + .active {
+  &.active {
     color: ${({ theme }) => theme.colors.primaryColor};
   }
 `

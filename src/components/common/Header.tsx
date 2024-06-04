@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchApartmentReducer } from '@/redux/apartmentSlice'
 import { clearAccessToken } from '@/redux/authSlice'
 import { AppDispatch, RootState } from '@/redux/store'
-import { findApartmentData } from '@/types/apartmentData'
+import { findApartmentData } from '@/types/apartmentData.interface'
 
 import Chip from './Chip'
 

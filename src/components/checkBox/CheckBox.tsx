@@ -8,15 +8,17 @@ interface CheckBoxProps {
   checked?: boolean
   onChange?: (_: React.ChangeEvent<HTMLInputElement>) => void
   name?: string
+  $baseColor?: boolean
 }
 
 // 스타일 정의
-const CheckContent = styled.div<{ $big?: boolean }>`
+const CheckContent = styled.div<{ $big?: boolean; $baseColor?: boolean }>`
   display: flex;
   align-items: center;
-  gap: 4px;
-  ${({ theme }) => theme.fonts.body._05}
-  color: ${({ theme }) => theme.colors.gray._07};
+  gap: 9px;
+  ${({ theme }) => theme.fonts.menuTitle._02}
+  color: ${({ theme, $baseColor }) =>
+    $baseColor ? theme.colors.gray._10 : theme.colors.gray._07};
 
   ${({ $big }) =>
     $big &&
@@ -35,7 +37,9 @@ const CheckContent = styled.div<{ $big?: boolean }>`
     cursor: pointer;
     width: 20px;
     height: 20px;
-    border: 2px solid ${({ theme }) => theme.colors.gray._07};
+    border: 2px solid
+      ${({ theme, $baseColor }) =>
+        $baseColor ? theme.colors.gray._10 : theme.colors.gray._07};
 
     ${({ $big }) =>
       $big &&
@@ -46,7 +50,7 @@ const CheckContent = styled.div<{ $big?: boolean }>`
   }
 
   .input:checked + .label-box {
-    background-image: url('icons/checkbox.svg');
+    background-image: url('/icons/checkbox.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -65,9 +69,12 @@ export default function CheckBox({
   onChange,
   $big = false,
   name,
+  $baseColor = false,
 }: CheckBoxProps) {
   return (
-    <CheckContent $big={$big}>
+    <CheckContent
+      $big={$big}
+      $baseColor={$baseColor}>
       <input
         type="checkbox"
         name={name}
@@ -78,7 +85,7 @@ export default function CheckBox({
       />
       <label
         htmlFor={name}
-        className="label-box"
+        className={'label-box'}
       />
       <span className={checked ? 'checked' : ''}>{children}</span>
     </CheckContent>

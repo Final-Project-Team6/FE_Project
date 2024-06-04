@@ -7,13 +7,13 @@ import { styled } from 'styled-components'
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: 'phone' | 'message' | 'confirm'
   color?: 'white' | 'primary' | 'default'
-  text?: 'thin'
+  $text?: 'thin'
 }
 
 const StyledButton = styled.button<ButtonProps>`
   border: 2px solid ${({ theme }) => theme.colors.primaryColor};
   border-radius: 8px;
-  font-size: ${({ theme }) => theme.fonts.subTitle._02};
+  ${({ theme }) => theme.fonts.subTitle._02};
   cursor: pointer;
   &.phone {
     min-width: 110px;
@@ -64,7 +64,7 @@ export default function Button({ ...props }: ButtonProps) {
   return (
     <StyledButton
       {...props}
-      className={`${props.size} ${props.color} ${props.text}`}
+      className={`${props.size} ${props.color} ${props.$text}`}
     />
   )
 }

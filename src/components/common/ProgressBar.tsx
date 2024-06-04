@@ -26,7 +26,8 @@ const Container = styled.div`
 
   .number {
     display: flex;
-    align-items: flex-end;
+    text-align: center;
+    align-items: center;
     justify-content: center;
 
     width: 28px;
@@ -45,7 +46,7 @@ const Container = styled.div`
 
     /* 이미지 추가된 상태 */
     &.with-background {
-      background-image: url('icons/checkbox.svg');
+      background-image: url('/icons/checkbox.svg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
