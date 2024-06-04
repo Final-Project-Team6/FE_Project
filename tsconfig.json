@@ -15,12 +15,17 @@
     "incremental": true,
     "plugins": [
       { "name": "typescript-plugin-css-modules" },
-      { "name": "next" }
+      { "name": "next" },
+      {
+        "$": "jquery",
+        "jQuery": "jquery"
+      }
     ],
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["jquery"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
