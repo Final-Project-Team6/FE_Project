@@ -1,0 +1,90 @@
+@import '@/styles/mixins.module';
+@import '@/styles/variables.module';
+
+.writeWrapper {
+  width: 892px;
+  margin: auto;
+}
+
+.writeTitle {
+  padding-bottom: 80px;
+}
+
+.writeInfoWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.classifyWrapper {
+  display: flex;
+  align-items: center;
+  padding: 40px 16px;
+  border-bottom: 1px solid $gray04;
+
+  p {
+    width: 164px;
+    color: $gray10;
+  }
+}
+
+.writeTitleWrapper {
+  display: flex;
+  align-items: center;
+  padding: 40px 16px;
+  border-bottom: 1px solid $gray04;
+
+  p {
+    width: 164px;
+    color: $gray10;
+  }
+}
+
+.cautionWrapper {
+  margin-right: 32px;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cautionTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cautionDesc {
+  color: $gray08;
+}
+
+.viewWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.viewPolicy {
+  color: $brandColor;
+}
+
+.secretSettingWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 16px;
+  gap: 16px;
+}
+
+.writeChipWrapper {
+  width: 664px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  div {
+    cursor: pointer;
+  }
+}
+
+.writeConfirmWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}

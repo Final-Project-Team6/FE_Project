@@ -15,7 +15,7 @@ const EmojiWrapper = styled.div`
   gap: 8px;
   ${({ theme }) => theme.fonts.caption._02}
   color: ${({ theme }) => theme.colors.primaryColor};
-  border: 3px solid ${({ theme }) => theme.colors.gray._09};
+  border: 1px solid ${({ theme }) => theme.colors.gray._09};
   border-radius: 8px;
   cursor: pointer;
   .hate {
