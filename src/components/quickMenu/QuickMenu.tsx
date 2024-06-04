@@ -4,12 +4,12 @@ import Link from 'next/link'
 import NextIcon from 'public/icons/nextGray08.svg'
 
 import styles from '@/components/quickMenu/quickMenu.module.scss'
-import QuickMenuProps from '@/types/quickMenu.interface'
+import QuickMenuPropsType from '@/types/quickMenu.interface'
 
 export default function QuickMenu({
   quickMenu,
 }: {
-  quickMenu: QuickMenuProps[]
+  quickMenu: QuickMenuPropsType[]
 }) {
   const topButtonHandler = () => {
     window.scrollTo({
@@ -19,7 +19,7 @@ export default function QuickMenu({
   }
   return (
     <div className={styles.quickWrapper}>
-      {quickMenu.map((menu: QuickMenuProps) => (
+      {quickMenu.map((menu: QuickMenuPropsType) => (
         <Link
           key={menu.text}
           href={menu.link}>

@@ -4,7 +4,7 @@ import likeOff from 'public/icons/likeOff.svg'
 import likeOn from 'public/icons/likeOn.svg'
 import styled from 'styled-components'
 
-import { EmojiProps } from '@/types/emoji.interface'
+import { EmojiType } from '@/types/emoji.interface'
 
 const EmojiWrapper = styled.div`
   width: 120px;
@@ -23,7 +23,7 @@ const EmojiWrapper = styled.div`
   }
 `
 
-export default function Emoji({ iconType, count, active }: EmojiProps) {
+export default function Emoji({ iconType, count, active }: EmojiType) {
   return (
     <EmojiWrapper>
       <Image

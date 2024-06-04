@@ -1,10 +1,10 @@
-export interface EmojiProps {
+export interface EmojiType {
   iconType: string
   count?: number
   active?: boolean
 }
 
-export interface CommentLikeProps {
+export interface CommentLikeType {
   count?: number
   active?: boolean
 }

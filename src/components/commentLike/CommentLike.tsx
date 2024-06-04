@@ -4,7 +4,7 @@ import likeOff from 'public/icons/likeOff.svg'
 import likeOn from 'public/icons/likeOn.svg'
 import styled from 'styled-components'
 
-import { CommentLikeProps } from '@/types/emoji.interface'
+import { CommentLikeType } from '@/types/emoji.interface'
 
 const CommentLikeWrapper = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const CommentLikeWrapper = styled.div`
 export default function CommentLike({
   count,
   active = false,
-}: CommentLikeProps) {
+}: CommentLikeType) {
   return (
     <CommentLikeWrapper className={active ? 'active' : ''}>
       <Image

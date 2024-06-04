@@ -1,48 +1,48 @@
 // 카테고리
-export interface announcementCategory {
+export interface announcementCategoryType {
   announcementCategoryId: number
   name: string
   type: string
 }
-export interface communicationCategory {
+export interface communicationCategoryType {
   communicationCategoryId: number
   name: string
   type: string
 }
-export interface complaintCategoryRespDTO {
+export interface complaintCategoryRespDTOType {
   complaintCategory: number
   name: string
   type: string
 }
-export interface informationCategory {
+export interface informationCategoryType {
   informationCategoryId: number
   name: string
   type: string
 }
 
 // 작성자
-export interface writer {
+export interface writerType {
   memberId: number
   nickname: string
 }
 
 // 댓글
-export interface postComment {
+export interface postCommentType {
   commentId: number
   contents: string
 }
 
 // 게시글
-export interface post {
+export interface postType {
   announcementId?: number
-  announcementCategory?: announcementCategory
+  announcementCategory?: announcementCategoryType
   communicationId?: number
-  communicationCategory?: communicationCategory
+  communicationCategory?: communicationCategoryType
   complaintId?: number
-  complaintCategoryRespDTO?: complaintCategoryRespDTO
+  complaintCategoryRespDTO?: complaintCategoryRespDTOType
   informationId?: number
-  informationCategory?: informationCategory
-  writer: writer
+  informationCategory?: informationCategoryType
+  writer: writerType
   title: string
   createdAt: string
   view: number
@@ -54,8 +54,8 @@ export interface post {
 }
 
 // 게시글 리스트
-export interface postList {
-  content: post[]
+export interface postListType {
+  content: postType[]
   totalPages: number
   totalElements: number
   pageNumber: number
