@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import check from 'public/icons/check.svg'
 import chipCheck from 'public/icons/check_black.svg'
