@@ -5,32 +5,34 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import styles from '@/components/announcement/Announcement.module.scss'
 import Skeleton from '@/components/common/skeleton/Skeleton'
-import styles from '@/components/notice/Notice.module.scss'
-import useFetchNoticeList from '@/hooks/useFetchPostList'
+import useFetchAnnouncementList from '@/hooks/useFetchPostList'
 import { RootState } from '@/redux/store'
 import { postType } from '@/types/post.interface'
 import { formatDate } from '@/utils/formatDate'
 
-export default function Notice({
-  noticeTitle,
-  noticeOptions,
-  noticeType,
+export default function Announcement({
+  announcementTitle,
+  announcementOptions,
+  announcementType,
+  apartmentEngName,
 }: {
-  noticeTitle: string
-  noticeOptions: string[]
-  noticeType: string
+  announcementTitle: string
+  announcementOptions: string[]
+  announcementType: string
+  apartmentEngName: string
 }) {
   const apartmentData = useSelector((state: RootState) => state.apartment)
 
-  const [optionState, setOptionState] = useState(noticeOptions[0])
+  const [optionState, setOptionState] = useState(announcementOptions[0])
 
   const handleTypeChange = (newType: string) => {
     setOptionState(newType)
   }
 
-  const { isLoading, error, data } = useFetchNoticeList(
-    noticeTitle,
+  const { isLoading, error, data } = useFetchAnnouncementList(
+    announcementTitle,
     apartmentData.data.apartmentId,
     optionState,
     'MANAGEMENT_OFFICE',
@@ -50,15 +52,15 @@ export default function Notice({
     )
   }
   if (error) {
-    return <h1 className={styles.noticeText}>{error.message}</h1>
+    return <h1 className={styles.announcementText}>{error.message}</h1>
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.containerTop}>
-        <h1 className={styles.noticeText}>{noticeTitle}</h1>
+        <h1 className={styles.announcementText}>{announcementTitle}</h1>
         <div className={styles.buttons}>
-          {noticeOptions.map(option => (
+          {announcementOptions.map(option => (
             <button
               key={option}
               className={`${styles.button} ${optionState === option && styles.activeButton}`}
@@ -68,29 +70,31 @@ export default function Notice({
           ))}
         </div>
       </div>
-      <div className={styles.notices}>
+      <div className={styles.announcements}>
         {data &&
           data.content &&
-          data.content.map((notice: postType, idx: number) => {
+          data.content.map((announcement: postType, idx: number) => {
             return (
-              <div key={notice.complaintId}>
-                <Link href={`/${notice.complaintId || notice.announcementId}`}>
-                  <div className={styles.noticeBox}>
-                    <span>{notice.title}</span>
-                    <p>{formatDate(notice.createdAt)}</p>
+              <div key={announcement.title}>
+                <Link
+                  href={`${apartmentEngName}/board/lists/${announcement.announcementId ? 'announcement' : 'complaint'}/detail/${announcement.announcementId || announcement.communicationId}`}>
+                  <div className={styles.announcementBox}>
+                    <span>{announcement.title}</span>
+                    <p>{formatDate(announcement.createdAt)}</p>
                   </div>
                   {data.content.length != ++idx && (
-                    <div className={styles.noticeBoxLine} />
+                    <div className={styles.announcementBoxLine} />
                   )}
                 </Link>
               </div>
             )
           })}
       </div>
-      <Link href={'/'}>
+      <Link
+        href={`${apartmentEngName}/board/lists/${announcementTitle === '공지사항' ? 'announcement' : 'complaint'}/1`}>
         <div className={`${styles.containerBottom} body_03`}>
           <p>
-            {noticeType} {'>'}
+            {announcementType} {'>'}
           </p>
         </div>
       </Link>
