@@ -3,12 +3,12 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const fetchPostList = async (
-  noticeTitle: string,
+  announcementTitle: string,
   apartmentId: number,
   orderType: string,
 ) => {
   let response
-  if (noticeTitle === '공지사항') {
+  if (announcementTitle === '공지사항') {
     response = await axios.get(
       `https://aptner.shop/api/post/announcement/search/${apartmentId}?pageNumber=1&pageSize=5${orderType === '중요글' ? '&important=true' : orderType === '최신순' ? '&orderType=DATE' : ''}&orderBy=DESC`,
     )
@@ -20,8 +20,8 @@ const fetchPostList = async (
   return response.data
 }
 
-const useFetchNoticeList = (
-  noticeTitle: string,
+const useFetchAnnouncementList = (
+  announcementTitle: string,
   apartmentId: number,
   orderType: string,
   complaintType: string,
@@ -37,11 +37,11 @@ const useFetchNoticeList = (
     }
   }, [apartmentId])
   return useQuery({
-    queryKey: [noticeTitle, apartmentId, orderType],
-    queryFn: () => fetchPostList(noticeTitle, apartmentId, orderType),
+    queryKey: [announcementTitle, apartmentId, orderType],
+    queryFn: () => fetchPostList(announcementTitle, apartmentId, orderType),
     enabled: enabled,
     ...options,
   })
 }
 
-export default useFetchNoticeList
+export default useFetchAnnouncementList

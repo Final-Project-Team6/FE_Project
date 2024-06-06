@@ -18,7 +18,7 @@ const useFetchData = (
   complaintType: string,
 ) => {
   return useQuery({
-    queryKey: ['noticeList', apartmentId, orderType, complaintType],
+    queryKey: ['announcementList', apartmentId, orderType, complaintType],
     queryFn: () => fetchData(apartmentId, orderType, complaintType),
   })
 }
