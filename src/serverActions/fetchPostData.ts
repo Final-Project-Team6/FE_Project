@@ -307,7 +307,7 @@ export async function fetchPostListData({
 
   // 정의된 값만을 사용하여 쿼리 스트링 생성
   const queryString = Object.entries(queryParams)
-    .filter(([_, value]) => value !== undefined || _)
+    .filter(([_, value]) => value !== undefined && _)
     .map(
       ([key, value]) =>
         `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
