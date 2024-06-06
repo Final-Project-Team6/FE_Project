@@ -8,11 +8,14 @@ import vote from 'public/icons/vote.svg'
 import write from 'public/icons/write.svg'
 
 import HelpContainer from '@/app/[apartmentName]/components/HelpContainer'
-import Notice from '@/components/notice/Notice'
+import Announcement from '@/components/announcement/Announcement'
 import QuickMenu from '@/components/quickMenu/QuickMenu'
-import { noticeOptions, noticeType } from '@/constants/mainPageNotice'
+import {
+  announcementOptions,
+  announcementType,
+} from '@/constants/mainPageAnnouncement'
 import { testMenus } from '@/constants/quickMenu.dummy'
-import { getData } from '@/serverActions/fetchApartmentData'
+import { fetchApartmentDataUseName } from '@/serverActions/fetchApartmentData'
 import styles from '@/styles/mainPage.module.scss'
 
 export async function generateMetadata({
@@ -20,7 +23,7 @@ export async function generateMetadata({
 }: {
   params: { apartmentName: string }
 }) {
-  const apartmentData = await getData(params.apartmentName)
+  const apartmentData = await fetchApartmentDataUseName(params.apartmentName)
 
   return {
     title: `${apartmentData?.data.name} | Main`,
@@ -33,7 +36,8 @@ export default async function App({
 }: {
   params: { apartmentName: string }
 }) {
-  const apartmentData = await getData(params.apartmentName)
+  const apartmentData = await fetchApartmentDataUseName(params.apartmentName)
+
   return (
     <>
       <section
@@ -128,16 +132,18 @@ export default async function App({
               <span className={`${styles.serviceContainerText} title_01`}>
                 아파트 이야기
               </span>
-              <div className={styles.noticeContainer}>
-                <Notice
-                  noticeTitle={'공지사항'}
-                  noticeOptions={noticeOptions[0].options}
-                  noticeType={noticeType.noticeAll}
+              <div className={styles.announcementContainer}>
+                <Announcement
+                  announcementTitle={'공지사항'}
+                  announcementOptions={announcementOptions[0].options}
+                  announcementType={announcementType.announcementAll}
+                  apartmentEngName={apartmentData.data.engName}
                 />
-                <Notice
-                  noticeTitle={'입주민 소통공간'}
-                  noticeOptions={noticeOptions[1].options}
-                  noticeType={noticeType.community}
+                <Announcement
+                  announcementTitle={'입주민 소통공간'}
+                  announcementOptions={announcementOptions[1].options}
+                  announcementType={announcementType.community}
+                  apartmentEngName={apartmentData.data.engName}
                 />
               </div>
             </div>

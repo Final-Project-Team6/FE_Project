@@ -13,7 +13,7 @@ import ThemeClient from '@/providers/ThemeClient'
 import { setApartmentData } from '@/redux/authSlice'
 import { store } from '@/redux/store'
 import { StoreProvider } from '@/redux/storeProvider'
-import { getData } from '@/serverActions/fetchApartmentData'
+import { fetchApartmentDataUseName } from '@/serverActions/fetchApartmentData'
 
 // 기본 Metadata
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default async function RootLayout({
   children: ReactNode
   params: { apartmentName: string }
 }) {
-  const apartmentData = await getData(params.apartmentName)
+  const apartmentData = await fetchApartmentDataUseName(params.apartmentName)
 
   // Redux 스토어에 초기 데이터 설정
   store.dispatch(setApartmentData(apartmentData))
