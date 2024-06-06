@@ -21,7 +21,7 @@ const ToolTipText = styled.div`
     transition: 0.3s;
   }
 
-  img:hover {
+  &:hover > img {
     transform: rotate(90deg);
   }
 `

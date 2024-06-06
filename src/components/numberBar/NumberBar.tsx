@@ -6,7 +6,9 @@ import nextIcon from 'public/icons/arrowDownGray10.svg'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { PaginationProps } from '@/types/pagination.interface'
+import { PostParamKeys } from '@/constants/params/postUrl.params'
+import { fetchPostListData } from '@/serverActions/fetchPostData'
+import { postListType } from '@/types/post.interface'
 
 const NumberBarWrapper = styled.ul`
   display: flex;
@@ -39,63 +41,82 @@ const NumberBarWrapper = styled.ul`
   }
 `
 
-export default function NumberBar({ totalPages, pageNumber }: PaginationProps) {
+export default function NumberBar({
+  params,
+}: {
+  params: { post: PostParamKeys; listNum: string }
+}) {
+  const [postResponse, setPostResponse] = useState<postListType>()
   const calculateStart = (pageNumber: number) => {
     return Math.floor((pageNumber - 1) / 5) * 5 + 1
   }
+  const [start, setStart] = useState(calculateStart(Number(params.listNum)))
 
-  const [start, setStart] = useState(calculateStart(pageNumber))
-  const noPrev = pageNumber === 1
-  const noNext = pageNumber === totalPages
+  const noPrev = Number(params.listNum) === 1
 
   useEffect(() => {
-    setStart(calculateStart(pageNumber))
-  }, [pageNumber, totalPages])
-
+    const fetchPostList = async () => {
+      const response = await fetchPostListData({
+        postType: params.post,
+        apartmentId: 1,
+        pageNumber: Number(params.listNum),
+        pageSize: 10,
+        orderBy: 'DESC',
+      })
+      setPostResponse(response)
+      setStart(calculateStart(Number(params.listNum)))
+    }
+    fetchPostList()
+  }, [params.post])
   return (
-    <NumberBarWrapper>
-      <li className={`${noPrev ? 'invisible' : ''}`}>
-        <Link
-          className="moveContainer"
-          href={`${pageNumber - 1}`}>
-          <Image
-            className="leftIcon"
-            src={nextIcon}
-            width={24}
-            height={24}
-            alt="이전"
-            priority
-          />
-          이전
-        </Link>
-      </li>
-      {[...Array(5)].map(
-        (_, i) =>
-          start + i <= totalPages && (
-            <li key={i}>
-              <Link
-                className={`${pageNumber === start + i ? 'active' : ''}`}
-                href={`${start + i}`}>
-                {start + i}
-              </Link>
-            </li>
-          ),
+    <>
+      {postResponse !== undefined && (
+        <NumberBarWrapper>
+          <li className={`${noPrev ? 'invisible' : ''}`}>
+            <Link
+              className="moveContainer"
+              href={`${postResponse.pageNumber - 1}`}>
+              <Image
+                className="leftIcon"
+                src={nextIcon}
+                width={24}
+                height={24}
+                alt="이전"
+                priority
+              />
+              이전
+            </Link>
+          </li>
+          {[...Array(5)].map(
+            (_, i) =>
+              start + i <= postResponse.totalPages && (
+                <li key={i}>
+                  <Link
+                    className={`${postResponse.pageNumber === start + i ? 'active' : ''}`}
+                    href={`${start + i}`}>
+                    {start + i}
+                  </Link>
+                </li>
+              ),
+          )}
+          <li
+            className={`${Number(params.listNum) === postResponse.totalPages ? 'invisible' : ''}`}>
+            <Link
+              className="moveContainer"
+              href={`${postResponse.pageNumber + 1}`}>
+              다음
+              <Image
+                className="rightIcon"
+                src={nextIcon}
+                width={24}
+                height={24}
+                alt="다음"
+                priority
+              />
+            </Link>
+          </li>
+        </NumberBarWrapper>
       )}
-      <li className={`${noNext ? 'invisible' : ''}`}>
-        <Link
-          className="moveContainer"
-          href={`${pageNumber + 1}`}>
-          다음
-          <Image
-            className="rightIcon"
-            src={nextIcon}
-            width={24}
-            height={24}
-            alt="다음"
-            priority
-          />
-        </Link>
-      </li>
-    </NumberBarWrapper>
+    </>
   )
 }
