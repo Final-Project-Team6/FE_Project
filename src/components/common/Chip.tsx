@@ -13,6 +13,7 @@ interface ChipProps {
 
 const ChipContainer = styled.div`
   width: fit-content;
+  height: fit-content;
   display: flex;
   align-items: center;
   padding: 2px 16px;

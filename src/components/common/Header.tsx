@@ -66,6 +66,7 @@ export default function Header({
               src={apartmentData?.data.icon}
               alt=""
               className="logo-image"
+              priority
             />
             <span>{apartmentData?.data.name}</span>
           </Link>
