@@ -1,21 +1,11 @@
+import { complaintStatusParamKeys } from '@/constants/params/complaintStatus.params'
+
 // 카테고리
-export interface announcementCategoryType {
-  announcementCategoryId: number
-  name: string
-  type: string
-}
-export interface communicationCategoryType {
-  communicationCategoryId: number
-  name: string
-  type: string
-}
-export interface complaintCategoryRespDTOType {
-  complaintCategory: number
-  name: string
-  type: string
-}
-export interface informationCategoryType {
-  informationCategoryId: number
+export interface CategoryType {
+  communicationCategoryId?: number
+  announcementCategoryId?: number
+  informationCategoryId?: number
+  complaintCategory?: number
   name: string
   type: string
 }
@@ -24,36 +14,44 @@ export interface informationCategoryType {
 export interface writerType {
   memberId: number
   nickname: string
+  profileImage: string
 }
 
 // 댓글
 export interface postCommentType {
   commentId: number
   contents: string
+  commentWriter: writerType
+  createdAt: string
+  status: string
+  agree: number
+  disagree: number
+  yourVote: any
+  children: postCommentType[]
 }
 
 // 게시글
 export interface postType {
   announcementId?: number
-  announcementCategory?: announcementCategoryType
+  announcementCategory?: CategoryType
   communicationId?: number
-  communicationCategory?: communicationCategoryType
+  communicationCategory?: CategoryType
   complaintId?: number
-  complaintCategoryRespDTO?: complaintCategoryRespDTOType
+  complaintCategory?: CategoryType
   informationId?: number
-  informationCategory?: informationCategoryType
+  informationCategory?: CategoryType
   writer: writerType
   title: string
   createdAt: string
   view: number
-  complaintStatus?: string
+  complaintStatus?: complaintStatusParamKeys
   secret?: boolean
   commentCnt?: number
   agreeCnt?: number
   disagreeCnt?: number
 }
 
-// 게시글 리스트
+// 게시글 응답
 export interface postListType {
   content: postType[]
   totalPages: number
