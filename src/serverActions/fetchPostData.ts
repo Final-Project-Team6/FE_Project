@@ -269,24 +269,27 @@ export async function patchHideAnnouncement(announcementId: number) {
 }
 
 // 아파트 게시글 목록 데이터 조회
-export async function fetchPostListData({
-  postType,
-  apartmentId,
-  pageNumber,
-  pageSize,
-  orderBy,
-  orderType,
-  categoryId,
-  keyword,
-  searchType,
-  announcementType,
-  complaintType,
-  communicationType,
-  informationType,
-  myComplaint,
-  period,
-  important,
-}: FetchPostListDataParams) {
+export async function fetchPostListData(
+  {
+    postType,
+    apartmentId,
+    pageNumber,
+    pageSize,
+    orderBy,
+    orderType,
+    categoryId,
+    keyword,
+    searchType,
+    announcementType,
+    complaintType,
+    communicationType,
+    informationType,
+    myComplaint,
+    period,
+    important,
+  }: FetchPostListDataParams,
+  accessToken?: string,
+) {
   // 쿼리 파라미터를 객체로 정리
   const queryParams = {
     pageNumber,
@@ -320,6 +323,7 @@ export async function fetchPostListData({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
       },
       cache: 'no-store',
     },
@@ -329,17 +333,26 @@ export async function fetchPostListData({
     throw new Error('아파트 게시글 목록 데이터 조회 실패')
   }
 
+  if (res.status === 204) {
+    return '게시글이 없습니다.'
+  }
+
   return res.json()
 }
 
 // 아파트 게시글 상세 데이터 조회
-export async function fetchPostDetailData(postType: string, postId: number) {
+export async function fetchPostDetailData(
+  postType: string,
+  postId: number,
+  accessToken?: string | null,
+) {
   const res = await fetch(
     `https://aptner.shop/api/post/${postType}/${postId}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
       },
       cache: 'no-store',
     },

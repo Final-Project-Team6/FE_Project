@@ -3,8 +3,14 @@ import Image from 'next/image'
 import arrow from 'public/icons/arrowDownGray10.svg'
 import search from 'public/icons/search.svg'
 import React, { useCallback, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
+import {
+  PostSearchParamKeys,
+  postSearchParams,
+} from '@/constants/params/postSearch.params'
+import { setPostSearchReducer } from '@/redux/postSearchSlice'
 import SearchBarProps from '@/types/searchBar.interface'
 
 const InputContent = styled.div<{ $dropDown?: string[] }>`
@@ -138,7 +144,8 @@ export default function SearchBar({
 }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(value || '')
   const [selectClicked, setSelectClicked] = useState(false)
-  const [selectedOption, setSelectedOption] = useState('전체')
+  const [selectedOption, setSelectedOption] =
+    useState<PostSearchParamKeys>('전체')
 
   const onChangeText = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,9 +162,22 @@ export default function SearchBar({
     setSelectClicked(!selectClicked)
   }
 
-  const selectOption = (option: string) => {
+  const selectOption = (option: PostSearchParamKeys) => {
     setSelectedOption(option)
     setSelectClicked(false)
+  }
+  const dispatch = useDispatch()
+
+  const searchHandler = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      console.log('Enter 핸들러 실행!')
+      dispatch(
+        setPostSearchReducer({
+          searchType: postSearchParams[selectedOption],
+          keyword: inputValue,
+        }),
+      )
+    }
   }
 
   return (
@@ -202,6 +222,7 @@ export default function SearchBar({
           placeholder={placeholder}
           onChange={onChangeText}
           value={inputValue}
+          onKeyDown={searchHandler}
         />
         <div className="iconContainer">
           <Image
@@ -209,6 +230,14 @@ export default function SearchBar({
             width={24}
             height={24}
             alt="Clear input"
+            onClick={() =>
+              dispatch(
+                setPostSearchReducer({
+                  searchType: postSearchParams[selectedOption],
+                  keyword: inputValue,
+                }),
+              )
+            }
             priority
           />
         </div>

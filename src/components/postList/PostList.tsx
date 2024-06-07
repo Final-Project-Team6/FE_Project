@@ -5,11 +5,15 @@ import Link from 'next/link'
 import lock from 'public/icons/lock.svg'
 import newIcon from 'public/icons/new.svg'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import Chip from '@/components/common/Chip'
 import { complaintStatusParams } from '@/constants/params/complaintStatus.params'
-import { PostParamKeys } from '@/constants/params/postUrl.params'
+import { PostCategoryParamKeys } from '@/constants/params/postCategoryUrl.params'
+import { setPostListReducer } from '@/redux/postListSlice'
+import { setPostPaginationReducer } from '@/redux/postPaginationSlice'
+import { RootState } from '@/redux/store'
 import { fetchPostListData } from '@/serverActions/fetchPostData'
 import { postType } from '@/types/post.interface'
 import { checkNewPost } from '@/utils/checkNewPost'
@@ -42,7 +46,11 @@ const PostWrapper = styled.table`
     margin: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+  }
+  td > p {
+    height: 432px;
   }
 `
 const PostWidth164 = styled.th`
@@ -82,23 +90,51 @@ const StatusBox = styled.div`
 export default function PostList({
   params,
 }: {
-  params: { post: PostParamKeys; listNum: string }
+  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
 }) {
-  const [postList, setPostList] = useState<postType[]>()
+  const apartmentId = useSelector(
+    (state: RootState) => state.apartment.data.apartmentId,
+  )
+  const postCategory = useSelector((state: RootState) => state.postCategory)
+  const postList = useSelector((state: RootState) => state.postList.content)
+  const postSearch = useSelector((state: RootState) => state.postSearch)
+  const [noList, setNoList] = useState('')
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchPostList = async () => {
+      if (apartmentId === 0) {
+        return
+      }
       const response = await fetchPostListData({
         postType: params.post,
-        apartmentId: 1,
+        apartmentId: apartmentId,
         pageNumber: Number(params.listNum),
         pageSize: 10,
         orderBy: 'DESC',
+        categoryId: postCategory.categoryId,
+        [`${params.post}Type`]: params.postType,
+        searchType: postSearch.searchType,
+        keyword: postSearch.keyword,
       })
-      setPostList(response.content)
+      if (response === '게시글이 없습니다.') {
+        setNoList(response)
+        return
+      }
+      setNoList('')
+      dispatch(setPostListReducer(response.content))
+      dispatch(
+        setPostPaginationReducer({
+          totalPages: response.totalPages,
+          totalElements: response.totalElements,
+          pageNumber: response.pageNumber,
+          size: response.size,
+        }),
+      )
     }
     fetchPostList()
-  }, [params.post])
+  }, [params.post, postCategory, apartmentId, postSearch])
 
   return (
     <>
@@ -117,90 +153,101 @@ export default function PostList({
             </tr>
           </thead>
           <tbody>
-            {postList.map((post: postType, idx: number) => (
-              <tr key={post.title + idx}>
-                <PostTextAlignCenter>
-                  <Link
-                    href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                    <p>
-                      {post.announcementCategory?.name ||
-                        post.communicationCategory?.name ||
-                        post.complaintCategory?.name ||
-                        post.informationCategory?.name ||
-                        ''}
-                    </p>
-                  </Link>
-                </PostTextAlignCenter>
-                <PostTitleData>
-                  <Link
-                    href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                    <p>
-                      {post.secret && (
-                        <Image
-                          className="lockIcon"
-                          src={lock}
-                          width={24}
-                          height={24}
-                          alt="비밀 글"
-                          priority
-                        />
-                      )}
-                      {post.title}
-                      {checkNewPost(post.createdAt) && (
-                        <Image
-                          className="newIcon"
-                          src={newIcon}
-                          width={24}
-                          height={24}
-                          alt="새로운 글"
-                          priority
-                        />
-                      )}
-                      {post.commentCnt !== 0 &&
-                        post.commentCnt !== undefined && (
-                          <span>[{post.commentCnt}]</span>
-                        )}
-                    </p>
-                  </Link>
-                </PostTitleData>
-                <PostTextAlignCenter>
-                  <Link
-                    href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                    <p>{post.writer.nickname}</p>
-                  </Link>
-                </PostTextAlignCenter>
-                <PostTextAlignCenter>
-                  <Link
-                    href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                    <p>{post.view}</p>
-                  </Link>
-                </PostTextAlignCenter>
-                <PostTextAlignCenter>
-                  <Link
-                    href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                    <p>{formatDate(post.createdAt)}</p>
-                  </Link>
-                </PostTextAlignCenter>
-                {post.complaintStatus !== undefined && (
-                  <AlignItemsCenter>
+            {noList !== '' ? (
+              <tr>
+                <td
+                  colSpan={10}
+                  rowSpan={10}>
+                  <p>{noList}</p>
+                </td>
+              </tr>
+            ) : (
+              postList.map((post: postType, idx: number) => (
+                <tr key={post.title + idx}>
+                  <PostTextAlignCenter>
+                    <Link
+                      href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}
+                      prefetch>
+                      <p>
+                        {post.announcementCategory?.name ||
+                          post.communicationCategory?.name ||
+                          post.complaintCategory?.name ||
+                          post.informationCategory?.name ||
+                          ''}
+                      </p>
+                    </Link>
+                  </PostTextAlignCenter>
+                  <PostTitleData>
                     <Link
                       href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
-                      <StatusBox>
-                        <Chip
-                          color={
-                            post.complaintStatus === 'COMPLETED'
-                              ? 'fill'
-                              : 'outline'
-                          }
-                          className="caption_01">
-                          {complaintStatusParams[post.complaintStatus]}
-                        </Chip>
-                      </StatusBox>
+                      <p>
+                        {post.secret && (
+                          <Image
+                            className="lockIcon"
+                            src={lock}
+                            width={24}
+                            height={24}
+                            alt="비밀 글"
+                            priority
+                          />
+                        )}
+                        {post.title}
+                        {checkNewPost(post.createdAt) && (
+                          <Image
+                            className="newIcon"
+                            src={newIcon}
+                            width={24}
+                            height={24}
+                            alt="새로운 글"
+                            priority
+                          />
+                        )}
+                        {post.commentCnt !== 0 &&
+                          post.commentCnt !== undefined && (
+                            <span>[{post.commentCnt}]</span>
+                          )}
+                      </p>
                     </Link>
-                  </AlignItemsCenter>
-                )}
-              </tr>
-            ))}
+                  </PostTitleData>
+                  <PostTextAlignCenter>
+                    <Link
+                      href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
+                      <p>{post.writer.nickname}</p>
+                    </Link>
+                  </PostTextAlignCenter>
+                  <PostTextAlignCenter>
+                    <Link
+                      href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
+                      <p>{post.view}</p>
+                    </Link>
+                  </PostTextAlignCenter>
+                  <PostTextAlignCenter>
+                    <Link
+                      href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
+                      <p>{formatDate(post.createdAt)}</p>
+                    </Link>
+                  </PostTextAlignCenter>
+                  {post.complaintStatus !== undefined && (
+                    <AlignItemsCenter>
+                      <Link
+                        href={`detail/${post.announcementId || post.communicationId || post.complaintId || post.informationId || ''}`}>
+                        <StatusBox>
+                          <Chip
+                            color={
+                              post.complaintStatus === 'COMPLETED'
+                                ? 'fill'
+                                : 'outline'
+                            }
+                            className="caption_01">
+                            {complaintStatusParams[post.complaintStatus]}
+                          </Chip>
+                        </StatusBox>
+                      </Link>
+                    </AlignItemsCenter>
+                  )}
+                </tr>
+              ))
+            )}
           </tbody>
         </PostWrapper>
       )}
