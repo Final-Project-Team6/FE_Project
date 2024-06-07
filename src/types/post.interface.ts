@@ -42,6 +42,7 @@ export interface postType {
   informationCategory?: CategoryType
   writer: writerType
   title: string
+  contents?: string
   createdAt: string
   view: number
   complaintStatus?: complaintStatusParamKeys
@@ -49,6 +50,8 @@ export interface postType {
   commentCnt?: number
   agreeCnt?: number
   disagreeCnt?: number
+  comments?: postCommentType[]
+  yourVote?: boolean | null
 }
 
 // 게시글 응답

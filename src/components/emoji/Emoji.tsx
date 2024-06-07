@@ -2,8 +2,16 @@
 import Image from 'next/image'
 import likeOff from 'public/icons/likeOff.svg'
 import likeOn from 'public/icons/likeOn.svg'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
+import { setPostDetailReducer } from '@/redux/postDetailSlice'
+import { fetchPostDetailData } from '@/serverActions/fetchPostData'
+import {
+  createVote,
+  deleteVote,
+  patchVote,
+} from '@/serverActions/fetchVoteData'
 import { EmojiType } from '@/types/emoji.interface'
 
 const EmojiWrapper = styled.div`
@@ -23,12 +31,66 @@ const EmojiWrapper = styled.div`
   }
 `
 
-export default function Emoji({ iconType, count, active }: EmojiType) {
+export default function Emoji({
+  iconType,
+  count,
+  active = null,
+  postId,
+  accessToken,
+}: EmojiType) {
+  // const postDetailData = useSelector((state: RootState) => state.postDetail)
+  const dispatch = useDispatch()
+
+  const fetchPostDetail = async () => {
+    const response = await fetchPostDetailData(
+      'announcement',
+      postId,
+      accessToken,
+    )
+    dispatch(setPostDetailReducer(response))
+  }
+
+  const handleEmojiClick = async () => {
+    if (active === null) {
+      const response = await createVote({
+        postId: postId,
+        voteType: 'ANNOUNCEMENT',
+        opinion: iconType === 'like' ? true : false,
+        accessToken: accessToken,
+      })
+    } else if (
+      (active && iconType === 'like') ||
+      (!active && iconType === 'hate')
+    ) {
+      const response = await deleteVote({
+        postId: postId,
+        voteType: 'ANNOUNCEMENT',
+        accessToken: accessToken,
+      })
+    } else {
+      const response = await patchVote({
+        postId: postId,
+        voteType: 'ANNOUNCEMENT',
+        opinion: !active,
+        accessToken: accessToken,
+      })
+    }
+    fetchPostDetail()
+  }
+
   return (
-    <EmojiWrapper>
+    <EmojiWrapper onClick={() => handleEmojiClick()}>
       <Image
         className={iconType}
-        src={active ? likeOn : likeOff}
+        src={
+          active === null
+            ? likeOff
+            : iconType === 'like' && active
+              ? likeOn
+              : iconType === 'hate' && !active
+                ? likeOn
+                : likeOff
+        }
         width={24}
         height={24}
         alt="Clear input"

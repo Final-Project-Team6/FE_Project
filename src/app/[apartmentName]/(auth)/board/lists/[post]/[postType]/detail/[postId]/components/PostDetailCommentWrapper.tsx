@@ -1,148 +1,53 @@
+'use client'
 import Image from 'next/image'
 import ImgIcon from 'public/icons/commentAddImg.svg'
-import SecretIcon from 'public/icons/lock.svg'
 import ReplyIcon from 'public/icons/reply.svg'
 import UserIcon from 'public/icons/user.svg'
-import React from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import CommentLike from '@/components/commentLike/CommentLike'
 import Button from '@/components/common/Button'
-import Emoji from '@/components/emoji/Emoji'
-import { PostParamKeys, postParams } from '@/constants/params/postUrl.params'
+import { PostCategoryParamKeys } from '@/constants/params/postCategoryUrl.params'
+import { setPostDetailReducer } from '@/redux/postDetailSlice'
+import { RootState } from '@/redux/store'
 import { fetchPostDetailData } from '@/serverActions/fetchPostData'
 import styles from '@/styles/postDetailPage.module.scss'
 import { postCommentType } from '@/types/post.interface'
 
-import CommentTextArea from './components/CommentTextArea'
+import CommentTextArea from './CommentTextArea'
 
-export async function generateMetadata({
+export default function PostDetailCommentWrapper({
   params,
 }: {
-  params: { post: PostParamKeys; postId: string }
+  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
 }) {
-  return {
-    title: `${postParams[params.post]} | Detail`,
-    description: 'detail 페이지',
+  const postDetailData = useSelector((state: RootState) => state.postDetail)
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken)
+  const dispatch = useDispatch()
+
+  const fetchPostDetail = async () => {
+    const response = await fetchPostDetailData(
+      params.post,
+      Number(params.postId),
+      accessToken,
+    )
+    dispatch(setPostDetailReducer(response))
   }
-}
 
-export default async function Page({
-  params,
-}: {
-  params: { post: PostParamKeys; postId: string }
-}) {
-  const postDetailData = await fetchPostDetailData(
-    params.post,
-    Number(params.postId),
-  )
+  useEffect(() => {
+    if (accessToken !== null) {
+      fetchPostDetail()
+    }
+  }, [accessToken])
 
   return (
     <>
-      <div className={styles.postDetailWrapper}>
-        <h1 className={'title1 ' + styles.postTitle}>
-          {postParams[params.post]}
-        </h1>
-        <div>
-          <div className={styles.postDetailTopWrapper}>
-            <div className={styles.postDetailTop}>
-              <h2 className="subTitle2">{postDetailData.title}</h2>
-              <div className={styles.postDetailTitle}>
-                <Image
-                  src={postDetailData.writer.profileImage || UserIcon}
-                  width={24}
-                  height={24}
-                  alt="게시글 작성자 아이콘"
-                  priority
-                />
-                <div className={styles.postDetailTopInfo}>
-                  <h3 className="caption_02">
-                    {postDetailData.writer.nickname}
-                  </h3>
-                  <h4 className="body_05">{postDetailData.createdAt}</h4>
-                  <p className="body_05">조회수 {postDetailData.view}</p>
-                </div>
-              </div>
-              <div className={`body_06 ${styles.secretWrapper}`}>
-                <Image
-                  src={SecretIcon}
-                  width={24}
-                  height={24}
-                  alt="비밀글"
-                  priority
-                />
-                <p>비밀글</p>
-                <p>비밀글은 작성자와 관리사무소만 확인할 수 있습니다</p>
-              </div>
-            </div>
-            <div className={styles.postDetailInfo}>
-              <p>{postDetailData.contents}</p>
-            </div>
-            <div className={styles.postDetailLikeWrapper}>
-              <p className="body_05">
-                <span className="caption_02">{postDetailData.agreeCnt}</span>{' '}
-                명이 이글에 공감합니다.
-              </p>
-              <div className={styles.postDetailLikeButtonWrapper}>
-                <Emoji
-                  iconType="like"
-                  count={postDetailData.agreeCnt}
-                  active={postDetailData.yourVote}
-                />
-                <Emoji
-                  iconType="hate"
-                  count={postDetailData.disagreeCnt}
-                />
-              </div>
-            </div>
-            <div className={styles.postDetailNavButtonWrapper}>
-              <div className={styles.postDetailNavButtons}>
-                {postDetailData.writer.memberId === 2 && (
-                  <>
-                    <Button
-                      size="phone"
-                      $text="thin"
-                      color="white">
-                      수정
-                    </Button>
-                    <Button
-                      size="phone"
-                      $text="thin"
-                      color="white">
-                      삭제
-                    </Button>
-                  </>
-                )}
-              </div>
-              <div className={styles.postDetailNavButtons}>
-                <Button
-                  size="phone"
-                  $text="thin"
-                  color="white">
-                  이전글
-                </Button>
-                <Button
-                  size="phone"
-                  $text="thin"
-                  color="white">
-                  다음글
-                </Button>
-                <Button
-                  size="phone"
-                  $text="thin"
-                  color="primary">
-                  목록
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {postDetailData.title !== '' && (
         <div className={styles.postDetailCommentWrapper}>
           <div className={styles.postDetailCommentTop}>
-            <span className="body_01">
-              댓글 ({postDetailData.comments.length})
-            </span>
+            <span className="body_01">댓글 ({postDetailData.commentCnt})</span>
           </div>
-          {/* 댓글 칸 */}
           {postDetailData.comments.map((comment: postCommentType) => (
             <div
               className={styles.commentWrapper}
@@ -252,7 +157,7 @@ export default async function Page({
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
