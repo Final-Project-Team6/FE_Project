@@ -4,8 +4,6 @@ import '../../../mypage.scss'
 
 import { useParams } from 'next/navigation'
 
-import NumberBar from '@/components/numberBar/NumberBar'
-import { dummyAnnouncementData } from '@/constants/announcement.dummy'
 import { dropDown } from '@/constants/dropDown'
 import {
   MypageParamKeys,
@@ -19,7 +17,6 @@ import MypageList from '../../../components/MypageList'
 export default function Page() {
   const params = useParams()
   const postKey = params.complaints as MypageParamKeys
-  const listNum = params.listNum as string
 
   return (
     <>
@@ -36,12 +33,7 @@ export default function Page() {
         </div>
       </div>
       <MypageList />
-      <div className={styles.postBottomWrapper}>
-        <NumberBar
-          totalPages={dummyAnnouncementData.totalPages}
-          pageNumber={Number(listNum)}
-        />
-      </div>
+      <div className={styles.postBottomWrapper} />
     </>
   )
 }

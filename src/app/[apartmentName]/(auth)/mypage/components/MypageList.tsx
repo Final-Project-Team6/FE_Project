@@ -12,6 +12,7 @@ import Chip from '@/components/common/Chip'
 import { RootState } from '@/redux/store'
 
 import Mypage_ElasticTabs from './Mypage_Tap'
+import Mypage_NumberBar from './MypageNumberBar'
 
 const PostWrapper = styled.table`
   width: 100%;
@@ -75,6 +76,11 @@ const Positions = styled.div`
   top: 443px;
 `
 
+const CenterItem = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 interface Post {
   boardType: string
   postTitle: string
@@ -114,22 +120,26 @@ interface Comment {
 export default function MypageList() {
   const [posts, setPosts] = useState<Post[]>([])
   const [comments, setComments] = useState<Comment[]>([])
+  const [commentTotalPages, setCommentTotalPages] = useState(1)
+  const [communicationTotalPages, setCommunicationTotalPages] = useState(1)
   const accessToken = useSelector((state: RootState) => state.auth.accessToken)
   const searchParams = useSearchParams()
   const params = useParams()
+
   const pageNumber = parseInt(searchParams.get('pageNumber') || '1', 10)
   const postType =
-    (params['complaints'] as string) ||
-    (params['communication'] as string) ||
+    (Array.isArray(params['complaints'])
+      ? params['complaints'][0]
+      : params['complaints']) ||
+    (Array.isArray(params['communication'])
+      ? params['communication'][0]
+      : params['communication']) ||
     (params['comment'] as string)
 
   const typeKey = postType === 'comment' ? 'boardType' : 'communicationType'
-  const typeValue = searchParams.get(typeKey) || ''
-
-  console.log('Params:', params)
-  console.log('Post type:', postType)
-  console.log('Type key:', typeKey)
-  console.log('Type value:', typeValue)
+  const typeValue =
+    searchParams.get(typeKey) ||
+    (postType === 'comment' ? 'ANNOUNCEMENT' : 'USER_COMMU')
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -142,11 +152,11 @@ export default function MypageList() {
   const getApiEndpoint = (postType: string) => {
     switch (postType) {
       case 'complaints':
-        return 'https://aptner.shop/api/post/complaint/search/1'
+        return `https://aptner.shop/api/post/complaint/search/${pageNumber}`
       case 'communication':
-        return 'https://aptner.shop/api/post/communication/search/1'
+        return `https://aptner.shop/api/post/communication/search/${pageNumber}`
       case 'comment':
-        return 'https://aptner.shop/api/post/comment/'
+        return `https://aptner.shop/api/post/comment/?pageNumber=${pageNumber}&pageSize=10`
       default:
         return ''
     }
@@ -156,7 +166,6 @@ export default function MypageList() {
     switch (postType) {
       case 'complaints':
         return {
-          pageNumber,
           pageSize: 10,
           searchType: 'TITLE_CONTENTS',
           orderType: 'DATE',
@@ -165,7 +174,6 @@ export default function MypageList() {
         }
       case 'communication':
         return {
-          pageNumber,
           pageSize: 10,
           searchType: 'TITLE',
           orderType: 'DATE',
@@ -174,10 +182,7 @@ export default function MypageList() {
           myCommunication: true,
         }
       case 'comment':
-        return {
-          pageNumber,
-          pageSize: 10,
-        }
+        return {}
       default:
         return {}
     }
@@ -211,6 +216,7 @@ export default function MypageList() {
             }))
           console.log('API Response (Comments):', content)
           setComments(content)
+          setCommentTotalPages(response.data.totalPages || 1)
         } else {
           const content = response.data.content.map((post: Post) => ({
             ...post,
@@ -218,6 +224,7 @@ export default function MypageList() {
           }))
           console.log('API Response:', content)
           setPosts(content)
+          setCommunicationTotalPages(response.data.totalPages || 1)
         }
       } catch (error) {
         console.error('Failed to fetch posts:', error)
@@ -350,6 +357,14 @@ export default function MypageList() {
           )}
         </tbody>
       </PostWrapper>
+      <CenterItem>
+        <Mypage_NumberBar
+          totalPages={
+            postType === 'comment' ? commentTotalPages : communicationTotalPages
+          }
+          pageNumber={pageNumber}
+        />
+      </CenterItem>
     </>
   )
 }

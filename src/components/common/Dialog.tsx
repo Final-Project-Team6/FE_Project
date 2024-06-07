@@ -5,23 +5,19 @@ import { styled } from 'styled-components'
 
 import Button from '@/components/common/Button'
 
-/*
-  Todo
-  - Dialog와 DialogButton 컴포넌트 분리 필요
-  - 버튼이 생각보다 크게 렌더링되서 디자이너와 협의 후에 재조정 필요
-*/
-
-type Dialog = 'confirm' | 'find'
+type Dialog = 'confirm' | 'find' | 'confirmWithCancel'
 
 interface DialogProps {
   children: ReactNode
   dialog: Dialog
   onClose: () => void
+  onConfirm?: () => void
 }
 
 interface DialogButtonProps {
   dialog: Dialog
   onClose: () => void
+  onConfirm?: () => void
 }
 
 const Background = styled.div`
@@ -55,6 +51,8 @@ const StyledModal = styled.div`
   p {
     font-size: ${({ theme }) => theme.fonts.body._03};
     ${({ theme }) => theme.colors.gray._10};
+    padding: 16px 26px;
+    text-align: center;
   }
 `
 
@@ -91,7 +89,7 @@ const CloseButton = styled.button`
   }
 `
 
-function DialogButton({ dialog, onClose }: DialogButtonProps) {
+function DialogButton({ dialog, onClose, onConfirm }: DialogButtonProps) {
   switch (dialog) {
     case 'find':
       return (
@@ -118,10 +116,31 @@ function DialogButton({ dialog, onClose }: DialogButtonProps) {
           확인
         </Button>
       )
+    case 'confirmWithCancel':
+      return (
+        <ButtonBlock>
+          <Button
+            size="message"
+            onClick={onClose}>
+            취소
+          </Button>
+          <Button
+            size="message"
+            color="primary"
+            onClick={onConfirm}>
+            확인
+          </Button>
+        </ButtonBlock>
+      )
   }
 }
 
-export default function Dialog({ children, dialog, onClose }: DialogProps) {
+export default function Dialog({
+  children,
+  dialog,
+  onClose,
+  onConfirm,
+}: DialogProps) {
   return (
     <>
       <Background onClick={onClose} />
@@ -130,11 +149,11 @@ export default function Dialog({ children, dialog, onClose }: DialogProps) {
           <span />
           <span />
         </CloseButton>
-        <p>{children}</p>
-
+        <p dangerouslySetInnerHTML={{ __html: children as string }} />
         <DialogButton
           dialog={dialog}
           onClose={onClose}
+          onConfirm={onConfirm}
         />
       </StyledModal>
     </>

@@ -26,7 +26,12 @@ function Privacy() {
   const [homeId, setHomeId] = useState<number | null>(null)
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [dialogMessage, setDialogMessage] = useState<string>('')
-  const [dialogType, setDialogType] = useState<'confirm' | 'find'>('confirm')
+  const [dialogType, setDialogType] = useState<
+    'confirm' | 'find' | 'confirmWithCancel'
+  >('confirm')
+  const [confirmAction, setConfirmAction] = useState<
+    'nickname' | 'home' | null
+  >(null)
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -98,7 +103,7 @@ function Privacy() {
         },
       )
       setOriginalNickname(nickname)
-      setDialogMessage('닉네임이 성공적으로 변경되었습니다.')
+      setDialogMessage('닉네임 변경을 완료하였습니다.')
       setDialogType('confirm')
       setShowDialog(true)
     } catch (error: any) {
@@ -123,12 +128,38 @@ function Privacy() {
       )
       setOriginalDong(dong)
       setOriginalHo(ho)
-      setDialogMessage('아파트 동/호가 성공적으로 변경되었습니다.')
+      setDialogMessage('동/호 변경을 완료하였습니다.')
       setDialogType('confirm')
       setShowDialog(true)
     } catch (error: any) {
       console.error(error)
     }
+  }
+
+  const openConfirmDialog = (action: 'nickname' | 'home') => {
+    setConfirmAction(action)
+    setDialogMessage(
+      action === 'nickname'
+        ? '닉네임을 변경하시겠습니까?'
+        : '동/호를 변경하시면 미인증회원으로 변경이 됩니다.<br />관리사무소 확인 후 인증회원으로 변경되어집니다.<br />계속 진행하시겠습니까?',
+    )
+    setDialogType('confirmWithCancel')
+    setShowDialog(true)
+  }
+
+  const handleConfirm = () => {
+    if (confirmAction === 'nickname') {
+      handleNicknameChange()
+    } else if (confirmAction === 'home') {
+      handleHomeChange()
+    }
+    setConfirmAction(null)
+    setDialogType('confirm')
+    setShowDialog(true)
+  }
+
+  const closeDialog = () => {
+    setShowDialog(false)
   }
 
   return (
@@ -152,7 +183,7 @@ function Privacy() {
             placeholder="닉네임 입력"
           />
           <Button
-            onClick={handleNicknameChange}
+            onClick={() => openConfirmDialog('nickname')}
             size="message"
             color="primary"
             disabled={nickname === originalNickname}>
@@ -185,7 +216,7 @@ function Privacy() {
             placeholder="호 입력"
           />
           <Button
-            onClick={handleHomeChange}
+            onClick={() => openConfirmDialog('home')}
             size="message"
             color="primary"
             disabled={dong === originalDong && ho === originalHo}>
@@ -203,7 +234,8 @@ function Privacy() {
       {showDialog && (
         <Dialog
           dialog={dialogType}
-          onClose={() => setShowDialog(false)}>
+          onClose={closeDialog}
+          onConfirm={handleConfirm}>
           {dialogMessage}
         </Dialog>
       )}
