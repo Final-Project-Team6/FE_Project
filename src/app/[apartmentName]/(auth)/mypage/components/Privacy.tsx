@@ -3,7 +3,9 @@
 import './Privacy.scss'
 
 import axios from 'axios'
+import Image from 'next/image'
 import Link from 'next/link'
+import arrowRight from 'public/icons/arrowRightGray08.svg'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -228,7 +230,14 @@ function Privacy() {
       <Link
         href=""
         className="body_05 linkText">
-        회원탈퇴 &gt;{' '}
+        회원탈퇴
+        <Image
+          src={arrowRight}
+          width={18}
+          height={18}
+          alt="이미지를 첨부"
+          priority
+        />
       </Link>
 
       {showDialog && (
