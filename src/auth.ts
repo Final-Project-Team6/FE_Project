@@ -1,8 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import error from 'next/error'
-import NextAuth from 'next-auth'
-import { CredentialsSignin } from 'next-auth'
+import NextAuth, { CredentialsSignin } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
 import { clearAccessToken, setAccessToken } from './redux/authSlice'
@@ -29,9 +28,7 @@ export const {
 
         // <로그인 로직 ...>
         if (error) {
-          throw new CredentialsSignin({
-            cause: '<ERROR_MESSAGE>',
-          })
+          throw new CredentialsSignin()
         }
         return { user, accessToken: '<ACCESS_TOKEN>' }
       },
@@ -58,7 +55,7 @@ export const {
       return token
     },
     session: async ({ session, token }) => {
-      if (token?.accessToken) {
+      if (typeof token?.accessToken === 'string') {
         session.accessToken = token.accessToken
       }
       return session
