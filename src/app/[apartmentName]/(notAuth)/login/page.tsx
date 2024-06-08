@@ -65,7 +65,7 @@ function LoginForm() {
     <form
       onSubmit={loginHandler}
       className="commonLayout">
-      <h1 className="title">로그인</h1>
+      <h1 className="title title1">로그인</h1>
       <div className="input-box">
         <div className="input-box-item">
           <Input
