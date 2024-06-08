@@ -3,7 +3,9 @@
 import './BasicInformation.scss'
 
 import axios from 'axios'
+import Image from 'next/image'
 import Link from 'next/link'
+import arrowRight from 'public/icons/arrowRightBlue08.svg'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -75,9 +77,12 @@ function BasicInformation() {
             className="value blue menuTitle2"
             href="">
             비밀번호 변경
-            <img
-              src="/"
-              alt=""
+            <Image
+              src={arrowRight}
+              width={18}
+              height={18}
+              alt="이미지를 첨부"
+              priority
             />
           </Link>
         </li>
