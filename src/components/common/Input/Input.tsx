@@ -1,12 +1,10 @@
-'use client'
-
 import Image from 'next/image'
 import check from 'public/icons/check.svg'
 import chipCheck from 'public/icons/check_black.svg'
 import close from 'public/icons/close.svg'
 import hidePassword from 'public/icons/hidePassword.svg'
 import showPassword from 'public/icons/showPassword.svg'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import InputProps from '@/types/input.interface'
@@ -126,13 +124,20 @@ export default function Input({
   const [passwordWatch, setPasswordWatch] = useState(false)
   const [inputValue, setInputValue] = useState(value || '')
 
+  useEffect(() => {
+    setInputValue(value || '')
+  }, [value])
+
   const handlePassWordWatchClick = useCallback(() => {
     setPasswordWatch(prevState => !prevState)
   }, [])
 
   const handleClearInputValue = useCallback(() => {
     setInputValue('')
-  }, [])
+    if (onChange) {
+      onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
+    }
+  }, [onChange])
 
   const validatePassword = (password: string) => {
     const conditions = [

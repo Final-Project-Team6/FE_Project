@@ -22,20 +22,31 @@ const AppInitializer = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = Cookies.get('accessToken')
-    const refreshToken = Cookies.get('refreshToken')
+    const initializeAuth = async () => {
+      const token = Cookies.get('accessToken')
+      const refreshToken = Cookies.get('refreshToken')
 
-    if (token) {
-      dispatch(setAccessToken(token))
-    } else if (refreshToken) {
-      refreshAccessToken().then(newToken => {
-        if (newToken) {
-          dispatch(setAccessToken(newToken))
-        } else {
+      if (token) {
+        dispatch(setAccessToken(token))
+      } else if (refreshToken) {
+        try {
+          const newToken = await refreshAccessToken()
+          if (newToken) {
+            dispatch(setAccessToken(newToken))
+            Cookies.set('accessToken', newToken, { expires: 1 })
+          } else {
+            dispatch(clearAccessToken())
+          }
+        } catch (error) {
+          console.error('Failed to refresh access token:', error)
           dispatch(clearAccessToken())
         }
-      })
+      } else {
+        dispatch(clearAccessToken())
+      }
     }
+
+    initializeAuth()
   }, [dispatch])
 
   return <>{children}</>
