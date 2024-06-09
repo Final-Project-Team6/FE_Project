@@ -54,7 +54,7 @@ export default async function App({
               </span>
               <ul className={styles.serviceBoxList}>
                 <Link
-                  href={'/'}
+                  href={`${params.apartmentName}/board/lists/complaint/MANAGEMENT_OFFICE/1`}
                   className={styles.serviceBox}>
                   <Image
                     src={phone1}
@@ -66,7 +66,7 @@ export default async function App({
                   <p className={styles.serviceText}>관리사무소 민원</p>
                 </Link>
                 <Link
-                  href={'/'}
+                  href={`${params.apartmentName}/board/lists/communication/REPRESENT_COMMU/1`}
                   className={styles.serviceBox}>
                   <Image
                     src={write}
@@ -78,7 +78,7 @@ export default async function App({
                   <p className={styles.serviceText}>입대의 소통</p>
                 </Link>
                 <Link
-                  href={'/'}
+                  href={'#'}
                   className={styles.serviceBox}>
                   <Image
                     src={car}
@@ -90,7 +90,7 @@ export default async function App({
                   <p className={styles.serviceText}>방문주차 등록</p>
                 </Link>
                 <Link
-                  href={'/'}
+                  href={'#'}
                   className={styles.serviceBox}>
                   <Image
                     src={scan}
@@ -102,7 +102,7 @@ export default async function App({
                   <p className={styles.serviceText}>커뮤니티 예약</p>
                 </Link>
                 <Link
-                  href={'/'}
+                  href={'#'}
                   className={styles.serviceBox}>
                   <Image
                     src={vote}
@@ -114,7 +114,7 @@ export default async function App({
                   <p className={styles.serviceText}>주민투표</p>
                 </Link>
                 <Link
-                  href={'/'}
+                  href={'#'}
                   className={styles.serviceBox}>
                   <Image
                     src={calendar}

@@ -73,14 +73,14 @@ export default function Announcement({
       <div className={styles.announcements}>
         {data &&
           data.content &&
-          data.content.map((announcement: postType, idx: number) => {
+          data.content.map((post: postType, idx: number) => {
             return (
-              <div key={announcement.title}>
+              <div key={post.title}>
                 <Link
-                  href={`${apartmentEngName}/board/lists/${announcement.announcementId ? 'announcement' : 'complaint'}/detail/${announcement.announcementId || announcement.communicationId}`}>
+                  href={`${apartmentEngName}/board/lists/${post.announcementId ? `announcement/${post.announcementCategory?.type}` : post.communicationId ? `communication/${post.communicationCategory?.type}` : post.complaintId ? `complaint/${post.complaintCategory?.type}` : post.informationId ? `information/${post.informationCategory?.type}` : ''}/detail/${post.announcementId || post.communicationId}`}>
                   <div className={styles.announcementBox}>
-                    <span>{announcement.title}</span>
-                    <p>{formatDate(announcement.createdAt)}</p>
+                    <span>{post.title}</span>
+                    <p>{formatDate(post.createdAt)}</p>
                   </div>
                   {data.content.length != ++idx && (
                     <div className={styles.announcementBoxLine} />
@@ -91,7 +91,7 @@ export default function Announcement({
           })}
       </div>
       <Link
-        href={`${apartmentEngName}/board/lists/${announcementTitle === '공지사항' ? 'announcement' : 'complaint'}/1`}>
+        href={`${apartmentEngName}/board/lists/${announcementTitle === '공지사항' ? 'announcement/NOTICE' : 'communication/USER_COMMU'}/1`}>
         <div className={`${styles.containerBottom} body_03`}>
           <p>
             {announcementType} {'>'}
