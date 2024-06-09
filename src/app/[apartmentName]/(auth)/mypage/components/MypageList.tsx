@@ -213,14 +213,12 @@ export default function MypageList() {
           },
         })
 
-        console.log('API response:', response.data)
-
         if (postType === 'comment') {
           const content = response.data.content.map((comment: Comment) => ({
             ...comment,
             createdAt: formatDate(comment.createdAt),
           }))
-          console.log('API Response (Comments):', content)
+
           setComments(content)
           setCommentTotalPages(response.data.totalPages || 1)
         } else {
@@ -228,7 +226,7 @@ export default function MypageList() {
             ...post,
             createdAt: formatDate(post.createdAt),
           }))
-          console.log('API Response:', content)
+
           setPosts(content)
           setCommunicationTotalPages(response.data.totalPages || 1)
         }
