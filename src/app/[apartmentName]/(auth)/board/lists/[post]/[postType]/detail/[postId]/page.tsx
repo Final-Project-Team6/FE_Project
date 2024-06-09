@@ -21,7 +21,12 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+    postId: number
+  }
 }) {
   return (
     <>

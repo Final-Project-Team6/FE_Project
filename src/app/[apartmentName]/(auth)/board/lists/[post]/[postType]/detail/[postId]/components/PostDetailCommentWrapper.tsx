@@ -20,7 +20,12 @@ import CommentTextArea from './CommentTextArea'
 export default function PostDetailCommentWrapper({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+    postId: number
+  }
 }) {
   const postDetailData = useSelector((state: RootState) => state.postDetail)
   const accessToken = useSelector((state: RootState) => state.auth.accessToken)
@@ -48,7 +53,7 @@ export default function PostDetailCommentWrapper({
           <div className={styles.postDetailCommentTop}>
             <span className="body_01">댓글 ({postDetailData.commentCnt})</span>
           </div>
-          {postDetailData.comments.map((comment: postCommentType) => (
+          {postDetailData.comments?.map((comment: postCommentType) => (
             <div
               className={styles.commentWrapper}
               key={`comment${comment.commentId}`}>

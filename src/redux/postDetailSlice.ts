@@ -9,6 +9,7 @@ const initialState: postType = {
     profileImage: '',
   },
   title: '',
+  contents: '',
   createdAt: '',
   view: 0,
 }

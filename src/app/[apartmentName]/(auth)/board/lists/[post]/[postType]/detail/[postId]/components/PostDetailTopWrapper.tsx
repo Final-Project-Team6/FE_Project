@@ -13,7 +13,12 @@ import styles from '@/styles/postDetailPage.module.scss'
 export default function PostDetailTopWrapper({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+    postId: number
+  }
 }) {
   const postDetailData = useSelector((state: RootState) => state.postDetail)
   const accessToken = useSelector((state: RootState) => state.auth.accessToken)

@@ -38,7 +38,6 @@ export default function Emoji({
   postId,
   accessToken,
 }: EmojiType) {
-  // const postDetailData = useSelector((state: RootState) => state.postDetail)
   const dispatch = useDispatch()
 
   const fetchPostDetail = async () => {
@@ -58,6 +57,7 @@ export default function Emoji({
         opinion: iconType === 'like' ? true : false,
         accessToken: accessToken,
       })
+      console.log(response)
     } else if (
       (active && iconType === 'like') ||
       (!active && iconType === 'hate')
@@ -67,6 +67,7 @@ export default function Emoji({
         voteType: 'ANNOUNCEMENT',
         accessToken: accessToken,
       })
+      console.log(response)
     } else {
       const response = await patchVote({
         postId: postId,
@@ -74,6 +75,7 @@ export default function Emoji({
         opinion: !active,
         accessToken: accessToken,
       })
+      console.log(response)
     }
     fetchPostDetail()
   }

@@ -8,7 +8,7 @@ export async function createVote({
   postId: number
   voteType: string
   opinion: boolean
-  accessToken: string
+  accessToken: string | null
 }) {
   const res = await fetch(
     `https://aptner.shop/api/post/vote/${postId}?voteType=${voteType}&opinion=${opinion}`,
@@ -39,7 +39,7 @@ export async function patchVote({
   postId: number
   voteType: string
   opinion: boolean
-  accessToken: string
+  accessToken: string | null
 }) {
   const res = await fetch(
     `https://aptner.shop/api/post/vote/${postId}?voteType=${voteType}&opinion=${opinion}`,
@@ -68,7 +68,7 @@ export async function deleteVote({
 }: {
   postId: number
   voteType: string
-  accessToken: string
+  accessToken: string | null
 }) {
   const res = await fetch(
     `https://aptner.shop/api/post/vote/${postId}?voteType=${voteType}`,

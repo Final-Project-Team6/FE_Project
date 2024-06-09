@@ -42,7 +42,7 @@ export interface postType {
   informationCategory?: CategoryType
   writer: writerType
   title: string
-  contents?: string
+  contents: string | TrustedHTML
   createdAt: string
   view: number
   complaintStatus?: complaintStatusParamKeys
