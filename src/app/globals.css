@@ -104,3 +104,7 @@ a {
   cursor: pointer;
   color: inherit;
 }
+
+.postWriteImage {
+  content: url(/icons/commentAddImg.svg);
+}

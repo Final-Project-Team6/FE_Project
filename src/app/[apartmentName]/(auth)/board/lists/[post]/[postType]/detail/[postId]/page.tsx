@@ -1,4 +1,7 @@
-import { PostCategoryParamKeys, postCategoryParams } from '@/constants/params/postCategoryUrl.params'
+import {
+  PostCategoryParamKeys,
+  postCategoryParams,
+} from '@/constants/params/postCategoryUrl.params'
 import styles from '@/styles/postDetailPage.module.scss'
 
 import PostDetailCommentWrapper from './components/PostDetailCommentWrapper'

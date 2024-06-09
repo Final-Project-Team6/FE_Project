@@ -119,19 +119,33 @@ export async function deletePostCategory(
 }
 
 // 아파트 게시글 생성
-export async function createPost(
-  apartmentId: number,
-  postType: string,
-  title: string,
-  contents: boolean,
-  complaintCategoryId?: number,
-  informationCategoryId?: number,
-  announcementCategoryId?: number,
-  communicationCategoryId?: number,
-  important?: number,
-  status?: string,
-  secret?: boolean,
-) {
+export async function createPost({
+  apartmentId,
+  postType,
+  title,
+  contents,
+  complaintCategoryId,
+  informationCategoryId,
+  announcementCategoryId,
+  communicationCategoryId,
+  important,
+  status,
+  secret,
+  accessToken,
+}: {
+  apartmentId: number
+  postType: string
+  title: string
+  contents: string
+  complaintCategoryId?: number
+  informationCategoryId?: number
+  announcementCategoryId?: number
+  communicationCategoryId?: number
+  important?: number
+  status?: string
+  secret?: boolean
+  accessToken: string | null
+}) {
   const payload = {
     apartmentId,
     postType,
@@ -147,11 +161,12 @@ export async function createPost(
   }
 
   const res = await fetch(
-    `https://aptner.shop/api/admin/post/${postType}/${apartmentId}`,
+    `https://aptner.shop/api/post/${postType}/${apartmentId}`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
       },
       body: JSON.stringify(payload),
       cache: 'no-store',
@@ -162,7 +177,7 @@ export async function createPost(
     throw new Error('아파트 게시글 생성 실패')
   }
 
-  return res.json()
+  return res
 }
 
 // 아파트 게시글 수정
@@ -269,27 +284,25 @@ export async function patchHideAnnouncement(announcementId: number) {
 }
 
 // 아파트 게시글 목록 데이터 조회
-export async function fetchPostListData(
-  {
-    postType,
-    apartmentId,
-    pageNumber,
-    pageSize,
-    orderBy,
-    orderType,
-    categoryId,
-    keyword,
-    searchType,
-    announcementType,
-    complaintType,
-    communicationType,
-    informationType,
-    myComplaint,
-    period,
-    important,
-  }: FetchPostListDataParams,
-  accessToken?: string,
-) {
+export async function fetchPostListData({
+  postType,
+  apartmentId,
+  pageNumber,
+  pageSize,
+  orderBy,
+  orderType,
+  categoryId,
+  keyword,
+  searchType,
+  announcementType,
+  complaintType,
+  communicationType,
+  informationType,
+  myComplaint,
+  period,
+  important,
+  accessToken,
+}: FetchPostListDataParams) {
   // 쿼리 파라미터를 객체로 정리
   const queryParams = {
     pageNumber,
