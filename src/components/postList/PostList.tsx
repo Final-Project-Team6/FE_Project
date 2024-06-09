@@ -95,6 +95,7 @@ export default function PostList({
   const apartmentId = useSelector(
     (state: RootState) => state.apartment.data.apartmentId,
   )
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken)
   const postCategory = useSelector((state: RootState) => state.postCategory)
   const postList = useSelector((state: RootState) => state.postList.content)
   const postSearch = useSelector((state: RootState) => state.postSearch)
@@ -117,6 +118,7 @@ export default function PostList({
         [`${params.post}Type`]: params.postType,
         searchType: postSearch.searchType,
         keyword: postSearch.keyword,
+        accessToken: accessToken,
       })
       if (response === '게시글이 없습니다.') {
         setNoList(response)

@@ -15,4 +15,5 @@ export interface FetchPostListDataParams {
   myComplaint?: boolean
   period?: string
   important?: boolean
+  accessToken: string | null
 }

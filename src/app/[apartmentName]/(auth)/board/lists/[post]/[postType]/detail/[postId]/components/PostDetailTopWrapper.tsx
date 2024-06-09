@@ -50,9 +50,11 @@ export default function PostDetailTopWrapper({
           </div>
         )}
       </div>
-      <div className={styles.postDetailInfo}>
-        <p>{postDetailData.contents}</p>
-      </div>
+      <div
+        id="contents"
+        className={styles.postDetailInfo}
+        dangerouslySetInnerHTML={{ __html: postDetailData.contents }}
+      />
       <div className={styles.postDetailLikeWrapper}>
         <p className="body_05">
           <span className="caption_02">{postDetailData.agreeCnt}</span> 명이
