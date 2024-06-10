@@ -22,8 +22,7 @@ export default function Header({
   apartmentData: findApartmentData
 }) {
   //경로
-  const apartmentName = apartmentData?.data?.name || 'defaultApartment'
-  const apartmentEngName = apartmentData?.data?.engName
+  const apartmentName = apartmentData?.data?.engName || 'defaultApartment'
   const dispatch: AppDispatch = useDispatch()
   const [isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
@@ -60,8 +59,7 @@ export default function Header({
         <div className="header-top">
           <Link
             href="/"
-            className="logo menuTitle1"
-            prefetch>
+            className="logo menuTitle1">
             <Image
               width={155}
               height={42}
@@ -116,6 +114,7 @@ export default function Header({
                   </Chip>
                 </Link>
               </>
+
               // <button onClick={handleLogout}>로그아웃</button>
             )}
           </div>
@@ -124,23 +123,20 @@ export default function Header({
           className={`header-bottom ${isMainPage ? 'is-main-page' : ''} ${isScrolled ? 'is-scrolled' : ''}`}>
           <div className="nav-wrap">
             <ul className="nav-top menuTitle2">
-              <Link href="#">
+              <Link href="/">
                 <li className="item">아파트 정보</li>
               </Link>
-              <Link
-                href={`/${apartmentEngName}/board/lists/announcement/NOTICE/1`}>
+              <Link href="/">
                 <li className="item">공지사항</li>
               </Link>
-              <Link
-                href={`/${apartmentEngName}/board/lists/complaint/MANAGEMENT_OFFICE/1`}>
+              <Link href="/">
                 <li className="item">아파트 민원</li>
               </Link>
-              <Link
-                href={`/${apartmentEngName}/board/lists/communication/USER_COMMU/1`}>
+              <Link href="/">
                 <li className="item">소통공간</li>
               </Link>
             </ul>
-            <Link href={`/${apartmentEngName}/mypage`}>
+            <Link href="/">
               <Image
                 className={isMainPage ? 'mainUserIcon' : ''}
                 width={37}
@@ -150,61 +146,44 @@ export default function Header({
               />
             </Link>
           </div>
+
           <div className="nav-detail">
             <ul className="detail-wrap body_04">
               <li className="detail-item">
-                <Link href="/">인사말</Link>
+                <Link href="/"> 인사말 </Link>
               </li>
               <li className="detail-item">
-                <Link href="/">단지전경</Link>
+                <Link href="/"> 단지전경 </Link>
               </li>
               <li className="detail-item">
-                <Link href="/">연락처정보</Link>
+                <Link href="/"> 연락처정보 </Link>
               </li>
               <li className="detail-item">
-                <Link href="/">커뮤니티시설</Link>
-              </li>
-            </ul>
-            <ul className="detail-wrap body_04">
-              <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/announcement/NOTICE/1`}>
-                  공지사항
-                </Link>
-              </li>
-              <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/announcement/DISCLOSURE/1`}>
-                  의무공개
-                </Link>
+                <Link href="/"> 커뮤니티시설 </Link>
               </li>
             </ul>
+
             <ul className="detail-wrap body_04">
               <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/complaint/MANAGEMENT_OFFICE/1`}>
-                  관리사무소 민원
-                </Link>
+                <Link href="/"> 공지사항 </Link>
               </li>
               <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/complaint/RESIDENTS_COMMITTEE/1`}>
-                  입주자 대표회의
-                </Link>
+                <Link href="/"> 의무공개 </Link>
               </li>
             </ul>
+
             <ul className="detail-wrap body_04">
               <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/communication/USER_COMMU/1`}>
-                  입주민 소통
-                </Link>
+                <Link href="/"> 관리사무소 인원 </Link>
+              </li>
+            </ul>
+
+            <ul className="detail-wrap body_04">
+              <li className="detail-item">
+                <Link href="/"> 입주민 소통 </Link>
               </li>
               <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/communication/REPRESENT_COMMU/1`}>
-                  입대의 소통
-                </Link>
+                <Link href="/"> 입대의 소통 </Link>
               </li>
             </ul>
           </div>

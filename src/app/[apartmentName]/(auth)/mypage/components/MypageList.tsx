@@ -108,13 +108,15 @@ interface Post {
 }
 
 interface Comment {
-  categoryId: string
-  commentId: number
-  postId: number
-  contents: string
-  createdAt: string
-  boardType: string
   postTitle: string
+  commentId: number
+  contents: string
+  commentWriter: {
+    memberId: number
+    nickname: string
+    profileImage: string | null
+  }
+  createdAt: string
 }
 
 export default function MypageList() {
@@ -136,7 +138,7 @@ export default function MypageList() {
       : params['communication']) ||
     (params['comment'] as string)
 
-  const typeKey = postType === 'comment' ? 'boardType' : 'communicationType'
+  const typeKey = postType === 'comment' ? 'commentType' : 'communicationType'
   const typeValue =
     searchParams.get(typeKey) ||
     (postType === 'comment' ? 'ANNOUNCEMENT' : 'USER_COMMU')
@@ -156,7 +158,7 @@ export default function MypageList() {
       case 'communication':
         return `https://aptner.shop/api/post/communication/search/${pageNumber}`
       case 'comment':
-        return `https://aptner.shop/api/post/comment/?pageNumber=${pageNumber}&pageSize=10`
+        return 'https://aptner.shop/api/post/comment/'
       default:
         return ''
     }
@@ -182,7 +184,11 @@ export default function MypageList() {
           myCommunication: true,
         }
       case 'comment':
-        return {}
+        return {
+          pageNumber,
+          pageSize: 10,
+          commentType: typeValue,
+        }
       default:
         return {}
     }
@@ -205,16 +211,12 @@ export default function MypageList() {
           },
         })
 
-        console.log('API response:', response.data)
-
         if (postType === 'comment') {
-          const content = response.data.content
-            .filter((comment: Comment) => comment.boardType === typeValue)
-            .map((comment: Comment) => ({
-              ...comment,
-              createdAt: formatDate(comment.createdAt),
-            }))
-          console.log('API Response (Comments):', content)
+          const content = response.data.content.map((comment: Comment) => ({
+            ...comment,
+            createdAt: formatDate(comment.createdAt),
+          }))
+
           setComments(content)
           setCommentTotalPages(response.data.totalPages || 1)
         } else {
@@ -222,13 +224,14 @@ export default function MypageList() {
             ...post,
             createdAt: formatDate(post.createdAt),
           }))
-          console.log('API Response:', content)
+
           setPosts(content)
           setCommunicationTotalPages(response.data.totalPages || 1)
         }
       } catch (error) {
         console.error('Failed to fetch posts:', error)
         setPosts([]) // API 요청이 실패한 경우 빈 배열로 초기화
+        setComments([]) // 댓글 요청이 실패한 경우 빈 배열로 초기화
       }
     }
 
@@ -260,7 +263,7 @@ export default function MypageList() {
         <Positions>
           <Mypage_ElasticTabs
             tabList={commentTabs}
-            typeKey="boardType"
+            typeKey="commentType"
           />
         </Positions>
       )}

@@ -77,26 +77,58 @@ export const {
   },
 })
 
-export const refreshAccessToken = async () => {
+export const clearTokens = () => {
+  Cookies.remove('accessToken')
+  Cookies.remove('refreshToken')
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+}
+
+export const refreshAccessToken = async (refreshToken: string | null) => {
+  if (!refreshToken) {
+    return null
+  }
+
   try {
-    const refreshToken = Cookies.get('refreshToken')
-    if (!refreshToken) throw new Error('No refresh token available')
+    const response = await axios.post(
+      'https://aptner.shop/api/token/refresh/reissue',
+      { refreshToken },
+    )
+    if (response.data.code === 1 && response.data.data.accessToken) {
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+        response.data.data
 
-    const response = await axios.post('/api/refresh-token/publish', {
-      token: refreshToken,
-    })
-
-    if (response.data.accessToken) {
-      const newAccessToken = response.data.accessToken
       store.dispatch(setAccessToken(newAccessToken))
-      Cookies.set('accessToken', newAccessToken, { expires: 1 }) // 쿠키에 새로운 액세스 토큰 저장
+      Cookies.set('accessToken', newAccessToken)
+      Cookies.set('refreshToken', newRefreshToken)
+
+      if (localStorage.getItem('rememberMe') === 'true') {
+        localStorage.setItem('accessToken', newAccessToken)
+        localStorage.setItem('refreshToken', newRefreshToken)
+      } else {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+      }
+
       return newAccessToken
     } else {
       throw new Error('Failed to refresh access token')
     }
   } catch (error) {
-    console.error('Error refreshing access token:', error)
-    store.dispatch(clearAccessToken())
+    if (axios.isAxiosError(error)) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.code === -1
+      ) {
+        store.dispatch(clearAccessToken())
+        clearTokens()
+      }
+    } else if (error instanceof Error) {
+      console.error('Error refreshing access token:', error.message)
+    } else {
+      console.error('Unknown error refreshing access token')
+    }
     return null
   }
 }

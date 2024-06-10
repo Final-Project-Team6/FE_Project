@@ -1,4 +1,3 @@
-// src/pages/login.tsx
 'use client'
 
 import './login.scss'
@@ -21,6 +20,7 @@ function LoginForm() {
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+  const [rememberMe, setRememberMe] = useState(false) // 자동로그인
   const router = useRouter()
   const dispatch = useDispatch()
   const apartmentId = useSelector(
@@ -48,8 +48,19 @@ function LoginForm() {
         const accessToken = response.data.data.accessToken
         const refreshToken = response.data.data.refreshToken
         dispatch(setAccessToken(accessToken))
-        Cookies.set('accessToken', accessToken, { expires: 1 }) // 액세스 토큰 저장
-        Cookies.set('refreshToken', refreshToken, { expires: 7 }) // 리프레시 토큰 저장 (예: 7일 동안 유지)
+        Cookies.set('accessToken', accessToken) // 액세스 토큰 저장
+        Cookies.set('refreshToken', refreshToken) // 리프레시 토큰 저장
+
+        if (rememberMe) {
+          localStorage.setItem('accessToken', accessToken)
+          localStorage.setItem('refreshToken', refreshToken)
+          localStorage.setItem('rememberMe', 'true') // rememberMe 상태 저장
+        } else {
+          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refreshToken')
+          localStorage.removeItem('rememberMe')
+        }
+
         router.replace('/')
       } else {
         const errorMessage =
@@ -86,7 +97,9 @@ function LoginForm() {
         </div>
         <CheckBox
           name="login"
-          $big>
+          $big
+          checked={rememberMe}
+          onChange={() => setRememberMe(!rememberMe)}>
           자동로그인
         </CheckBox>
         <p className="input-box-error body_06">{message}</p>

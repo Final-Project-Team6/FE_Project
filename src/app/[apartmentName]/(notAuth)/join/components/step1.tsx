@@ -57,11 +57,9 @@ const Step1: React.FC<Step1Props> = ({ onAllChecked, onUpdate }) => {
 
     setChecks(newChecks)
 
-    const allChecked =
-      newChecks.termsService &&
-      newChecks.privateInformationCollection &&
-      newChecks.snsMarketingInformationReceive
-    onAllChecked(allChecked)
+    const allRequiredChecked =
+      newChecks.termsService && newChecks.privateInformationCollection
+    onAllChecked(allRequiredChecked)
   }
 
   return (
