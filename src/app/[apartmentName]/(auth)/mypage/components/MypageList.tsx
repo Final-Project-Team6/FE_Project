@@ -154,9 +154,9 @@ export default function MypageList() {
   const getApiEndpoint = (postType: string) => {
     switch (postType) {
       case 'complaints':
-        return 'https://aptner.shop/api/post/complaint/search'
+        return `https://aptner.shop/api/post/complaint/search/${pageNumber}`
       case 'communication':
-        return 'https://aptner.shop/api/post/communication/search'
+        return `https://aptner.shop/api/post/communication/search/${pageNumber}`
       case 'comment':
         return 'https://aptner.shop/api/post/comment/'
       default:
@@ -168,7 +168,6 @@ export default function MypageList() {
     switch (postType) {
       case 'complaints':
         return {
-          pageNumber,
           pageSize: 10,
           searchType: 'TITLE_CONTENTS',
           orderType: 'DATE',
@@ -177,7 +176,6 @@ export default function MypageList() {
         }
       case 'communication':
         return {
-          pageNumber,
           pageSize: 10,
           searchType: 'TITLE',
           orderType: 'DATE',
