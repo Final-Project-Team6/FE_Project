@@ -52,7 +52,9 @@ const AlternativeComponent: React.FC<AlternativeComponentProps> = ({
     dispatch(saveStep2Data({ data: formData }))
     onUpdate(formData)
     checkFormValidity()
-  }, [formData, dispatch, onUpdate])
+    // onUpdate를 useEffect 의존성 배열에서 제거
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData, dispatch])
 
   const isFormValid = () => {
     const { fullName, phone } = formData
