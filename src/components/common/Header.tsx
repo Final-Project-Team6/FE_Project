@@ -22,7 +22,7 @@ export default function Header({
   apartmentData: findApartmentData
 }) {
   //경로
-  const apartmentName = apartmentData?.data?.name || 'defaultApartment'
+  const apartmentName = apartmentData?.data?.engName || 'defaultApartment'
   const dispatch: AppDispatch = useDispatch()
   const [isScrolled, setIsScrolled] = useState(
     typeof window !== 'undefined' ? window.scrollY > 573 : false,
