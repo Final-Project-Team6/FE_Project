@@ -3,12 +3,14 @@
 
 import Cookies from 'js-cookie'
 import { ReactNode, useEffect } from 'react'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 
 import { refreshAccessToken } from '@/auth'
+import { clearTokens } from '@/auth'
+import useAutoLogin from '@/hooks/useAutoLogin'
 
 import { clearAccessToken, setAccessToken } from './authSlice'
-import { store } from './store'
+import { RootState, store } from './store'
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   return (
@@ -19,10 +21,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 }
 
 const AppInitializer = ({ children }: { children: ReactNode }) => {
+  useAutoLogin()
   const dispatch = useDispatch()
+  const isLoggedOut = useSelector((state: RootState) => state.auth.isLoggedOut) // 로그아웃 상태 확인
 
   useEffect(() => {
     const initializeAuth = async () => {
+      if (isLoggedOut) return // 로그아웃 상태이면 자동 로그인 로직 건너뛰기
+
       const token = Cookies.get('accessToken')
       const refreshToken = Cookies.get('refreshToken')
 
@@ -30,16 +36,18 @@ const AppInitializer = ({ children }: { children: ReactNode }) => {
         dispatch(setAccessToken(token))
       } else if (refreshToken) {
         try {
-          const newToken = await refreshAccessToken()
+          const newToken = await refreshAccessToken(refreshToken)
           if (newToken) {
             dispatch(setAccessToken(newToken))
-            Cookies.set('accessToken', newToken, { expires: 1 })
+            Cookies.set('accessToken', newToken)
           } else {
             dispatch(clearAccessToken())
+            clearTokens()
           }
         } catch (error) {
           console.error('Failed to refresh access token:', error)
           dispatch(clearAccessToken())
+          clearTokens()
         }
       } else {
         dispatch(clearAccessToken())
@@ -47,7 +55,7 @@ const AppInitializer = ({ children }: { children: ReactNode }) => {
     }
 
     initializeAuth()
-  }, [dispatch])
+  }, [dispatch, isLoggedOut])
 
   return <>{children}</>
 }
