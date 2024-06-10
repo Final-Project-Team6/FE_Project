@@ -100,12 +100,14 @@ const Page: React.FC = () => {
       handleNextClick()
     } else {
       handleSubmit()
+      setCompletedItems(5)
     }
   }
 
   useEffect(() => {
     if (completedItems === 4 || completedItems === 2) {
-      setIsButtonDisabled(!isDataValid)
+      // setIsButtonDisabled(!isDataValid)
+      setIsButtonDisabled(isDataValid)
     }
   }, [isDataValid, completedItems])
 
