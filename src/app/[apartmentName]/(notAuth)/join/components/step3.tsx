@@ -54,7 +54,6 @@ const Step3: React.FC<Step3Props> = ({ onUpdate, handleNext }) => {
       const response = await axios.get(
         `https://aptner.shop/api/member/check/username?username=${username}`,
       )
-      console.log('API response:', response.data)
       if (response.data.code === 1) {
         setUsernameError(null)
         setUsernameMessage('')

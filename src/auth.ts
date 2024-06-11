@@ -39,7 +39,7 @@ export const {
     maxAge: 60 * 60 * 24, // 세션 만료 시간(sec)
   },
   pages: {
-    signIn: '/signin', // Default: '/auth/signin'
+    signIn: '/signin',
   },
   callbacks: {
     signIn: async () => {
@@ -106,8 +106,7 @@ export const refreshAccessToken = async (refreshToken: string | null) => {
         localStorage.setItem('accessToken', newAccessToken)
         localStorage.setItem('refreshToken', newRefreshToken)
       } else {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
+        clearTokens()
       }
 
       return newAccessToken

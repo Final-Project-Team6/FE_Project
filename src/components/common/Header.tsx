@@ -38,6 +38,7 @@ export default function Header({
   const handleLogout = () => {
     dispatch(clearAccessToken())
     Cookies.remove('accessToken')
+    Cookies.remove('refreshToken')
     router.replace('/')
   }
 

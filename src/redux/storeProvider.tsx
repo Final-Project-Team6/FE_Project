@@ -1,15 +1,18 @@
-// src/redux/storeProvider.tsx
 'use client'
 
 import Cookies from 'js-cookie'
 import { ReactNode, useEffect } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 
-import { refreshAccessToken } from '@/auth'
-import { clearTokens } from '@/auth'
+import { clearTokens, refreshAccessToken } from '@/auth'
 import useAutoLogin from '@/hooks/useAutoLogin'
 
-import { clearAccessToken, setAccessToken } from './authSlice'
+import {
+  clearAccessToken,
+  setAccessToken,
+  setLoggedOut,
+  setRefreshToken,
+} from './authSlice'
 import { RootState, store } from './store'
 
 export function StoreProvider({ children }: { children: ReactNode }) {
@@ -39,14 +42,17 @@ const AppInitializer = ({ children }: { children: ReactNode }) => {
           const newToken = await refreshAccessToken(refreshToken)
           if (newToken) {
             dispatch(setAccessToken(newToken))
+            dispatch(setRefreshToken(refreshToken)) // 리프레쉬 토큰 설정
             Cookies.set('accessToken', newToken)
           } else {
             dispatch(clearAccessToken())
+            dispatch(setLoggedOut())
             clearTokens()
           }
         } catch (error) {
           console.error('Failed to refresh access token:', error)
           dispatch(clearAccessToken())
+          dispatch(setLoggedOut())
           clearTokens()
         }
       } else {

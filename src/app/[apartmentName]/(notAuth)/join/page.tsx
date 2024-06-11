@@ -78,18 +78,20 @@ const Page: React.FC = () => {
   }
 
   const handleValidationUpdate = (isValid: boolean) => {
-    setIsDataValid(isValid)
+    setIsDataValid(!isValid)
   }
 
   const handleSubmit = async () => {
-    // 선택사항 필드를 제외하고 필수값만 서버로 전송
+    // 필수값만 서버로 전송, 선택값은 값이 있을 때만 포함
     const submitData = Object.fromEntries(
-      Object.entries(formData).filter(([value]) => value),
+      Object.entries(formData).filter(
+        ([value]) => value !== '' && value !== null && value !== undefined,
+      ),
     )
 
     try {
       await axios.post('https://aptner.shop/api/member/join', submitData)
-      console.log('회원가입이 성공적으로 처리되었습니다.')
+      setCompletedItems(5)
     } catch (error) {
       console.error('회원가입 중 오류가 발생했습니다:', error)
     }
@@ -100,14 +102,12 @@ const Page: React.FC = () => {
       handleNextClick()
     } else {
       handleSubmit()
-      setCompletedItems(5)
     }
   }
 
   useEffect(() => {
     if (completedItems === 4 || completedItems === 2) {
-      // setIsButtonDisabled(!isDataValid)
-      setIsButtonDisabled(isDataValid)
+      setIsButtonDisabled(!isDataValid)
     }
   }, [isDataValid, completedItems])
 
@@ -198,7 +198,7 @@ const Page: React.FC = () => {
           <div className={completedItems === 1 ? 'center' : 'leftbtn'}>
             <Button
               disabled={isButtonDisabled}
-              onClick={completedItems === 1 ? handleNext : handleSubmit}
+              onClick={handleNext}
               size="confirm"
               color="primary">
               {completedItems === 4 ? '확인' : '다음'}

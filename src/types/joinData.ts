@@ -4,8 +4,8 @@ export interface joinData {
     privateInformationCollection: boolean
     snsMarketingInformationReceive: boolean
     fullName: string
-    birthFirst: number
-    gender: number
+    birthFirst?: number
+    gender?: number
     phone: number
     username: string
     password: string

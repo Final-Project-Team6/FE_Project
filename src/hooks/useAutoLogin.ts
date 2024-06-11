@@ -3,8 +3,12 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { refreshAccessToken } from '@/auth'
-import { setAccessToken } from '@/redux/authSlice'
-import { clearAccessToken } from '@/redux/authSlice'
+import {
+  clearAccessToken,
+  setAccessToken,
+  setLoggedOut,
+  setRefreshToken,
+} from '@/redux/authSlice'
 import { RootState } from '@/redux/store'
 
 const useAutoLogin = () => {
@@ -13,13 +17,10 @@ const useAutoLogin = () => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      if (isLoggedOut) return
-      const token =
-        localStorage.getItem('accessToken') ||
-        sessionStorage.getItem('accessToken')
-      const refreshToken =
-        localStorage.getItem('refreshToken') ||
-        sessionStorage.getItem('refreshToken')
+      if (isLoggedOut) return // 로그아웃 상태이면 자동 로그인 로직 건너뛰기
+
+      const token = Cookies.get('accessToken')
+      const refreshToken = Cookies.get('refreshToken')
 
       if (token) {
         dispatch(setAccessToken(token))
@@ -28,13 +29,20 @@ const useAutoLogin = () => {
           const newToken = await refreshAccessToken(refreshToken)
           if (newToken) {
             dispatch(setAccessToken(newToken))
+            dispatch(setRefreshToken(refreshToken))
             Cookies.set('accessToken', newToken)
           } else {
             dispatch(clearAccessToken())
+            dispatch(setLoggedOut())
+            Cookies.remove('accessToken')
+            Cookies.remove('refreshToken')
           }
         } catch (error) {
           console.error('Failed to refresh access token:', error)
           dispatch(clearAccessToken())
+          dispatch(setLoggedOut())
+          Cookies.remove('accessToken')
+          Cookies.remove('refreshToken')
         }
       } else {
         dispatch(clearAccessToken())
@@ -42,7 +50,7 @@ const useAutoLogin = () => {
     }
 
     initializeAuth()
-  }, [dispatch])
+  }, [dispatch, isLoggedOut])
 }
 
 export default useAutoLogin

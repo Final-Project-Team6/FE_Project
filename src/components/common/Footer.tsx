@@ -22,7 +22,7 @@ function Footer() {
       const expirationTime = payload.exp * 1000
       const currentTime = Date.now()
 
-      if (expirationTime - currentTime < 25 * 60 * 1000) {
+      if (expirationTime - currentTime < 30 * 60 * 1000) {
         if (refreshToken) {
           try {
             const newToken = await refreshAccessToken(refreshToken)
@@ -48,7 +48,7 @@ function Footer() {
 
   useEffect(() => {
     checkTokenExpiration() // UseEffect가 호출될 때 한 번 바로 실행
-    const interval = setInterval(checkTokenExpiration, 25 * 60 * 1000) // 25분마다 체크
+    const interval = setInterval(checkTokenExpiration, 30 * 60 * 1000) // 30분마다 체크
     return () => clearInterval(interval)
   }, [])
 
