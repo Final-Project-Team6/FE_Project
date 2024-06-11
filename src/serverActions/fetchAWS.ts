@@ -13,7 +13,7 @@ export async function createImage({
 
   const headers: Record<string, string> = {
     'Content-Type': 'multipart/form-data',
-    'Authorization': `Bearer ${accessToken}`
+    Authorization: `Bearer ${accessToken}`,
   }
 
   const res = await fetch(
