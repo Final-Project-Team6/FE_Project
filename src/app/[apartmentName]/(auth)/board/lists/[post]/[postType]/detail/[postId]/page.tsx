@@ -10,7 +10,13 @@ import PostDetailTopWrapper from './components/PostDetailTopWrapper'
 export async function generateMetadata({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+    postId: number
+  }
 }) {
   return {
     title: `${params.post} | Detail`,
@@ -22,6 +28,7 @@ export default async function Page({
   params,
 }: {
   params: {
+    apartmentName: string
     post: string
     postType: PostCategoryParamKeys
     listNum: string

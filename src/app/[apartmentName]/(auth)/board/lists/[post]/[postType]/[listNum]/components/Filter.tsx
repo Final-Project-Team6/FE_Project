@@ -12,7 +12,12 @@ import { fetchPostCategory } from '@/serverActions/fetchPostData'
 export default function Filter({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   const postCategory = useSelector((state: RootState) => state.postCategory)
   const postCategoryList = useSelector(

@@ -37,15 +37,12 @@ export default function Emoji({
   active = null,
   postId,
   accessToken,
+  params,
 }: EmojiType) {
   const dispatch = useDispatch()
 
   const fetchPostDetail = async () => {
-    const response = await fetchPostDetailData(
-      'announcement',
-      postId,
-      accessToken,
-    )
+    const response = await fetchPostDetailData(params.post, postId, accessToken)
     dispatch(setPostDetailReducer(response))
   }
 
@@ -53,7 +50,7 @@ export default function Emoji({
     if (active === null) {
       const response = await createVote({
         postId: postId,
-        voteType: 'ANNOUNCEMENT',
+        voteType: params.post.toUpperCase(),
         opinion: iconType === 'like' ? true : false,
         accessToken: accessToken,
       })
@@ -64,14 +61,14 @@ export default function Emoji({
     ) {
       const response = await deleteVote({
         postId: postId,
-        voteType: 'ANNOUNCEMENT',
+        voteType: params.post.toUpperCase(),
         accessToken: accessToken,
       })
       console.log(response)
     } else {
       const response = await patchVote({
         postId: postId,
-        voteType: 'ANNOUNCEMENT',
+        voteType: params.post.toUpperCase(),
         opinion: !active,
         accessToken: accessToken,
       })

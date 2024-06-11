@@ -10,7 +10,12 @@ import WriteForm from './components/WriteForm'
 export async function generateMetadata({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   return {
     title: `${postCategoryParams[params.postType]} | Write`,
@@ -21,7 +26,12 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   return <WriteForm params={params} />
 }

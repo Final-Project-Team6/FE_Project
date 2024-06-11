@@ -90,7 +90,12 @@ const StatusBox = styled.div`
 export default function PostList({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   const apartmentId = useSelector(
     (state: RootState) => state.apartment.data.apartmentId,

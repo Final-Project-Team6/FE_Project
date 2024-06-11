@@ -17,11 +17,8 @@ export default function Editor() {
               disableResizeEditor: true,
               tabDisable: false,
               placeholder: '내용을 입력하세요',
-              icons: {
-                  picture: 'postWriteImage'
-              },
               toolbar: [
-                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['insert', ['hr']],
                 ['style', ['style']],
                 ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
                 ['fontsize', ['fontsize']],

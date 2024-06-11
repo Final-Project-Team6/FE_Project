@@ -44,7 +44,12 @@ const NumberBarWrapper = styled.ul`
 export default function NumberBar({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   const postList = useSelector((state: RootState) => state.postList.content)
   const postPagination = useSelector((state: RootState) => state.postPagination)

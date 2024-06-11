@@ -12,6 +12,9 @@ const initialState: postType = {
   contents: '',
   createdAt: '',
   view: 0,
+  agreeCnt: 0,
+  disagreeCnt: 0,
+  yourVote: null,
 }
 
 const postDetailSlice = createSlice({
@@ -40,8 +43,21 @@ const postDetailSlice = createSlice({
       state.comments = action.payload.comments
       state.yourVote = action.payload.yourVote
     },
+    setPostDetailVoteReducer(
+      state,
+      action: PayloadAction<{
+        agreeCnt: number
+        disagreeCnt: number
+        yourVote: boolean | null
+      }>,
+    ) {
+      state.agreeCnt = action.payload.agreeCnt
+      state.disagreeCnt = action.payload.disagreeCnt
+      state.yourVote = action.payload.yourVote
+    },
   },
 })
 
 export const { setPostDetailReducer } = postDetailSlice.actions
+export const { setPostDetailVoteReducer } = postDetailSlice.actions
 export default postDetailSlice.reducer

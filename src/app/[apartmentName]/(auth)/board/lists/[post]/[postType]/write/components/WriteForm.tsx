@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Info from 'public/icons/info.svg'
 import NextIcon from 'public/icons/next.svg'
-import React, { ChangeEventHandler } from 'react'
+import React, { ChangeEventHandler /*useState*/ } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import CheckBox from '@/components/checkBox/CheckBox'
@@ -20,6 +21,7 @@ import {
   setPostWriteTitleReducer,
 } from '@/redux/postWriteSlice'
 import { RootState } from '@/redux/store'
+// import { createImage } from '@/serverActions/fetchAWS'
 import { createPost } from '@/serverActions/fetchPostData'
 import styles from '@/styles/writePage.module.scss'
 
@@ -28,7 +30,12 @@ import Filter from './Filter'
 export async function generateMetadata({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   return {
     title: `${postCategoryParams[params.postType]} | Write`,
@@ -39,8 +46,14 @@ export async function generateMetadata({
 export default function WriteForm({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
+  const router = useRouter()
   const apartmentId = useSelector(
     (state: RootState) => state.apartment.data.apartmentId,
   )
@@ -57,20 +70,50 @@ export default function WriteForm({
   }
 
   const writeAction = async () => {
+    if (postWrite.title === '') {
+      alert('제목을 입력해주세요.')
+      return
+    } else if (postWrite.categoryId === 0) {
+      alert('분류를 선택해주세요.')
+      return
+    }
+
+    // const imageResponse = await createImage({
+    //   category: '테스트',
+    //   accessToken: accessToken,
+    //   imageUrl: imageUrl,
+    // })
+
     const response = await createPost({
       apartmentId: apartmentId,
       postType: params.post,
       title: postWrite.title,
-      contents: document.getElementsByClassName('note-editable')[0].innerHTML,
+      contents:
+        document.getElementsByClassName('note-editable')[0].innerHTML /*+
+        `<img src="${imageResponse.json}"/>`*/,
       [`${params.post}CategoryId`]: postWrite.categoryId,
       important: postWrite.important,
       status: postWrite.status,
       secret: postWrite.secret,
       accessToken: accessToken,
     })
-    console.log('게시물 작성 액션 실행됨!🟢🟢🟢🟢🟢🟢🟢')
+    router.replace(
+      `/${params.apartmentName}/board/lists/${params.post}/${params.postType}/1`,
+    )
+
+    alert(`${postCategoryParams[params.postType]}이 작성되었습니다.`)
     return response
   }
+
+  // const [image, setImage] = useState<File | null>(null)
+  // const [imageUrl, setImageUrl] = useState<string | null>(null)
+  // const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     const uploadedImage = event.target.files[0]
+  //     setImage(uploadedImage)
+  //     setImageUrl(URL.createObjectURL(uploadedImage))
+  //   }
+  // }
 
   return (
     <form action={() => writeAction()}>
@@ -126,6 +169,26 @@ export default function WriteForm({
             </div>
           </div>
           <Editor />
+          {/* <div>
+            <div>
+              <input
+                type="file"
+                className="real-upload"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              {imageUrl && (
+                <div className="image-container">
+                  <Image
+                    src={imageUrl}
+                    alt="Uploaded Image"
+                    height={150}
+                    width={150}
+                  />
+                </div>
+              )}
+            </div>
+          </div> */}
           <div className={`caption_02 ${styles.secretSettingWrapper}`}>
             <CheckBox
               name="secret"
