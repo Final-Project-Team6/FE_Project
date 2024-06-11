@@ -185,12 +185,6 @@ export default function Header({
                   관리사무소 민원
                 </Link>
               </li>
-              <li className="detail-item">
-                <Link
-                  href={`/${apartmentEngName}/board/lists/complaint/RESIDENTS_COMMITTEE/1`}>
-                  입주자 대표회의
-                </Link>
-              </li>
             </ul>
             <ul className="detail-wrap body_04">
               <li className="detail-item">
