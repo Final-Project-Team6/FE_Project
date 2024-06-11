@@ -48,8 +48,8 @@ export interface postType {
   complaintStatus?: complaintStatusParamKeys
   secret?: boolean
   commentCnt?: number
-  agreeCnt?: number
-  disagreeCnt?: number
+  agreeCnt: number
+  disagreeCnt: number
   comments?: postCommentType[]
   yourVote?: boolean | null
 }
