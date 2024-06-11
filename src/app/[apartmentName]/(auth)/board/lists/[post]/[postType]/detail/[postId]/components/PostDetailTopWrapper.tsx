@@ -14,6 +14,7 @@ export default function PostDetailTopWrapper({
   params,
 }: {
   params: {
+    apartmentName: string
     post: string
     postType: PostCategoryParamKeys
     listNum: string
@@ -72,6 +73,7 @@ export default function PostDetailTopWrapper({
             active={postDetailData.yourVote}
             postId={Number(params.postId)}
             accessToken={accessToken}
+            params={params}
           />
           <Emoji
             iconType="hate"
@@ -79,6 +81,7 @@ export default function PostDetailTopWrapper({
             active={postDetailData.yourVote}
             postId={Number(params.postId)}
             accessToken={accessToken}
+            params={params}
           />
         </div>
       </div>

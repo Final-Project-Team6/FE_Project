@@ -21,6 +21,7 @@ export default function PostDetailCommentWrapper({
   params,
 }: {
   params: {
+    apartmentName: string
     post: string
     postType: PostCategoryParamKeys
     listNum: string
