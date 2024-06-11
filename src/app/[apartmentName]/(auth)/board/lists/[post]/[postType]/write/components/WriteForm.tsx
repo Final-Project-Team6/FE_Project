@@ -27,22 +27,6 @@ import styles from '@/styles/writePage.module.scss'
 
 import Filter from './Filter'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: {
-    apartmentName: string
-    post: string
-    postType: PostCategoryParamKeys
-    listNum: string
-  }
-}) {
-  return {
-    title: `${postCategoryParams[params.postType]} | Write`,
-    description: 'write 페이지',
-  }
-}
-
 export default function WriteForm({
   params,
 }: {
@@ -189,24 +173,28 @@ export default function WriteForm({
               )}
             </div>
           </div> */}
-          <div className={`caption_02 ${styles.secretSettingWrapper}`}>
-            <CheckBox
-              name="secret"
-              onChange={onChangeSecret}
-              $baseColor>
-              비밀글 설정
-            </CheckBox>
-            <div>
-              <p>
-                다른 입주민에게 노출을 원하지 않는 민원의 경우 비밀글을
-                설정하세요.
-              </p>
-              <p>
-                비밀글 설정을 하면 아파트 민원 게시판에 노출되지 않고
-                관리사무소와 작성자만 확인할 수 있습니다.
-              </p>
+          {postCategoryParams[params.postType] === '입대의 소통' ? (
+            ''
+          ) : (
+            <div className={`caption_02 ${styles.secretSettingWrapper}`}>
+              <CheckBox
+                name="secret"
+                onChange={onChangeSecret}
+                $baseColor>
+                비밀글 설정
+              </CheckBox>
+              <div>
+                <p>
+                  다른 입주민에게 노출을 원하지 않는 민원의 경우 비밀글을
+                  설정하세요.
+                </p>
+                <p>
+                  비밀글 설정을 하면 아파트 민원 게시판에 노출되지 않고
+                  관리사무소와 작성자만 확인할 수 있습니다.
+                </p>
+              </div>
             </div>
-          </div>
+          )}
           <div className={styles.writeConfirmWrapper}>
             <Button
               size="message"
