@@ -2,19 +2,68 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Input from '@/components/common/Input/Input'
-import { saveStep4Data } from '@/redux/joinSlice' // 경로는 실제 경로에 맞게 수정하세요.
+import { saveStep4Data } from '@/redux/joinSlice'
 
 type Step4Props = {
   onUpdate: (data: any) => void
-  onValidationUpdate: (isValid: boolean) => void // 변경된 부분
+  onValidationUpdate: (isValid: boolean) => void
+}
+
+const getRandomNickname = () => {
+  const determiners = [
+    '예쁜',
+    '화난',
+    '귀여운',
+    '배고픈',
+    '철학적인',
+    '현학적인',
+    '슬픈',
+    '푸른',
+    '비싼',
+    '밝은',
+  ]
+
+  const animals = [
+    '호랑이',
+    '비버',
+    '강아지',
+    '부엉이',
+    '여우',
+    '치타',
+    '문어',
+    '고양이',
+    '미어캣',
+    '다람쥐',
+  ]
+
+  const randomDeterminer =
+    determiners[Math.floor(Math.random() * determiners.length)]
+  const randomAnimal = animals[Math.floor(Math.random() * animals.length)]
+
+  return `${randomDeterminer}${randomAnimal}`
 }
 
 const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
   const [formData, setFormData] = useState({
-    nickname: '',
+    nickname: getRandomNickname(),
     dong: '',
     ho: '',
   })
+
+  const [nicknameStatus, setNicknameStatus] = useState<
+    'default' | 'error' | 'success'
+  >('default')
+  const [nicknameError, setNicknameError] = useState<string>('')
+
+  const [dongStatus, setDongStatus] = useState<'default' | 'error' | 'success'>(
+    'default',
+  )
+  const [dongError, setDongError] = useState<string>('')
+
+  const [hoStatus, setHoStatus] = useState<'default' | 'error' | 'success'>(
+    'default',
+  )
+  const [hoError, setHoError] = useState<string>('')
 
   const dispatch = useDispatch()
 
@@ -38,9 +87,39 @@ const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
   // 모든 필드가 작성되었는지 확인하는 함수
   const checkFormValidity = () => {
     const { nickname, dong, ho } = formData
-    const isValid =
-      nickname.length >= 2 && nickname.length <= 16 && !!dong && !!ho
-    onValidationUpdate(isValid)
+    let isValid = true
+
+    if (nickname.length < 2 || nickname.length > 16) {
+      setNicknameStatus('error')
+      setNicknameError('닉네임은 최소 2글자에서 최대 16글자여야 합니다.')
+
+      isValid = false
+    } else {
+      setNicknameStatus('success')
+      setNicknameError('')
+    }
+
+    if (!dong) {
+      setDongStatus('error')
+      setDongError('아파트 동을 입력해주세요.')
+
+      isValid = false
+    } else {
+      setDongStatus('success')
+      setDongError('')
+    }
+
+    if (!ho) {
+      setHoStatus('error')
+      setHoError('아파트 호수를 입력해주세요.')
+
+      isValid = false
+    } else {
+      setHoStatus('success')
+      setHoError('')
+    }
+
+    onValidationUpdate(!isValid)
   }
 
   useEffect(() => {
@@ -59,6 +138,9 @@ const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
           placeholder="글자는 최소 2글자에서 최대 16글자"
           value={formData.nickname}
           onChange={handleChange}
+          status={nicknameStatus}
+          errorMessage={nicknameError ? nicknameError : ''}
+          checkIcon
         />
       </div>
 
@@ -72,6 +154,9 @@ const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
           placeholder="아파트 동 입력(숫자만)"
           value={formData.dong}
           onChange={handleChange}
+          status={dongStatus}
+          errorMessage={dongError ? dongError : ''}
+          checkIcon
         />
       </div>
 
@@ -85,6 +170,9 @@ const Step4: React.FC<Step4Props> = ({ onUpdate, onValidationUpdate }) => {
           placeholder="아파트 호수 입력(숫자만)"
           value={formData.ho}
           onChange={handleChange}
+          status={hoStatus}
+          errorMessage={hoError ? hoError : ''}
+          checkIcon
         />
       </div>
     </div>
