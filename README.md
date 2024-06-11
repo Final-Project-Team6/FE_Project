@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 반포자이 - 아파트너 고도화 <a href="https://fe-project-tau.vercel.app/seoul-signiel"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/17b9e1be-a56b-4afd-b2ca-67fbfd366b7a" align="left" width="100"></a>
 
-## Getting Started
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FFinal-Project-Team6%2FFE_Project&count_bg=%233DB7C8&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr-closed/Final-Project-Team6/FE_Project.svg)](https://github.com/Final-Project-Team6/FE_Project/pulls?q=is%3Apr+is%3Aclosed)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<br/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/3a950b34-fa8c-429a-a519-94e0b29743b1)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/f929ae69-a8e0-409f-be87-4df0f2512259)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/ca807190-412d-4c4f-9f61-e3ee8bbf312e)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+<br/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ✨아파트너 서비스 고도화 배경
 
-## Deploy on Vercel
+- 아파트너의 핵심 목표는 아파트 이해관계자를 위해 아파트너만의 다양한 솔루션을 제공합니다.
+- 요구 사항에 따른 아파트너 입주민들이 프라이드를 가질 만큼의 있어빌리티 UI / UX 중요한 목표입니다.
+- 요구 사항에 따른 회원 / 인증, 게시판(공지사항 / 정보 / 소통 / 민원) 서비스 고도화가 중요한 목표입니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<br/>
+
+
+
+##  👨‍👩‍👧‍👦  구성원
+
+| BE(L): 임대일                                                | BE: 이규석                                                   | BE: 나승정                                                   | FE(L): 박수빈                                                | FE: 이주홍                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <a href="https://github.com/LimdaeIl"><img src="https://avatars.githubusercontent.com/u/131642334?v=4" alt="profile" width="140" height="140"></a> | <a href="https://github.com/cutegyuseok"><img src="https://avatars.githubusercontent.com/u/103543611?v=4" alt="profile" width="140" height="140"></a> | <a href="https://github.com/NaSJ93"><img src="https://avatars.githubusercontent.com/u/145634600?v=4" alt="profile" width="140" height="140"></a> | <a href="https://github.com/subinsad"><img src="https://avatars.githubusercontent.com/u/92204014?v=4" alt="profile" width="140" height="140"></a> | <a href="https://github.com/dlwnghd"><img src="https://avatars.githubusercontent.com/u/61799492?v=4" width="140" height="140"></a> |
+| <div align="center"><a href="https://github.com/LimdaeIl" target="_blank"><img src="https://img.shields.io/badge/LimdaeIl-181717?style=for-the-social&logo=github&logoColor=white"/></a></div> | <div align="center"><a href="https://github.com/cutegyuseok" target="_blank"><img src="https://img.shields.io/badge/cutegyuseok-181717?style=for-the-social&logo=github&logoColor=white"/></a></div> | <div align="center"><a href="https://github.com/NaSJ93" target="_blank"><img src="https://img.shields.io/badge/NaSJ93-181717?style=for-the-social&logo=github&logoColor=white"/></a></div> | <div align="center"><a href="https://github.com/subinsad" target="_blank"><img src="https://img.shields.io/badge/subinsad-181717?style=for-the-social&logo=github&logoColor=white"/></a></div> | <div align="center"><a href="https://github.com/dlwnghd" target="_blank"><img src="https://img.shields.io/badge/dlwnghd-181717?style=for-the-social&logo=github&logoColor=white"/></a></div> |
+
+| PM(L): 이나현                                                | PM: 오로라                                                   | PM: 김윤희                                                   | UXUI(L): 유채연                                              | UXUI: 권은비                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://cdn-icons-png.flaticon.com/512/3736/3736502.png" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/00fe414d-f3fa-4c9e-a7ac-edf6cc837774" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/af7d2109-00a5-449e-ae9e-28a1fb13be79" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/37167b01-8645-47e6-9e97-01b98503db6e" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/mango101"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/39a84c41-2f9f-46e0-a445-a30ff51a2d61" alt="profile" width="140" height="140"> |
+| <div align="center"><a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://img.shields.io/badge/이_나_현-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a></div> |                                                              |                                                              | <div align="center"><a href="https://notefolio.net/OGU59"><img src="https://img.shields.io/badge/유_채_연-%23F7F7F7?style=for-the-badge&logo=notion&logoColor=000000"/></a></div> | <div align="center"><a href="https://notefolio.net/mango101"><img src="https://img.shields.io/badge/권_은_비-%23F7F7F7?style=for-the-badge&logo=notion&logoColor=000000"/></a></div> |
+
+<br/>
+
+
+
+
+
+## 🚎 프로젝트 아키텍처
+![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/05ae149e-e1ec-426f-9660-9e1543dfc9f1)
+
+<br/>
+
+ 
+<br/>
+
+**🚀 Devopment Team Tool**
+- **소통 도구**
+  - `Slack`: 모든 이해관계자와 대화하는 공간입니다.
+  - `Zoom`: 온라인 과정으로 화상 회의가 중심입니다.
+  - `Notion`: PM, UIUX, BE, FE 일정 및 도출되는 문서 관리 공간입니다.
+
+
+- **협업 도구(FE)**
+  - `Github`: Wiki, Project 를 활용하여 애자일 방법론으로 프로젝트 형상관리를 구성합니다.
+
+<br/>
+
+<br/>
+
+<br/>
+
+## 🍃 Contributors
+**👜 Repository**
+- [⚙️ BE Repository](https://github.com/Final-Project-Team6/BE_Project)
+- [⚙️ FE Repository](https://github.com/Final-Project-Team6/FE_Project)
