@@ -1,16 +1,19 @@
 import Cookies from 'js-cookie'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { refreshAccessToken } from '@/auth'
 import { setAccessToken } from '@/redux/authSlice'
 import { clearAccessToken } from '@/redux/authSlice'
+import { RootState } from '@/redux/store'
 
 const useAutoLogin = () => {
   const dispatch = useDispatch()
+  const isLoggedOut = useSelector((state: RootState) => state.auth.isLoggedOut)
 
   useEffect(() => {
     const initializeAuth = async () => {
+      if (isLoggedOut) return
       const token =
         localStorage.getItem('accessToken') ||
         sessionStorage.getItem('accessToken')
