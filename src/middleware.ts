@@ -13,14 +13,18 @@ const matchersForAuth = [
 export async function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken')?.value
 
+  // 리디렉션 설정
   if (request.nextUrl.pathname === '/') {
     return NextResponse.redirect(new URL('/seoul-signiel', request.url))
   }
 
+  // 인증이 필요한 경로 검사
   if (isMatch(request.nextUrl.pathname, matchersForAuth)) {
-    return accessToken
-      ? NextResponse.next()
-      : NextResponse.redirect(new URL('/seoul-signiel/login', request.url))
+    if (accessToken) {
+      return NextResponse.next()
+    } else {
+      return NextResponse.redirect(new URL('/seoul-signiel/login', request.url))
+    }
   }
 
   return NextResponse.next()
