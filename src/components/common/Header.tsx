@@ -22,7 +22,6 @@ export default function Header({
   apartmentData: findApartmentData
 }) {
   //경로
-  const apartmentName = apartmentData?.data?.name || 'defaultApartment'
   const apartmentEngName = apartmentData?.data?.engName
   const dispatch: AppDispatch = useDispatch()
   const [isScrolled, setIsScrolled] = useState(
@@ -76,7 +75,7 @@ export default function Header({
             {!accessToken ? (
               <>
                 <Link
-                  href={`/${apartmentName}/join`}
+                  href={`/${apartmentEngName}/join`}
                   className="chip-link caption_02">
                   <Chip
                     color="outline"
@@ -85,7 +84,7 @@ export default function Header({
                   </Chip>
                 </Link>
                 <Link
-                  href={`/${apartmentName}/login`}
+                  href={`/${apartmentEngName}/login`}
                   className="chip-link">
                   <Chip
                     color="fill"
@@ -97,7 +96,7 @@ export default function Header({
             ) : (
               <>
                 <Link
-                  href={`/${apartmentName}/mypage`}
+                  href={`/${apartmentEngName}/mypage`}
                   className="chip-link">
                   <Chip
                     color="outline"
