@@ -17,7 +17,12 @@ import Filter from './components/Filter'
 export async function generateMetadata({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   return {
     title: `${postCategoryParams[params.postType]} | Post`,
@@ -28,7 +33,12 @@ export async function generateMetadata({
 export default function Page({
   params,
 }: {
-  params: { post: string; postType: PostCategoryParamKeys; listNum: string }
+  params: {
+    apartmentName: string
+    post: string
+    postType: PostCategoryParamKeys
+    listNum: string
+  }
 }) {
   return (
     <>
@@ -51,15 +61,19 @@ export default function Page({
       <PostList params={params} />
       <div className={styles.postBottomWrapper}>
         <NumberBar params={params} />
-        <Link href={'write'}>
-          <Button
-            className="body_05"
-            size="phone"
-            color="primary"
-            $text="thin">
-            글작성하기
-          </Button>
-        </Link>
+        {params.post === 'announcement' ? (
+          ''
+        ) : (
+          <Link href={'write'}>
+            <Button
+              className="body_05"
+              size="phone"
+              color="primary"
+              $text="thin">
+              글작성하기
+            </Button>
+          </Link>
+        )}
       </div>
     </>
   )
