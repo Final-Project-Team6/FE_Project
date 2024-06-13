@@ -73,6 +73,11 @@ const PostTextAlignLeft = styled.th`
 `
 const PostTitleData = styled.td`
   align-items: center;
+
+  a > p {
+    justify-content: flex-start;
+  }
+  justify-content: flex-start;
 `
 const AlignItemsCenter = styled.td`
   display: flex;
