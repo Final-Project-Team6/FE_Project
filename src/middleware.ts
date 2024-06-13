@@ -4,9 +4,6 @@ import { match } from 'path-to-regexp'
 
 const matchersForAuth = [
   '/seoul-signiel/board/:path*', // board 페이지와 그 하위 경로
-  '/dashboard/:path*',
-  '/myaccount/:path*',
-  '/settings/:path*',
   // 필요한 경로를 추가
 ]
 
@@ -31,7 +28,7 @@ export async function middleware(request: NextRequest) {
 }
 
 function isMatch(pathname: string, urls: string[]) {
-  return urls.some(url => !!match(url)(pathname))
+  return pathname !== '/' && urls.some(url => !!match(url)(pathname))
 }
 
 export const config = {
@@ -43,6 +40,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api/auth/*|font/*|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api/auth/*|font/*|_next/static|_next/imgs|favicon.ico).*)',
   ],
 }

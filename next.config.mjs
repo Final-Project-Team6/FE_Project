@@ -13,6 +13,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/seoul-signiel',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
