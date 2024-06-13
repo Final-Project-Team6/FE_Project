@@ -2,6 +2,8 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { match } from 'path-to-regexp'
 
+import { auth } from '@/auth'
+
 const matchersForAuth = [
   '/seoul-signiel/board/:path*', // board 페이지와 그 하위 경로
   // 필요한 경로를 추가
@@ -17,11 +19,12 @@ export async function middleware(request: NextRequest) {
 
   // 인증이 필요한 경로 검사
   if (isMatch(request.nextUrl.pathname, matchersForAuth)) {
-    if (accessToken) {
-      return NextResponse.next()
-    } else {
-      return NextResponse.redirect(new URL('/seoul-signiel/login', request.url))
-    }
+    return (
+      accessToken &&
+      ((await auth())
+        ? NextResponse.next()
+        : NextResponse.redirect(new URL('/seoul-signiel/login', request.url)))
+    )
   }
 
   return NextResponse.next()
