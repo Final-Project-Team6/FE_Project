@@ -162,7 +162,7 @@ export default function WriteForm({
                 onChange={handleImageUpload}
               />
               {imageUrl && (
-                <div className="image-container">
+                <div className={styles.imageContainer}>
                   <Image
                     src={imageUrl}
                     alt="Uploaded Image"
@@ -197,6 +197,12 @@ export default function WriteForm({
           )}
           <div className={styles.writeConfirmWrapper}>
             <Button
+              type="button"
+              onClick={() => {
+                router.replace(
+                  `/${params.apartmentName}/board/lists/${params.post}/${params.postType}/1`,
+                )
+              }}
               size="message"
               color="white">
               취소
