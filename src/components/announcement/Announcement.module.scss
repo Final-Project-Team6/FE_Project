@@ -1,0 +1,95 @@
+@import '@/styles/_mixins.module';
+@import '@/styles/_variables.module';
+
+.container {
+  width: 628px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  border-radius: var(--size-24, 24px);
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.08);
+}
+
+.containerTop {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px;
+}
+
+.announcementText {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: $bold;
+  color: $gray10;
+}
+
+.containerBottom {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid $gray05;
+  padding: 36px 16px 28px;
+  color: $gray09;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.button {
+  color: $primaryColor;
+  background-color: $white;
+  border: 1px solid $primaryColor;
+  border-radius: 5rem;
+  padding: 4px 16px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: $medium;
+}
+
+.activeButton {
+  font-weight: $bold;
+  color: $white;
+  background-color: $primaryColor;
+}
+
+.announcements {
+  padding: 0px;
+  div {
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 400px;
+      color: $gray10;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 500;
+    }
+    p {
+      color: $gray08;
+    }
+  }
+}
+
+.announcementBox {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 32px;
+  transition: background 0.1s ease-out;
+
+  &:hover {
+    background-color: $gray03;
+    span {
+      font-weight: $bold;
+    }
+  }
+}
+
+.announcementBoxLine {
+  width: 564px;
+  height: 1px;
+  background: $gray04;
+  margin: auto;
+}

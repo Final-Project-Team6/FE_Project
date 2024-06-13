@@ -4,7 +4,12 @@
     "plugin:storybook/recommended",
     "prettier"
   ],
-  "plugins": ["prettier", "eslint-plugin-simple-import-sort", "unused-imports"],
+  "plugins": [
+    "prettier",
+    "eslint-plugin-simple-import-sort",
+    "unused-imports",
+    "@typescript-eslint/eslint-plugin"
+  ],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
@@ -50,12 +55,13 @@
     "comma-spacing": ["error", { "before": false, "after": true }],
     "prettier/prettier": [
       "error",
-      { "endOfLine": "crlf" },
+      // { "endOfLine": "crlf" },
       { "usePrettierrc": true }
     ],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "@typescript-eslint/no-unused-vars": "error" // TypeScript 관련 규칙 추가
   },
   "parserOptions": {
     "ecmaFeatures": {

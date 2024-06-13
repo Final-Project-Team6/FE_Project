@@ -1,0 +1,36 @@
+@import '@/styles/_mixins.module';
+@import '@/styles/_variables.module';
+
+.privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .label {
+        width: 140px;
+        padding-left: 40px;
+      }
+
+      .value {
+        width: 668px;
+      }
+    }
+  }
+
+  .linkText {
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    color: $gray06;
+  }
+}

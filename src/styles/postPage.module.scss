@@ -1,0 +1,44 @@
+.postSection {
+  width: 1280px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.postTitle {
+  padding-bottom: 80px;
+}
+
+.postFilterWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.postChipWrapper {
+  width: 628px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  div {
+    cursor: pointer;
+  }
+}
+
+.postBottomWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  ul {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  a {
+    margin-left: auto;
+  }
+}

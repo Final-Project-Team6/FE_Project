@@ -1,0 +1,46 @@
+// 01.Typography
+$Pretendard: Pretendard Variable;
+$medium: 500;
+$bold: 700;
+
+// 02.Color
+// Theme / Brand
+$primaryColor: #2a3f6d;
+$subColor: #1674b7;
+$brandColor: #00a8ff;
+
+// Gray
+$white: #ffffff;
+$black100: #222222;
+
+$gray01: #f9f9f9;
+$gray02: #f7f7f7;
+$gray03: #eeeeee;
+$gray04: #dddddd;
+$gray05: #bbbbbb;
+$gray06: #999999;
+$gray07: #777777;
+$gray08: #666666;
+$gray09: #555555;
+$gray10: #333333;
+
+:export {
+  pretendard: $Pretendard;
+  medium: $medium;
+  bold: $bold;
+
+  primaryColor: $primaryColor;
+  subColor: $subColor;
+  brandColor: $brandColor;
+
+  gray01: $gray01;
+  gray02: $gray02;
+  gray03: $gray03;
+  gray04: $gray04;
+  gray05: $gray05;
+  gray06: $gray06;
+  gray07: $gray07;
+  gray08: $gray08;
+  gray09: $gray09;
+  gray10: $gray10;
+}
