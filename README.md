@@ -62,6 +62,13 @@
 
 - **협업 도구(FE)**
   - `Github`: Wiki, Project 를 활용하여 애자일 방법론으로 프로젝트 형상관리를 구성합니다.
+ 
+- **기술 스택(FE)**
+  - `Framework` : Next.js
+  - `개발 언어` : TypeScript
+  - `상태관리` : Redux toolkit
+  - `Libray` : Styled-components, SCSS
+  -  
 
 <br/>
 
