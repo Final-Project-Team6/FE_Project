@@ -1,0 +1,113 @@
+@import '@/styles/_variables.module';
+
+// 01.Typography
+.menu {
+  &Title1 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: $medium;
+  }
+  &Title2 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: $bold;
+  }
+}
+
+.title1 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: $bold;
+}
+
+.sub {
+  &Title1 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: $bold;
+  }
+  &Title2 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: $bold;
+  }
+}
+
+.body {
+  &_01 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: $bold;
+  }
+  &_02 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: $medium;
+  }
+  &_03 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: $medium;
+  }
+  &_04 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: $medium;
+  }
+  &_05 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: $medium;
+  }
+  &_06 {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: $medium;
+  }
+}
+
+.caption {
+  &_01 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: $medium;
+  }
+  &_02 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: $bold;
+  }
+}
+
+.dialog {
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: $medium;
+  &BTN {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: $bold;
+  }
+}
+
+// 02.Color
+// Theme / Brand
+$primaryColor: #2a3f6d;
+$subColor: #1674b7;
+
+// Gray
+
+:export {
+  primaryColor: $primaryColor;
+  subColor: $subColor;
+  gray01: $gray01;
+  gray02: $gray02;
+  gray03: $gray03;
+  gray04: $gray04;
+  gray05: $gray05;
+  gray06: $gray06;
+  gray07: $gray07;
+  gray08: $gray08;
+  gray09: $gray09;
+  gray10: $gray10;
+}

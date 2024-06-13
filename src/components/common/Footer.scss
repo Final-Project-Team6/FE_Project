@@ -1,0 +1,46 @@
+@import '@/styles/mixins.module';
+
+.Footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  padding-top: 40px;
+  padding-bottom: 56px;
+
+  background-color: $gray10;
+
+  .link-box {
+    display: flex;
+    width: 1280px;
+
+    .link-item {
+      display: flex;
+      align-items: center;
+
+      height: 12px;
+      padding: 0px 16px;
+      border-right: 1px solid $gray06;
+
+      list-style: none;
+    }
+
+    .link-item:first-child {
+      padding-left: 0;
+    }
+
+    a {
+      color: $gray06;
+    }
+  }
+
+  .info {
+    color: $gray05;
+    .copyright {
+      display: flex;
+      gap: 32px;
+      border-right: none;
+    }
+  }
+}

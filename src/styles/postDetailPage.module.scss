@@ -1,0 +1,180 @@
+@import '@/styles/mixins.module';
+@import '@/styles/variables.module';
+
+.postTitle {
+  padding-bottom: 32px;
+}
+
+.postDetailWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.postDetailTopWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.postDetailTop {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $gray06;
+  flex-direction: column;
+}
+
+.postDetailTitle {
+  display: flex;
+  gap: 6px;
+
+  h4 {
+    color: $gray07;
+  }
+
+  p {
+    color: $gray07;
+  }
+}
+
+.postDetailTopInfo {
+  display: flex;
+  align-items: center;
+  & * {
+    padding: 0 15px;
+    border-right: 1px solid $gray07;
+  }
+
+  :last-child {
+    border: none;
+  }
+}
+
+.secretWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $gray07;
+}
+
+.postDetailInfo {
+  padding: 16px;
+  min-height: 180px;
+}
+
+.postDetailLikeWrapper {
+  display: flex;
+  width: 1280px;
+  padding: 16px 0px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  & > p {
+    color: $gray08;
+  }
+}
+
+.postDetailLikeButtonWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.postDetailNavButtonWrapper {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid $gray06;
+  padding-top: 16px;
+}
+
+.postDetailNavButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.postDetailCommentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.postDetailCommentTop {
+  width: 100%;
+  padding-bottom: 4px;
+  margin: 8px 0px;
+  border-bottom: 1px solid $gray08;
+}
+
+.commentTop {
+  display: flex;
+  align-items: center;
+}
+
+.commentTopDetail {
+  display: flex;
+  align-items: center;
+}
+
+.commentBottomWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 60px;
+}
+
+.commentLikeWrapper {
+  display: flex;
+  gap: 2px;
+  color: $gray06;
+  p {
+    color: $gray07;
+    cursor: pointer;
+  }
+}
+
+.commentWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.commentChildrenList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 60px;
+  gap: 35px;
+  background-color: $gray01;
+}
+
+.commentChildren {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0px;
+}
+
+.commentWriteWrapper {
+  margin: auto;
+}
+
+.commentWriteBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.commentAddImageWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0px;
+  cursor: pointer;
+  p {
+    color: $gray06;
+  }
+}

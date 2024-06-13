@@ -1,0 +1,35 @@
+@import '@/styles/_mixins.module';
+@import '@/styles/_variables.module';
+
+.activitydetails {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 627px;
+    height: 173px;
+
+    background-color: $gray01;
+    border: 1px solid $gray04;
+    border-radius: 24px;
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+
+      width: 200px;
+    }
+
+    .line {
+      border-left: 1px solid $gray05;
+      border-right: 1px solid $gray05;
+    }
+  }
+}

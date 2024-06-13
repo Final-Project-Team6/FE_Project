@@ -1,0 +1,43 @@
+@import '@/styles/_mixins.module';
+@import '@/styles/_variables.module';
+
+.quickWrapper {
+  position: sticky;
+  top: 300px;
+  right: 50px;
+  float: right;
+  width: 100px;
+  height: 0px;
+  color: $gray08;
+}
+
+.quickMenuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0.5px solid #777777;
+  padding: 20px 12px;
+  gap: 16px;
+  padding-bottom: 8px;
+  background-color: $white;
+}
+
+.quickMenuText {
+  word-break: break-all;
+  text-align: center;
+  letter-spacing: -0.16px;
+}
+
+.topContainer {
+  cursor: pointer;
+  border: 0.5px solid #777777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px;
+  background-color: $white;
+}
+
+.topImage {
+  transform: rotate(270deg);
+}

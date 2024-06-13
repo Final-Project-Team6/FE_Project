@@ -1,0 +1,41 @@
+ul {
+  list-style: none;
+}
+
+.mypage {
+  display: flex;
+
+  .wrap {
+    display: flex;
+    gap: 110px;
+  }
+
+  .img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+
+  &-top {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+
+    &-item {
+      display: flex;
+      gap: 80px;
+    }
+  }
+
+  .title {
+    display: flex;
+
+    width: 100%;
+    padding-bottom: 40px;
+  }
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
