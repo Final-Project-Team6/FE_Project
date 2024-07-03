@@ -82,7 +82,7 @@ export default function WriteForm({
       accessToken: accessToken,
     })
     router.replace(
-      `/${params.apartmentName}/board/lists/${params.post}/${params.postType}/1`,
+      `/${params.apartmentName}/${params.post}/${params.postType}/1`,
     )
 
     alert(`${postCategoryParams[params.postType]}이 작성되었습니다.`)
@@ -200,7 +200,7 @@ export default function WriteForm({
               type="button"
               onClick={() => {
                 router.replace(
-                  `/${params.apartmentName}/board/lists/${params.post}/${params.postType}/1`,
+                  `/${params.apartmentName}/${params.post}/${params.postType}/1`,
                 )
               }}
               size="message"
