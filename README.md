@@ -67,8 +67,8 @@
   - `개발 언어` : TypeScript
   - `상태관리` : Redux toolkit
   - `Libray` : Styled-components, SCSS
-  -  
-
+  - `코드 컨벤션` : Prettier, ESLint, Husky
+  - `CI/CD` : Vercel, Github Action
 <br/>
 
 <br/>
