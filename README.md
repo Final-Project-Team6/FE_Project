@@ -6,11 +6,10 @@
 
 <br/>
 
-![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/3a950b34-fa8c-429a-a519-94e0b29743b1)
+| ![image](https://github.com/Final-Project-Team6/FE_Project/assets/61799492/cd0ecfbc-2c38-405a-ac09-900ba736efb6) | ![image](https://github.com/Final-Project-Team6/FE_Project/assets/61799492/f37b4033-3c41-4f1f-a316-62c9d63a709d) |
+| --- | --- |
+| ![image](https://github.com/Final-Project-Team6/FE_Project/assets/61799492/a5755445-7bf0-4f43-b445-0c45af211ded) | ![image](https://github.com/Final-Project-Team6/FE_Project/assets/61799492/1519b869-bf6b-45c2-b188-8e8fe668c6e9) |
 
-![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/f929ae69-a8e0-409f-be87-4df0f2512259)
-
-![image](https://github.com/Final-Project-Team6/BE_Project/assets/131642334/ca807190-412d-4c4f-9f61-e3ee8bbf312e)
 
 
 <br/>
@@ -36,8 +35,8 @@
 
 | PM(L): 이나현                                                | PM: 오로라                                                   | PM: 김윤희                                                   | UXUI(L): 유채연                                              | UXUI: 권은비                                                 |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://cdn-icons-png.flaticon.com/512/3736/3736502.png" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/00fe414d-f3fa-4c9e-a7ac-edf6cc837774" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/af7d2109-00a5-449e-ae9e-28a1fb13be79" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/37167b01-8645-47e6-9e97-01b98503db6e" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/mango101"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/39a84c41-2f9f-46e0-a445-a30ff51a2d61" alt="profile" width="140" height="140"> |
-| <div align="center"><a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://img.shields.io/badge/이_나_현-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a></div> |                                                              |                                                              | <div align="center"><a href="https://notefolio.net/OGU59"><img src="https://img.shields.io/badge/유_채_연-%23F7F7F7?style=for-the-badge&logo=notion&logoColor=000000"/></a></div> | <div align="center"><a href="https://notefolio.net/mango101"><img src="https://img.shields.io/badge/권_은_비-%23F7F7F7?style=for-the-badge&logo=notion&logoColor=000000"/></a></div> |
+| <a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://cdn-icons-png.flaticon.com/512/3736/3736502.png" alt="profile" width="140" height="140"> | <a href="http://www.linkedin.com/in/rora289323"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/2ee7c304-b779-4441-a7e3-294e89080c22" alt="profile" width="140" height="140"> | <a href="www.linkedin.com/in/yunhee-kim-220943312"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/da1fd218-c6e0-4b99-9373-68ee0cbadb37" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/c5f5eadd-4467-41f8-8283-fcf6a174a7c7" alt="profile" width="140" height="140"> | <a href="https://notefolio.net/mango101"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/39a84c41-2f9f-46e0-a445-a30ff51a2d61" alt="profile" width="140" height="140"> |
+| <div align="center"><a href="https://www.linkedin.com/in/nahyunlee-yeriel/"><img src="https://img.shields.io/badge/이_나_현-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a></div> | <div align="center"><a href="http://www.linkedin.com/in/rora289323"><img src="https://img.shields.io/badge/오_로_라-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a></div> | <div align="center"><a href="www.linkedin.com/in/yunhee-kim-220943312"><img src="https://img.shields.io/badge/김_윤_희-%230077B5.svg?style=for-the-socail&logo=linkedin&logoColor=white"/></a></div> | <div align="center"><a href="https://notefolio.net/OGU59"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/e2089a6c-3218-4d2a-b331-0be3fd264bc0"/></a></div> | <div align="center"><a href="https://notefolio.net/mango101"><img src="https://github.com/Final-Project-Team6/BE_Project/assets/131642334/ca697ecf-0518-4863-be89-52d76e5f07fa"/></a></div> |
 
 <br/>
 
